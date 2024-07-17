@@ -10,10 +10,12 @@ const nextConfig = {
         // Menentukan hostname atau domain
         hostname: "localhost",
         // Menentukan path pattern untuk gambar
-        pathname: "/**", // ini akan mencakup semua path di bawah localhost
+        pathname: "/uploads/**", // ini akan mencakup semua path di bawah localhost
       },
     ],
   },
+  output: "export",
+  assetPrefix: "/commerce",
 };
 
 export default nextConfig;
