@@ -15,8 +15,6 @@ const nextConfig = {
       },
     ],
   },
-  output: "export",
-  assetPrefix: "/commerce",
 };
 
 export default nextConfig;
