@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
+    unoptimized: true,
     // Mengganti konfigurasi domains dengan remotePatterns
     remotePatterns: [
       {
