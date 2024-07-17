@@ -9,6 +9,7 @@ const nextConfig = {
         protocol: "http", // sesuaikan dengan kebutuhan (http atau https)
         // Menentukan hostname atau domain
         hostname: "localhost",
+        port: "1337",
         // Menentukan path pattern untuk gambar
         pathname: "/uploads/**", // ini akan mencakup semua path di bawah localhost
       },
