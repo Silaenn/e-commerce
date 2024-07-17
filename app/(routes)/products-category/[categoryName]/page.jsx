@@ -6,14 +6,6 @@ import ProductList from "@/app/_components/ProductList";
 import { SearchContext } from "@/app/_context/SearchContext";
 import { useRouter } from "next/navigation";
 
-export async function generateStaticParams() {
-  const categories = await GlobalApi.getCategoryList();
-
-  return categories.map((category) => ({
-    categoryName: category.attributes.name,
-  }));
-}
-
 function ProductCategory({ params }) {
   const [productList, setProductList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
