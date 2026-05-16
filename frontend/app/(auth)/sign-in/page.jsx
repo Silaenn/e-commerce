@@ -41,31 +41,52 @@ const SignIn = () => {
     );
   };
   return (
-    <div className="flex items-baseline justify-center my-36">
-      <div className="flex flex-col items-center justify-center p-10 bg-slate-100 border border-gray-200">
-        <Image src="/logo.png" width={200} height={200} alt="logo" />
+    <div className="min-h-screen flex items-center justify-center bg-background px-6">
+      <div className="flex flex-col items-center justify-center p-12 bg-card rounded-[2.5rem] shadow-2xl shadow-primary/5 border border-primary/10 w-full max-w-md space-y-8">
+        <Link href="/">
+          <Image src="/logo.png" width={150} height={150} alt="logo" className="hover:opacity-80 transition-opacity" />
+        </Link>
 
-        <h2 className="font-bold text-3xl">Sign In Account</h2>
-        <h2 className="text-gray-500">
-          Enter your Email and Password to Sign In account
-        </h2>
-        <div className="w-full flex flex-col gap-5 mt-7">
-          <Input
-            placeholder="name@example.com"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button onClick={() => onSignIn()} disabled={!(email || password)}>
-            {loader ? <LoaderIcon className="animate-spin" /> : "Sign In"}
+        <div className="text-center space-y-2">
+          <h2 className="font-bold text-4xl tracking-tighter text-primary">Sign In</h2>
+          <p className="text-muted-foreground font-medium">
+            Welcome back! Let's get you some fresh groceries.
+          </p>
+        </div>
+
+        <div className="w-full flex flex-col gap-4 mt-4">
+          <div className="space-y-2">
+            <Input
+              placeholder="name@example.com"
+              className="rounded-2xl h-14 px-6 bg-secondary/20 border-transparent focus:bg-background focus:border-primary/20 transition-all"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Input
+              type="password"
+              placeholder="Password"
+              className="rounded-2xl h-14 px-6 bg-secondary/20 border-transparent focus:bg-background focus:border-primary/20 transition-all"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          
+          <Button
+            className="w-full h-14 rounded-2xl text-lg font-bold bg-primary text-background hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10 mt-4"
+            onClick={() => onSignIn()}
+            disabled={!(email || password) || loader}
+          >
+            {loader ? (
+              <LoaderIcon className="animate-spin h-6 w-6" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
-          <p>
+
+          <p className="text-center text-sm font-medium text-muted-foreground mt-4">
             Don't have an account? {""}
-            <Link href="/create-account" className="text-blue-500">
-              Click here to create new account
+            <Link href="/create-account" className="text-primary font-bold hover:underline decoration-2 underline-offset-4">
+              Create one here
             </Link>
           </p>
         </div>
