@@ -95,55 +95,55 @@ const Header = () => {
   };
 
   return (
-    <div className="p-5 shadow-sm flex justify-between">
-      <div className="flex items-center gap-8">
+    <div className="p-4 px-6 md:px-12 lg:px-24 sticky top-0 z-50 backdrop-blur-lg bg-background/80 flex justify-between items-center transition-all duration-300">
+      <div className="flex items-center gap-12">
         <Link href={"/"}>
           <Image
             src="/logo.png"
             alt="logo"
-            width={150}
-            height={100}
-            className="cursor-pointer"
+            width={120}
+            height={80}
+            className="cursor-pointer hover:opacity-80 transition-opacity"
           />
         </Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <h2 className="hidden md:flex gap-2 items-center border rounded-full p-2 px-10 bg-slate-200 cursor-pointer">
-              <LayoutGrid className="h5 w5" />
-              Category
+            <h2 className="hidden md:flex gap-2 items-center text-sm font-medium cursor-pointer hover:text-primary transition-colors">
+              Categories
             </h2>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Browse Category</DropdownMenuLabel>
+          <DropdownMenuContent className="rounded-2xl p-2 min-w-[200px]">
+            <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground pb-2">Browse Category</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {category.map((c, index) => (
               <Link
                 key={index}
-                href={"/products-category/" + c.attributes.name}
+                href={"/products-category/" + c.name}
               >
-                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer">
+                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3 hover:bg-secondary">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}${
-                      c?.attributes?.icon?.data?.[0]?.attributes?.url || ""
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
+                      c?.image?.url || ""
                     }`}
-                    alt={c?.attributes?.name || "icon"}
-                    width={30}
-                    height={30}
+                    alt={c?.name || "icon"}
+                    width={24}
+                    height={24}
                     unoptimized={true}
                   />
-                  <h2 className="text-lg">{c?.attributes?.name}</h2>
+                  <h2 className="text-sm font-medium">{c?.name}</h2>
                 </DropdownMenuItem>
               </Link>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <div className="md:flex gap-3 items-center border rounded-full p-2 px-5 hidden ">
-          <Search />
+
+        <div className="hidden md:flex items-center gap-3 bg-secondary/50 rounded-full px-6 py-2 w-[300px] group focus-within:bg-secondary transition-all">
+          <Search className="h-4 w-4 text-muted-foreground" />
           <input
             type="text"
-            placeholder="Search"
-            className="outline-none"
+            placeholder="Search products..."
+            className="bg-transparent outline-none text-sm w-full"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -151,7 +151,7 @@ const Header = () => {
           />
         </div>
       </div>
-      <div className="flex gap-5 items-center">
+      <div className="flex gap-6 items-center">
         <Sheet>
           <SheetTrigger>
             <h2 className="flex gap-2 items-center text-lg">

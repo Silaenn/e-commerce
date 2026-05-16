@@ -28,21 +28,39 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
   console.log(search);
 
   return (
-    <div className="p-5 md:p-16 px-16 ">
-      {/* Slider */}
-      <Slider sliderList={sliderList} />
-      {/* Daftar Kategori */}
-      <CategoryList categoryList={categoryList} />
-      {/* Daftar Produk */}
-      <ProductList productList={productList} search={search} />
-      {/* Banner */}
-      <Image
-        src="/banner.png"
-        width={1000}
-        height={300}
-        className="w-full h-[400px] object-contain"
-        alt="banner"
-      />
+    <div className="bg-background min-h-screen">
+      <div className="space-y-24 pb-20">
+        {/* Slider */}
+        <Slider sliderList={sliderList} />
+        
+        {/* Daftar Kategori */}
+        <CategoryList categoryList={categoryList} />
+        
+        {/* Daftar Produk */}
+        <ProductList productList={productList} search={search} />
+        
+        {/* Promo Banner Section */}
+        <div className="px-6 md:px-12 lg:px-24">
+          <div className="relative overflow-hidden rounded-[3rem] bg-accent/10 p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12 group">
+            <div className="space-y-6 z-10">
+              <span className="bg-accent text-primary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">Special Offer</span>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-primary max-w-md leading-none">Healthy Living Starts Here.</h2>
+              <p className="text-muted-foreground text-lg max-w-xs font-medium">Get up to 30% off on your first organic basket purchase.</p>
+              <button className="bg-primary text-background px-10 py-4 rounded-full font-bold hover:scale-105 transition-transform active:scale-95 shadow-xl shadow-primary/20">
+                Claim Offer
+              </button>
+            </div>
+            <Image
+              src="/banner.png"
+              width={600}
+              height={600}
+              className="w-full md:w-1/2 h-auto object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-110"
+              alt="banner"
+            />
+          </div>
+        </div>
+      </div>
+      
       {/* Footer */}
       <Footer />
     </div>
