@@ -25,7 +25,7 @@ const getAllProducts = () =>
 
 const getProductsByCategory = (category) =>
   axiosClient
-    .get("/products?filters[caregories][name][$in]=" + category + "&populate=*")
+    .get("/products?filters[categories][name][$in]=" + category + "&populate=*")
     .then((resp) => {
       return resp.data.data;
     });
@@ -33,7 +33,7 @@ const getProductsByCategory = (category) =>
 const searchProducts = (searchTerm) =>
   axiosClient
     .get(
-      `/products?filters[$or][0][slug][$containsi]=${searchTerm}&filters[$or][1][caregories][name][$containsi]=${searchTerm}&populate=*`
+      `/products?filters[$or][0][slug][$containsi]=${searchTerm}&filters[$or][1][categories][name][$containsi]=${searchTerm}&populate=*`
     )
     .then((resp) => {
       return resp.data.data;
@@ -74,27 +74,21 @@ const getCartItems = (userId, jwt) =>
     .then((res) => {
       const data = res.data.data;
       const cartItemList = data.map((item) => {
-        // console.log("Full item:", JSON.stringify(item, null, 2));
-        const product = item.attributes.products.data[0].attributes;
-        // console.log("Product:", JSON.stringify(product, null, 2));
-        // console.log("Images:", JSON.stringify(product.images, null, 2));
+        const product = item.products[0];
 
         let imageUrl = "";
-        if (product.images && product.images.data && product.images.data[0]) {
-          imageUrl = product.images.data[0].attributes.url;
-          // console.log("Image URL found:", imageUrl);
-        } else {
-          console.log("No image URL found");
+        if (product.images && product.images[0]) {
+          imageUrl = product.images[0].url;
         }
 
         return {
           name: product.name,
-          quantity: item.attributes.quantity,
-          amount: item.attributes.amount,
+          quantity: item.quantity,
+          amount: item.amount,
           image: imageUrl,
           actualPrice: product.sellingPrice,
           id: item.id,
-          product: item.attributes.products.data[0].id,
+          product: item.products[0].id,
         };
       });
 
@@ -158,11 +152,11 @@ const getMyOrder = (userId, jwt) =>
       const response = resp.data.data;
       const orderList = response.map((item) => ({
         id: item.id,
-        totalOrderAmount: item.attributes.totalOrderAmount,
-        paymentId: item.attributes.paymentId,
-        orderItemList: item.attributes.orderitemList,
-        createdAt: item.attributes.createdAt,
-        status: item.attributes.Status,
+        totalOrderAmount: item.totalOrderAmount,
+        paymentId: item.paymentId,
+        orderItemList: item.orderitemList,
+        createdAt: item.createdAt,
+        status: item.Status,
       }));
 
       return orderList;

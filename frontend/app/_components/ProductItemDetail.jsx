@@ -15,9 +15,9 @@ const ProductItemDetail = ({ product }) => {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
   const [productTotalPrice, setProductTotalPrice] = useState(
-    product.attributes.sellingPrice
-      ? product.attributes.sellingPrice
-      : product.attributes.mrp
+    product.sellingPrice
+      ? product.sellingPrice
+      : product.price
   );
 
   const router = useRouter();
@@ -61,75 +61,76 @@ const ProductItemDetail = ({ product }) => {
     }
   };
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 p-7 bg-white text-black">
-      <Image
-        src={
-          process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
-          product.attributes.images.data[0].attributes.url
-        }
-        alt="image"
-        width={300}
-        height={300}
-        className="bg-slate-200 p-5 h-[320px] w-[300px] object-contain rounded-lg"
-      />
-      <div className="flex flex-col gap-3">
-        <h2 className="text-2xl font-bold">{product.attributes.name}</h2>
-        <h2 className="text-sm text-gray-500">
-          {product.attributes.decription}
-        </h2>
-        <div className="flex gap-3 text-3xl">
-          {product.attributes.sellingPrice && (
-            <h2 className="font-bold text-3xl">
-              Rp{product.attributes.sellingPrice.toLocaleString("id-ID")}
-            </h2>
-          )}
-          {product.attributes.mrp && (
-            <h2
-              className={`font-bold text-3xl ${
-                product.attributes.sellingPrice && "line-through text-gray-500"
-              }`}
-            >
-              Rp{product.attributes.mrp.toLocaleString("id-ID")}
-            </h2>
-          )}
-        </div>
-        <h2 className="font-medium text-lg">
-          Quantity ({product.attributes.itemQuantityType})
-        </h2>
-        <div className="flex flex-col items-baseline gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2 border flex gap-10 items-center px-5">
-              <button
-                disabled={quantity === 1}
-                onClick={() => setQuantity((prev) => prev - 1)}
-              >
-                -
-              </button>
-              <h2>{quantity}</h2>
-              <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
-            </div>
-            <h2 className="text-2xl font-bold">
-              {" "}
-              = Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}
-            </h2>
-          </div>
-          <Button
-            className="flex gap-3"
-            onClick={() => addToCart()}
-            disabled={loading || isDisabled}
-          >
-            <ShoppingBasket />
-            {loading && !paymentToken ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              <div>{isDisabled ? "Pending Payment" : "Add To Cart"}</div>
+    <div className="grid grid-cols-1 md:grid-cols-2 bg-background text-foreground h-full md:h-auto max-h-[90vh] overflow-y-auto">
+      <div className="bg-secondary/20 p-12 flex items-center justify-center">
+        <Image
+          src={
+            (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
+            product.images[0].url
+          }
+          alt="image"
+          width={600}
+          height={600}
+          className="h-full w-full object-contain hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+      <div className="flex flex-col p-12 gap-8 justify-center">
+        <div className="space-y-4">
+          <span className="text-xs uppercase tracking-[0.2em] font-bold text-muted-foreground">{product.categories?.[0]?.name || "Organic"}</span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary leading-tight">{product.name}</h2>
+          <div className="flex items-center gap-4">
+            {product.sellingPrice && (
+              <span className="text-3xl font-bold tracking-tighter text-primary">
+                Rp{product.sellingPrice.toLocaleString("id-ID")}
+              </span>
             )}
-          </Button>
+            {product.price && (
+              <span className="text-xl text-muted-foreground line-through font-medium">
+                Rp{product.price.toLocaleString("id-ID")}
+              </span>
+            )}
+          </div>
         </div>
-        <h2>
-          <span className="font-bold">Category: </span>
-          {product.attributes.caregories.data[0].attributes.name}
-        </h2>
+
+        <p className="text-muted-foreground leading-relaxed text-lg font-medium border-l-4 border-primary/10 pl-6 italic">
+          {product.description || "Fresh selection, carefully picked for your daily nutrition. Guaranteed quality from our farmers."}
+        </p>
+
+        <div className="space-y-6">
+          <div className="flex items-center gap-8 bg-secondary/30 w-fit p-2 px-6 rounded-full border border-primary/5">
+            <button
+              disabled={quantity === 1}
+              onClick={() => setQuantity((prev) => prev - 1)}
+              className="text-2xl font-bold hover:text-primary transition-colors disabled:opacity-30"
+            >
+              -
+            </button>
+            <h2 className="text-xl font-bold w-8 text-center">{quantity}</h2>
+            <button 
+              onClick={() => setQuantity((prev) => prev + 1)}
+              className="text-2xl font-bold hover:text-primary transition-colors"
+            >+</button>
+          </div>
+
+          <div className="space-y-4">
+             <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-muted-foreground">
+                <span>Total Amount</span>
+                <span className="text-primary text-xl">Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}</span>
+             </div>
+            <Button
+              className="w-full h-16 rounded-full text-lg font-bold flex gap-4 bg-primary text-background hover:scale-[1.02] transition-transform shadow-xl shadow-primary/20"
+              onClick={() => addToCart()}
+              disabled={loading || isDisabled}
+            >
+              <ShoppingBasket className="h-6 w-6" />
+              {loading && !paymentToken ? (
+                <LoaderCircle className="animate-spin h-6 w-6" />
+              ) : (
+                <span>{isDisabled ? "Pending Payment" : "Add To Cart"}</span>
+              )}
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -11,8 +11,8 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
         <div className="flex items-center gap-4 justify-start col-span-2 ">
           <Image
             src={
-              process.env.NEXT_PUBLIC_BACKEND_BASE_URL +
-              orderItem.product.data.attributes.images.data[0].attributes.url
+              (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
+              orderItem.product.images[0].url
             }
             width={80}
             height={80}
@@ -20,8 +20,8 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
             className="bg-gray-100 p-5 rounded-md"
           />
           <div>
-            <h2>{orderItem.product.data.attributes.name}</h2>
-            <h2>Item Price: {orderItem.product.data.attributes.mrp}</h2>
+            <h2>{orderItem.product.name}</h2>
+            <h2>Item Price: {orderItem.product.price}</h2>
           </div>
         </div>
         <div className="flex flex-col gap-3 col-span-3 mr-16 ">
