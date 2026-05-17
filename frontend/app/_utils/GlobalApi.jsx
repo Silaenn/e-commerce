@@ -1,6 +1,4 @@
-import Midtrans from "midtrans-client";
-
-const { default: axios } = require("axios");
+import axios from "axios";
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:1337/api",

@@ -30,7 +30,7 @@ function ProductCategory({ params }) {
 
       GlobalApi.getCategoryList().then((res) => {
         const index = res.findIndex(
-          (cat) => cat.attributes.name === params.categoryName
+          (cat) => cat.name === params.categoryName
         );
         setCurrentCategoryIndex(index !== -1 ? index : 0);
         console.log(index);
@@ -43,7 +43,7 @@ function ProductCategory({ params }) {
     if (newIndex < 0) newIndex = categoryList.length - 1;
     if (newIndex >= categoryList.length) newIndex = 0;
 
-    const newCategory = categoryList[newIndex].attributes.name;
+    const newCategory = categoryList[newIndex].name;
     // Gunakan router untuk navigasi ke kategori baru
     router.push(`/products-category/${newCategory}`);
   };
