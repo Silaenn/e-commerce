@@ -6,21 +6,21 @@ export default function useAuth() {
   const [user, setUser] = useState(null);
   const [jwt, setJwt] = useState(null);
 
-  const router = useRouter();
-
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedUser = JSON.parse(sessionStorage.getItem("user"));
-      const storedJwt = sessionStorage.getItem("jwt");
+      try {
+        const storedUser = sessionStorage.getItem("user");
+        const storedJwt = sessionStorage.getItem("jwt");
 
-      if (!storedUser && !storedJwt) {
-        router.push("/sign-in");
-      } else {
-        setUser(storedUser);
-        setJwt(storedJwt);
+        if (storedUser && storedJwt) {
+          setUser(JSON.parse(storedUser));
+          setJwt(storedJwt);
+        }
+      } catch (error) {
+        console.error("Error parsing user from sessionStorage", error);
       }
     }
-  }, [router]);
+  }, []);
 
   return { user, setUser, jwt, setJwt };
 }
