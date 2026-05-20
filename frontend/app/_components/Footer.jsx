@@ -5,7 +5,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="bg-gray-50 text-gray-900 mt-20 border-t border-gray-100 w-full">
-      <div className="mx-auto px-6 md:px-12 lg:px-24 py-16">
+      <div className="mx-auto px-8 md:px-20 lg:px-36 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Section */}
           <div className="space-y-6">
