@@ -8,6 +8,7 @@ import React, { useContext, useState } from "react";
 import GlobalApi from "../_utils/GlobalApi";
 import { toast } from "sonner";
 import { UpdateCartContext } from "../_context/UpdateCartContext";
+import { motion } from "framer-motion";
 
 const ProductItemDetail = ({ product }) => {
   const jwt = sessionStorage.getItem("jwt");
@@ -62,7 +63,12 @@ const ProductItemDetail = ({ product }) => {
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 bg-white text-gray-900 h-full md:h-auto max-h-[90vh] overflow-y-auto">
-      <div className="bg-gray-50 p-12 flex items-center justify-center">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="bg-gray-50 p-12 flex items-center justify-center"
+      >
         <Image
           src={
             (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
@@ -73,9 +79,14 @@ const ProductItemDetail = ({ product }) => {
           height={600}
           className="h-full w-full object-contain hover:scale-105 transition-transform duration-500"
         />
-      </div>
+      </motion.div>
       <div className="flex flex-col p-12 gap-8 justify-center">
-        <div className="space-y-4">
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+          className="space-y-4"
+        >
           <span className="text-xs uppercase tracking-[0.2em] font-bold text-gray-400">{product.categories?.[0]?.name || "Organic"}</span>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-gray-900 leading-tight">{product.name}</h2>
           <div className="flex items-center gap-4">
@@ -90,14 +101,24 @@ const ProductItemDetail = ({ product }) => {
               </span>
             )}
           </div>
-        </div>
+        </motion.div>
 
-        <p className="text-gray-500 leading-relaxed text-lg font-medium border-l-4 border-primary/10 pl-6 italic">
+        <motion.p 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-gray-500 leading-relaxed text-lg font-medium border-l-4 border-primary/10 pl-6 italic"
+        >
           {product.description || "Fresh selection, carefully picked for your daily nutrition. Guaranteed quality from our farmers."}
-        </p>
+        </motion.p>
 
         <div className="space-y-6">
-          <div className="flex items-center gap-8 bg-gray-50 w-fit p-2 px-6 rounded-full border border-gray-100">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="flex items-center gap-8 bg-gray-50 w-fit p-2 px-6 rounded-full border border-gray-100"
+          >
             <button
               disabled={quantity === 1}
               onClick={() => setQuantity((prev) => prev - 1)}
@@ -110,9 +131,14 @@ const ProductItemDetail = ({ product }) => {
               onClick={() => setQuantity((prev) => prev + 1)}
               className="text-2xl font-bold hover:text-primary transition-colors"
             >+</button>
-          </div>
+          </motion.div>
 
-          <div className="space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="space-y-4"
+          >
              <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-400">
                 <span>Total Amount</span>
                 <span className="text-primary text-xl font-extrabold">Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}</span>
@@ -129,7 +155,7 @@ const ProductItemDetail = ({ product }) => {
                 <span>{isDisabled ? "Pending Payment" : "Add To Cart"}</span>
               )}
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -33,6 +33,7 @@ import CartItemList from "./CartItemList";
 import { toast } from "sonner";
 import useAuth from "../_context/useAuth";
 import { SearchContext } from "../_context/SearchContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const { search, setSearch, setSearchResults } = useContext(SearchContext);
@@ -94,23 +95,32 @@ const Header = () => {
   };
 
   return (
-    <div className="p-4 px-6 md:px-12 lg:px-24 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b flex justify-between items-center">
+    <motion.div 
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="p-4 px-6 md:px-12 lg:px-24 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b flex justify-between items-center"
+    >
       <div className="flex items-center gap-10">
         <Link href={"/"}>
-          <Image
-            src="/logo.png"
-            alt="logo"
-            width={130}
-            height={80}
-            className="cursor-pointer"
-          />
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Image
+              src="/logo.png"
+              alt="logo"
+              width={130}
+              height={80}
+              className="cursor-pointer"
+            />
+          </motion.div>
         </Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <h2 className="hidden md:flex gap-2 items-center text-sm font-bold cursor-pointer hover:text-primary transition-colors uppercase tracking-widest">
+            <motion.h2 
+              whileHover={{ color: "#22c55e" }}
+              className="hidden md:flex gap-2 items-center text-sm font-bold cursor-pointer transition-colors uppercase tracking-widest"
+            >
               Explore
-            </h2>
+            </motion.h2>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="rounded-2xl p-2 min-w-[200px] bg-white shadow-2xl border">
             <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-gray-400 pb-2">Categories</DropdownMenuLabel>
@@ -137,7 +147,11 @@ const Header = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="hidden md:flex items-center gap-3 bg-gray-100 rounded-full px-5 py-2 w-[350px] border border-transparent focus-within:border-primary/20 focus-within:bg-white transition-all">
+        <motion.div 
+          initial={{ width: "300px" }}
+          whileFocus={{ width: "400px" }}
+          className="hidden md:flex items-center gap-3 bg-gray-100 rounded-full px-5 py-2 border border-transparent focus-within:border-primary/20 focus-within:bg-white transition-all"
+        >
           <Search className="h-4 w-4 text-gray-400" />
           <input
             type="text"
@@ -148,25 +162,37 @@ const Header = () => {
             onKeyPress={handleKeyPress}
             disabled={disabled}
           />
-        </div>
+        </motion.div>
       </div>
       
       <div className="flex gap-6 items-center">
         <Sheet>
-          <SheetTrigger>
-            <h2 className="flex gap-2 items-center text-lg relative group">
-              <ShoppingBasket className="h-7 w-7 text-gray-900 group-hover:text-primary transition-colors" />{" "}
-              <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
-                {totalCartItem}
-              </span>
-            </h2>
+          <SheetTrigger asChild>
+            <motion.button 
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex gap-2 items-center text-lg relative group"
+            >
+              <ShoppingBasket className="h-7 w-7 text-gray-900 group-hover:text-primary transition-colors" />
+              <AnimatePresence mode="popLayout">
+                <motion.span 
+                  key={totalCartItem}
+                  initial={{ scale: 0.5, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 1.5, opacity: 0 }}
+                  className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full"
+                >
+                  {totalCartItem}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
           </SheetTrigger>
           <SheetContent className="rounded-l-[2rem] bg-white shadow-2xl border-l">
             <SheetHeader>
               <SheetTitle className="bg-primary text-white font-bold text-lg p-3 rounded-xl mb-4">
                 Your Shopping Cart
               </SheetTitle>
-              <SheetDescription>
+              <SheetDescription asChild>
                 <CartItemList
                   cartItemList={cartItemList}
                   onDeleteItem={onDeleteItem}
@@ -192,14 +218,20 @@ const Header = () => {
 
         {!jwt ? (
           <Link href={"/sign-in"}>
-            <Button className="rounded-full px-8 font-bold">Login</Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button className="rounded-full px-8 font-bold">Login</Button>
+            </motion.div>
           </Link>
         ) : (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+              <motion.div 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+              >
                 <CircleUserRound className="h-6 w-6 text-primary" />
-              </div>
+              </motion.div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="rounded-2xl min-w-[150px] bg-white shadow-2xl border">
               <DropdownMenuLabel className="font-bold">My Account</DropdownMenuLabel>
@@ -215,7 +247,7 @@ const Header = () => {
           </DropdownMenu>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
