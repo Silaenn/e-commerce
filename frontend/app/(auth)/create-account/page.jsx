@@ -27,8 +27,6 @@ const CreateAccount = () => {
     setLoader(true);
     GlobalApi.registerUser(username, email, password).then(
       (resp) => {
-        console.log(resp.data.user);
-        console.log(resp.data.jwt);
         sessionStorage.setItem("user", JSON.stringify(resp.data.user));
         sessionStorage.setItem("jwt", resp.data.jwt);
         toast("Account Created Successfully");
@@ -41,63 +39,80 @@ const CreateAccount = () => {
       }
     );
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-6">
-      <div className="flex flex-col items-center justify-center p-12 bg-card rounded-[2.5rem] shadow-2xl shadow-primary/5 border border-primary/10 w-full max-w-md space-y-8">
-        <Link href="/">
-          <Image src="/logo.png" width={150} height={150} alt="logo" className="hover:opacity-80 transition-opacity" />
-        </Link>
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
+      {/* Form Side */}
+      <div className="flex flex-col items-center justify-center p-8 md:p-20 bg-white order-last md:order-first">
+        <div className="w-full max-w-sm space-y-10">
+          <Link href="/" className="inline-block">
+            <Image src="/logo.png" width={140} height={140} alt="logo" />
+          </Link>
 
-        <div className="text-center space-y-2">
-          <h2 className="font-bold text-4xl tracking-tighter text-primary">Create Account</h2>
-          <p className="text-muted-foreground font-medium">
-            Join our community for fresh, curated essentials.
-          </p>
+          <div className="space-y-2">
+            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Create Account</h1>
+            <p className="text-gray-500 font-medium">Join us for a fresh shopping experience.</p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Username</label>
+              <Input
+                placeholder="Full Name"
+                className="h-12 border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Email</label>
+              <Input
+                placeholder="name@example.com"
+                className="h-12 border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Password</label>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                className="h-12 border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            
+            <Button
+              className="w-full h-14 rounded-xl text-lg font-bold bg-primary text-white hover:bg-green-700 transition-all shadow-lg shadow-green-900/10 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none"
+              onClick={() => onCreateAccount()}
+              disabled={!(username || email || password) || loader}
+            >
+              {loader ? (
+                <LoaderIcon className="animate-spin h-6 w-6" />
+              ) : (
+                "Create Account"
+              )}
+            </Button>
+
+            <p className="text-center text-gray-500 font-medium">
+              Already have an account? {""}
+              <Link href="/sign-in" className="text-primary font-bold hover:underline">
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div className="w-full flex flex-col gap-4 mt-4">
-          <div className="space-y-2">
-            <Input
-              placeholder="Username"
-              className="rounded-2xl h-14 px-6 bg-secondary/20 border-transparent focus:bg-background focus:border-primary/20 transition-all"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Input
-              placeholder="name@example.com"
-              className="rounded-2xl h-14 px-6 bg-secondary/20 border-transparent focus:bg-background focus:border-primary/20 transition-all"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Input
-              type="password"
-              placeholder="Password"
-              className="rounded-2xl h-14 px-6 bg-secondary/20 border-transparent focus:bg-background focus:border-primary/20 transition-all"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          
-          <Button
-            className="w-full h-14 rounded-2xl text-lg font-bold bg-primary text-background hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10 mt-4"
-            onClick={() => onCreateAccount()}
-            disabled={!(username || email || password) || loader}
-          >
-            {loader ? (
-              <LoaderIcon className="animate-spin h-6 w-6" />
-            ) : (
-              "Create an Account"
-            )}
-          </Button>
-
-          <p className="text-center text-sm font-medium text-muted-foreground mt-4">
-            Already have an account? {""}
-            <Link href="/sign-in" className="text-primary font-bold hover:underline decoration-2 underline-offset-4">
-              Sign In
-            </Link>
-          </p>
-        </div>
+      {/* Visual Side */}
+      <div className="hidden md:block relative h-full w-full bg-green-50 overflow-hidden">
+        <Image 
+          src="https://images.unsplash.com/photo-1543168256-418811576931?q=80&w=2070&auto=format&fit=crop" 
+          layout="fill" 
+          objectFit="cover" 
+          alt="Fresh Veggies"
+          className="opacity-90 grayscale-[10%]"
+        />
+        <div className="absolute inset-0 bg-green-900/5" />
       </div>
     </div>
   );

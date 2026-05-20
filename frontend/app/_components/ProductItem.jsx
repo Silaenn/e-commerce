@@ -4,17 +4,16 @@ import React from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ProductItemDetail from "./ProductItemDetail";
+import { ShoppingBasket } from "lucide-react";
 
 const ProductItem = ({ p }) => {
   return (
-    <div className="group p-4 flex flex-col gap-4 bg-card hover:bg-background rounded-[2rem] transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 border border-transparent hover:border-primary/10">
-      <div className="relative aspect-square w-full overflow-hidden rounded-[1.5rem] bg-secondary/10 p-8 flex items-center justify-center">
+    <div className="group relative bg-white border border-gray-100 rounded-3xl p-4 transition-all duration-300 hover:shadow-2xl hover:shadow-gray-200">
+      {/* Image Container */}
+      <div className="relative aspect-square w-full bg-gray-50 rounded-2xl flex items-center justify-center p-6 overflow-hidden">
         <Image
           src={
             (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
@@ -23,37 +22,35 @@ const ProductItem = ({ p }) => {
           width={400}
           height={400}
           alt={p.name}
-          className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-110"
+          className="object-contain w-full h-full transition-transform duration-500 group-hover:scale-110"
         />
-
+        
+        {/* Quick Add Overlay */}
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              variant="secondary"
-              className="absolute bottom-4 right-4 h-12 w-12 rounded-full p-0 flex items-center justify-center bg-primary text-background hover:bg-primary/90 hover:scale-110 active:scale-95 transition-all duration-300 overflow-hidden group/btn hover:w-36"
-            >
-              <div className="flex items-center gap-2 whitespace-nowrap px-4">
-                <span className="text-xl font-bold">+</span>
-                <span className="opacity-0 group-hover/btn:opacity-100 transition-opacity font-bold text-sm">Add to Cart</span>
-              </div>
-            </Button>
+            <button className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+               <div className="bg-white text-black p-3 rounded-full shadow-lg translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+                 <ShoppingBasket className="h-6 w-6" />
+               </div>
+            </button>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl p-0 overflow-hidden rounded-[2.5rem] border-none shadow-2xl">
+          <DialogContent className="max-w-4xl p-0 overflow-hidden rounded-[2rem] border-none shadow-2xl">
             <ProductItemDetail product={p} />
           </DialogContent>
         </Dialog>
       </div>
 
-      <div className="space-y-1 px-2">
-        <h2 className="font-bold text-lg text-primary truncate">{p.name}</h2>
-        <div className="flex items-center gap-3 font-medium">
+      {/* Info Section */}
+      <div className="mt-4 space-y-1">
+        <h2 className="font-bold text-gray-900 text-lg truncate group-hover:text-primary transition-colors">{p.name}</h2>
+        <div className="flex items-center gap-2">
           {p.sellingPrice && (
-            <span className="text-primary text-xl font-bold tracking-tighter">
+            <span className="font-extrabold text-xl text-gray-900">
               Rp{p.sellingPrice.toLocaleString("id-ID")}
             </span>
           )}
           {p.price && (
-            <span className="text-muted-foreground text-sm line-through decoration-primary/30">
+            <span className="text-gray-400 text-sm line-through">
               Rp{p.price.toLocaleString("id-ID")}
             </span>
           )}

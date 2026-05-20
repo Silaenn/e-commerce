@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import { Button } from "@/components/ui/button";
 import { MoveLeft, MoveRight } from "lucide-react";
@@ -7,27 +7,27 @@ import { MoveLeft, MoveRight } from "lucide-react";
 const ProductList = ({ productList, search, button, navigateCategory }) => {
   return (
     <div className="mt-24 px-6 md:px-12 lg:px-24">
-      <div className="flex items-center justify-between mb-12">
-        <div className="space-y-2">
-          <h2 className="text-primary font-bold text-3xl md:text-4xl tracking-tighter">
-            Our Popular Products
+      <div className="flex items-center justify-between mb-10">
+        <div className="space-y-1">
+          <h2 className="text-gray-900 font-extrabold text-4xl tracking-tight">
+            Popular Products
           </h2>
-          <p className="text-muted-foreground font-medium">Selected favorites, loved by our community.</p>
+          <p className="text-gray-500 font-medium">The most loved items this week.</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           {button && (
             <>
               <Button 
                 variant="outline" 
                 onClick={() => navigateCategory(-1)}
-                className="rounded-full h-12 w-12 p-0 border-primary/10 hover:bg-primary hover:text-background transition-all"
+                className="rounded-full h-12 w-12 p-0"
               >
                 <MoveLeft className="h-5 w-5" />
               </Button>
               <Button 
                 variant="outline" 
                 onClick={() => navigateCategory(+1)}
-                className="rounded-full h-12 w-12 p-0 border-primary/10 hover:bg-primary hover:text-background transition-all"
+                className="rounded-full h-12 w-12 p-0"
               >
                 <MoveRight className="h-5 w-5" />
               </Button>
