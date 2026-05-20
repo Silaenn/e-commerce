@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 const SignIn = () => {
   const [email, setEmail] = useState();
@@ -42,9 +43,14 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
+    <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 overflow-hidden">
       {/* Visual Side */}
-      <div className="hidden md:block relative h-full w-full bg-green-50 overflow-hidden">
+      <motion.div 
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="hidden md:block relative h-full w-full bg-green-50 overflow-hidden"
+      >
         <Image 
           src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070&auto=format&fit=crop" 
           layout="fill" 
@@ -53,21 +59,42 @@ const SignIn = () => {
           className="opacity-90 grayscale-[20%]"
         />
         <div className="absolute inset-0 bg-green-900/10" />
-      </div>
+      </motion.div>
 
       {/* Form Side */}
-      <div className="flex flex-col items-center justify-center p-8 md:p-20 bg-white">
+      <motion.div 
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="flex flex-col items-center justify-center p-8 md:p-20 bg-white"
+      >
         <div className="w-full max-w-sm space-y-10">
-          <Link href="/" className="inline-block">
-            <Image src="/logo.png" width={140} height={140} alt="logo" />
-          </Link>
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Link href="/" className="inline-block">
+              <Image src="/logo.png" width={140} height={140} alt="logo" />
+            </Link>
+          </motion.div>
 
-          <div className="space-y-2">
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="space-y-2"
+          >
             <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Welcome back</h1>
             <p className="text-gray-500 font-medium">Please enter your details to sign in.</p>
-          </div>
+          </motion.div>
 
-          <div className="space-y-6">
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="space-y-6"
+          >
             <div className="space-y-2">
               <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Email</label>
               <Input
@@ -104,9 +131,9 @@ const SignIn = () => {
                 Create account
               </Link>
             </p>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
