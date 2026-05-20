@@ -11,7 +11,7 @@ import Link from "next/link";
 
 const Slider = ({ sliderList }) => {
   return (
-    <div className="mt-10 px-6 md:px-12 lg:px-24">
+    <div className="mt-10 px-6 md:px-16 lg:px-28">
       <Carousel className="w-full">
         <CarouselContent>
           {sliderList.map((s, index) => (
@@ -41,18 +41,17 @@ const Slider = ({ sliderList }) => {
                     src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
                       s?.image?.url || ""
                     }`}
-                    width={600}
-                    height={600}
+                    fill
                     alt="slider product"
-                    className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                    className="object-cover drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex left-6" />
-        <CarouselNext className="hidden md:flex right-6" />
+        <CarouselPrevious className="hidden md:flex -left-10" />
+        <CarouselNext className="hidden md:flex -right-10" />
       </Carousel>
     </div>
   );
