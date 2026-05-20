@@ -1,52 +1,84 @@
-import { Facebook, Instagram, Linkedin, Twitter, ChevronRight } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, ChevronRight, Mail, Phone, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-background mt-20 p-12 px-6 md:px-12 lg:px-24 rounded-t-[3rem]">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="col-span-1 md:col-span-2 space-y-6">
-          <Image src="/logo.png" width={150} height={100} alt="logo" />
-          <p className="text-sm max-w-sm leading-relaxed opacity-70">
-            Freshly curated groceries delivered with care. Inspired by quality, 
-            driven by health. Experience the new standard of organic shopping.
+    <footer className="bg-gray-50 text-gray-900 mt-20 border-t border-gray-100 w-full">
+      <div className="mx-auto px-6 md:px-12 lg:px-24 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand Section */}
+          <div className="space-y-6">
+            <Image src="/logo.png" width={140} height={80} alt="logo" className="opacity-90" />
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Elevating your daily grocery experience with curated, 
+              organic essentials delivered fresh to your door.
+            </p>
+            <div className="flex gap-5">
+              <Facebook className="h-5 w-5 text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+              <Twitter className="h-5 w-5 text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+              <Instagram className="h-5 w-5 text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+              <Linkedin className="h-5 w-5 text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h2 className="font-bold text-sm uppercase tracking-widest text-primary mb-6">Explore</h2>
+            <ul className="space-y-4 text-sm text-gray-600 font-medium">
+              <li className="hover:text-primary cursor-pointer transition-colors">Home</li>
+              <li className="hover:text-primary cursor-pointer transition-colors">All Products</li>
+              <li className="hover:text-primary cursor-pointer transition-colors">Categories</li>
+              <li className="hover:text-primary cursor-pointer transition-colors">Flash Sale</li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h2 className="font-bold text-sm uppercase tracking-widest text-primary mb-6">Contact Us</h2>
+            <ul className="space-y-4 text-sm text-gray-600 font-medium">
+              <li className="flex items-center gap-3">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span>Jakarta, Indonesia</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 text-primary" />
+                <span>+62 812-3456-789</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="h-4 w-4 text-primary" />
+                <span>support@grocery.com</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h2 className="font-bold text-sm uppercase tracking-widest text-primary mb-6">Newsletter</h2>
+            <p className="text-gray-500 text-sm mb-4">Get the latest updates on new products and upcoming sales.</p>
+            <div className="flex bg-white rounded-full p-1 pl-4 border border-gray-200 focus-within:border-primary transition-all">
+              <input 
+                type="text" 
+                placeholder="Your email" 
+                className="bg-transparent outline-none text-sm w-full"
+              />
+              <button className="bg-primary text-white p-3 rounded-full hover:bg-green-700 transition-colors">
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-200 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-400 text-xs">
+            © 2026 Modern Grocery Marketplace. All rights reserved.
           </p>
-          <div className="flex gap-4">
-            <Facebook className="h-5 w-5 opacity-60 hover:opacity-100 cursor-pointer transition-opacity" />
-            <Twitter className="h-5 w-5 opacity-60 hover:opacity-100 cursor-pointer transition-opacity" />
-            <Instagram className="h-5 w-5 opacity-60 hover:opacity-100 cursor-pointer transition-opacity" />
-            <Linkedin className="h-5 w-5 opacity-60 hover:opacity-100 cursor-pointer transition-opacity" />
+          <div className="flex gap-8 text-xs text-gray-400 font-medium">
+            <span className="hover:text-primary cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">Terms of Service</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">Cookies Settings</span>
           </div>
         </div>
-
-        <div>
-          <h2 className="font-bold text-lg mb-6 uppercase tracking-widest text-accent">Navigation</h2>
-          <ul className="space-y-4 text-sm opacity-70">
-            <li className="hover:opacity-100 cursor-pointer transition-opacity">Categories</li>
-            <li className="hover:opacity-100 cursor-pointer transition-opacity">About Us</li>
-            <li className="hover:opacity-100 cursor-pointer transition-opacity">Contact</li>
-            <li className="hover:opacity-100 cursor-pointer transition-opacity">Privacy Policy</li>
-          </ul>
-        </div>
-
-        <div>
-          <h2 className="font-bold text-lg mb-6 uppercase tracking-widest text-accent">Newsletter</h2>
-          <p className="text-sm mb-4 opacity-70">Subscribe to get latest updates and offers.</p>
-          <div className="flex bg-white/10 rounded-full p-1 pl-4 items-center">
-            <input 
-              type="text" 
-              placeholder="Email address" 
-              className="bg-transparent outline-none text-sm w-full placeholder:text-white/40 text-white"
-            />
-            <button className="bg-accent text-primary-foreground p-3 rounded-full hover:scale-105 transition-transform">
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="border-t border-white/10 mt-12 pt-8 text-center text-xs opacity-40">
-        © 2026 E-Commerce. All rights reserved.
       </div>
     </footer>
   );
