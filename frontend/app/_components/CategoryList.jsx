@@ -4,37 +4,40 @@ import React from "react";
 
 const CategoryList = ({ categoryList }) => {
   return (
-    <div className="mt-20 px-6 md:px-12 lg:px-24">
-      <div className="flex justify-between items-end mb-8">
-        <div className="space-y-2">
-          <h2 className="text-primary font-bold text-3xl md:text-4xl tracking-tighter">Shop by Category</h2>
-          <p className="text-muted-foreground font-medium">Explore our curated selection of fresh essentials.</p>
+    <div className="mt-24 px-6 md:px-12 lg:px-24">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+        <div className="space-y-1">
+          <h2 className="text-gray-900 font-extrabold text-4xl tracking-tight">Browse Categories</h2>
+          <p className="text-gray-500 font-medium">Top picks for your healthy lifestyle.</p>
         </div>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
         {categoryList.map((c, index) => (
           <Link
             key={c.id || index}
             href={"/products-category/" + c.name}
-            className={`flex flex-col items-center justify-center gap-4 p-8 rounded-[2rem] group cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 bg-secondary/20 hover:bg-background border border-transparent hover:border-primary/10 ${
-              index === 0 ? "md:col-span-2 md:row-span-2 py-16" : ""
-            }`}
+            className="group flex flex-col items-center gap-4"
           >
-            <div className="relative p-6 rounded-full bg-background group-hover:scale-110 transition-transform duration-500 shadow-sm">
+            {/* Large Product Image Container */}
+            <div className="relative aspect-square w-full rounded-[2rem] bg-gray-50 flex items-center justify-center p-10 transition-all duration-500 group-hover:bg-green-50 group-hover:shadow-xl group-hover:shadow-green-900/5">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
                   c?.image?.url || ""
                 }`}
-                width={index === 0 ? 80 : 50}
-                height={index === 0 ? 80 : 50}
-                alt="icon"
-                className="transition-all ease-in-out"
+                width={150}
+                height={150}
+                alt={c.name}
+                className="object-contain transition-transform duration-500 group-hover:scale-110"
               />
             </div>
-            <h2 className="text-primary text-center font-bold text-lg group-hover:tracking-wider transition-all">
-              {c.name}
-            </h2>
+            
+            {/* Text Below the image */}
+            <div className="text-center">
+              <h2 className="text-gray-900 font-bold text-lg transition-colors group-hover:text-primary">
+                {c.name}
+              </h2>
+            </div>
           </Link>
         ))}
       </div>

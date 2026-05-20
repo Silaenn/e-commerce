@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import {
@@ -56,8 +55,8 @@ const Header = () => {
   }, [cartItemList]);
 
   useEffect(() => {
+    getCategoryList();
     if (user && jwt) {
-      getCategoryList();
       getCartItems();
     }
   }, [user, jwt, updateCart]);
@@ -95,55 +94,55 @@ const Header = () => {
   };
 
   return (
-    <div className="p-4 px-6 md:px-12 lg:px-24 sticky top-0 z-50 backdrop-blur-lg bg-background/80 flex justify-between items-center transition-all duration-300">
-      <div className="flex items-center gap-12">
+    <div className="p-4 px-6 md:px-12 lg:px-24 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b flex justify-between items-center">
+      <div className="flex items-center gap-10">
         <Link href={"/"}>
           <Image
             src="/logo.png"
             alt="logo"
-            width={120}
+            width={130}
             height={80}
-            className="cursor-pointer hover:opacity-80 transition-opacity"
+            className="cursor-pointer"
           />
         </Link>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <h2 className="hidden md:flex gap-2 items-center text-sm font-medium cursor-pointer hover:text-primary transition-colors">
-              Categories
+            <h2 className="hidden md:flex gap-2 items-center text-sm font-bold cursor-pointer hover:text-primary transition-colors uppercase tracking-widest">
+              Explore
             </h2>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="rounded-2xl p-2 min-w-[200px]">
-            <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground pb-2">Browse Category</DropdownMenuLabel>
+          <DropdownMenuContent className="rounded-2xl p-2 min-w-[200px] bg-white shadow-2xl border">
+            <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-gray-400 pb-2">Categories</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {category.map((c, index) => (
               <Link
                 key={index}
                 href={"/products-category/" + c.name}
               >
-                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3 hover:bg-secondary">
+                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3 hover:bg-gray-50">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
                       c?.image?.url || ""
                     }`}
                     alt={c?.name || "icon"}
-                    width={24}
-                    height={24}
+                    width={25}
+                    height={25}
                     unoptimized={true}
                   />
-                  <h2 className="text-sm font-medium">{c?.name}</h2>
+                  <h2 className="text-sm font-bold">{c?.name}</h2>
                 </DropdownMenuItem>
               </Link>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="hidden md:flex items-center gap-3 bg-secondary/50 rounded-full px-6 py-2 w-[300px] group focus-within:bg-secondary transition-all">
-          <Search className="h-4 w-4 text-muted-foreground" />
+        <div className="hidden md:flex items-center gap-3 bg-gray-100 rounded-full px-5 py-2 w-[350px] border border-transparent focus-within:border-primary/20 focus-within:bg-white transition-all">
+          <Search className="h-4 w-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Search products..."
-            className="bg-transparent outline-none text-sm w-full"
+            placeholder="Search for items..."
+            className="bg-transparent outline-none text-sm w-full font-medium"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -151,20 +150,21 @@ const Header = () => {
           />
         </div>
       </div>
+      
       <div className="flex gap-6 items-center">
         <Sheet>
           <SheetTrigger>
-            <h2 className="flex gap-2 items-center text-lg">
-              <ShoppingBasket className="h-7 w-7" />{" "}
-              <span className="bg-primary text-white px-2 rounded-full">
-                {totalCartItem}{" "}
+            <h2 className="flex gap-2 items-center text-lg relative group">
+              <ShoppingBasket className="h-7 w-7 text-gray-900 group-hover:text-primary transition-colors" />{" "}
+              <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
+                {totalCartItem}
               </span>
             </h2>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className="rounded-l-[2rem] bg-white shadow-2xl border-l">
             <SheetHeader>
-              <SheetTitle className="bg-primary text-white font-bold text-lg p-2">
-                My Cart
+              <SheetTitle className="bg-primary text-white font-bold text-lg p-3 rounded-xl mb-4">
+                Your Shopping Cart
               </SheetTitle>
               <SheetDescription>
                 <CartItemList
@@ -175,14 +175,15 @@ const Header = () => {
             </SheetHeader>
             <SheetClose asChild>
               <div className="flex flex-col absolute w-[90%] bottom-6">
-                <h2 className="text-lg font-bold flex justify-between">
+                <h2 className="text-xl font-bold flex justify-between p-4 bg-gray-50 rounded-2xl mb-4">
                   Subtotal <span>Rp{subtotal.toLocaleString("id-ID")}</span>
                 </h2>
                 <Button
+                  className="h-14 rounded-full text-lg font-bold shadow-xl shadow-green-900/10"
                   disabled={subtotal === 0}
                   onClick={() => router.push(jwt ? "/checkout" : "sign-in")}
                 >
-                  Checkout
+                  Go to Checkout
                 </Button>
               </div>
             </SheetClose>
@@ -191,21 +192,23 @@ const Header = () => {
 
         {!jwt ? (
           <Link href={"/sign-in"}>
-            <Button>Login</Button>
+            <Button className="rounded-full px-8 font-bold">Login</Button>
           </Link>
         ) : (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <CircleUserRound className="h-12 w-12 bg-green-100 cursor-pointer text-primary p-2 rounded-full" />
+              <div className="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+                <CircleUserRound className="h-6 w-6 text-primary" />
+              </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuContent className="rounded-2xl min-w-[150px] bg-white shadow-2xl border">
+              <DropdownMenuLabel className="font-bold">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
               <Link href={"/my-order"}>
-                <DropdownMenuItem>My order</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">My order</DropdownMenuItem>
               </Link>
-              <DropdownMenuItem onClick={() => onSignOut()}>
+              <DropdownMenuItem onClick={() => onSignOut()} className="text-red-500 cursor-pointer">
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>

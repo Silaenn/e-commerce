@@ -61,8 +61,8 @@ const ProductItemDetail = ({ product }) => {
     }
   };
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 bg-background text-foreground h-full md:h-auto max-h-[90vh] overflow-y-auto">
-      <div className="bg-secondary/20 p-12 flex items-center justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 bg-white text-gray-900 h-full md:h-auto max-h-[90vh] overflow-y-auto">
+      <div className="bg-gray-50 p-12 flex items-center justify-center">
         <Image
           src={
             (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
@@ -76,28 +76,28 @@ const ProductItemDetail = ({ product }) => {
       </div>
       <div className="flex flex-col p-12 gap-8 justify-center">
         <div className="space-y-4">
-          <span className="text-xs uppercase tracking-[0.2em] font-bold text-muted-foreground">{product.categories?.[0]?.name || "Organic"}</span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary leading-tight">{product.name}</h2>
+          <span className="text-xs uppercase tracking-[0.2em] font-bold text-gray-400">{product.categories?.[0]?.name || "Organic"}</span>
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-gray-900 leading-tight">{product.name}</h2>
           <div className="flex items-center gap-4">
             {product.sellingPrice && (
-              <span className="text-3xl font-bold tracking-tighter text-primary">
+              <span className="text-3xl font-extrabold tracking-tighter text-primary">
                 Rp{product.sellingPrice.toLocaleString("id-ID")}
               </span>
             )}
             {product.price && (
-              <span className="text-xl text-muted-foreground line-through font-medium">
+              <span className="text-xl text-gray-300 line-through font-medium">
                 Rp{product.price.toLocaleString("id-ID")}
               </span>
             )}
           </div>
         </div>
 
-        <p className="text-muted-foreground leading-relaxed text-lg font-medium border-l-4 border-primary/10 pl-6 italic">
+        <p className="text-gray-500 leading-relaxed text-lg font-medium border-l-4 border-primary/10 pl-6 italic">
           {product.description || "Fresh selection, carefully picked for your daily nutrition. Guaranteed quality from our farmers."}
         </p>
 
         <div className="space-y-6">
-          <div className="flex items-center gap-8 bg-secondary/30 w-fit p-2 px-6 rounded-full border border-primary/5">
+          <div className="flex items-center gap-8 bg-gray-50 w-fit p-2 px-6 rounded-full border border-gray-100">
             <button
               disabled={quantity === 1}
               onClick={() => setQuantity((prev) => prev - 1)}
@@ -113,12 +113,12 @@ const ProductItemDetail = ({ product }) => {
           </div>
 
           <div className="space-y-4">
-             <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-muted-foreground">
+             <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-400">
                 <span>Total Amount</span>
-                <span className="text-primary text-xl">Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}</span>
+                <span className="text-primary text-xl font-extrabold">Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}</span>
              </div>
             <Button
-              className="w-full h-16 rounded-full text-lg font-bold flex gap-4 bg-primary text-background hover:scale-[1.02] transition-transform shadow-xl shadow-primary/20"
+              className="w-full h-16 rounded-full text-lg font-bold flex gap-4 bg-primary text-white hover:bg-green-700 transition-all shadow-xl shadow-green-900/10"
               onClick={() => addToCart()}
               disabled={loading || isDisabled}
             >
