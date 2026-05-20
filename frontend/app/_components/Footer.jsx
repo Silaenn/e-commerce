@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="bg-primary text-background mt-20 p-12 px-6 md:px-12 lg:px-24 rounded-t-[3rem]">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2 space-y-6">
-          <Image src="/logo.png" width={150} height={100} alt="logo" className="brightness-0 invert opacity-80" />
+          <Image src="/logo.png" width={150} height={100} alt="logo" />
           <p className="text-sm max-w-sm leading-relaxed opacity-70">
             Freshly curated groceries delivered with care. Inspired by quality, 
             driven by health. Experience the new standard of organic shopping.
