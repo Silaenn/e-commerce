@@ -15,8 +15,13 @@ function ProductCategory({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    GlobalApi.getCategoryList().then(setCategoryList);
-  }, []);
+    GlobalApi.getCategoryList().then((res) => {
+      setCategoryList(res);
+      const decodedName = decodeURIComponent(params.categoryName);
+      const index = res.findIndex((cat) => cat.name === decodedName);
+      setCurrentCategoryIndex(index !== -1 ? index : 0);
+    });
+  }, [params.categoryName]);
 
   useEffect(() => {
     if (search) {
@@ -26,14 +31,6 @@ function ProductCategory({ params }) {
       // Jika tidak ada pencarian, tampilkan produk berdasarkan kategori
       GlobalApi.getProductsByCategory(params.categoryName).then((res) => {
         setProductList(res);
-      });
-
-      GlobalApi.getCategoryList().then((res) => {
-        const index = res.findIndex(
-          (cat) => cat.name === params.categoryName
-        );
-        setCurrentCategoryIndex(index !== -1 ? index : 0);
-        console.log(index);
       });
     }
   }, [search, params.categoryName]);
