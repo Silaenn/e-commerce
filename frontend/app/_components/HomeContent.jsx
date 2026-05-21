@@ -41,7 +41,7 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
       <TrustFeatures />
       
       {/* 4. Popular Products */}
-      <ProductList productList={productList} search={search} />
+      <ProductList productList={productList.slice(0, 8)} search={search} />
       
       {/* 5. Special Promo Banner */}
       <SpecialPromo />
