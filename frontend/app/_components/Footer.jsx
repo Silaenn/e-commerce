@@ -7,8 +7,8 @@ const Footer = () => {
     <footer className="bg-white text-gray-900 mt-32 border-t border-green-100/50 w-full relative overflow-hidden">
       {/* Decorative background element */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-      
-      <div className="mx-auto px-8 md:px-20 lg:px-36 py-20 relative z-10">
+
+      <div className="max-w-[1800px] mx-auto px-6 md:px-12 lg:px-12 py-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
           {/* Brand Section */}
           <div className="space-y-8">

@@ -13,12 +13,13 @@ import { motion } from "framer-motion";
 
 const Slider = ({ sliderList }) => {
   return (
-    <div className="mt-10 px-6 md:px-16 lg:px-28">
-      <Carousel className="w-full">
-        <CarouselContent>
-          {sliderList.map((s, index) => (
-            <CarouselItem key={index}>
-              <div className="grid grid-cols-1 md:grid-cols-2 bg-gradient-to-br from-green-50/50 to-white rounded-[2.5rem] border border-green-100/50 overflow-hidden min-h-[400px] md:min-h-[500px]">
+    <div className="mt-10 px-6 md:px-12 lg:px-12 w-full">
+      <div className="max-w-[1800px] mx-auto">
+        <Carousel className="w-full">
+          <CarouselContent className="-ml-0">
+            {sliderList.map((s, index) => (
+              <CarouselItem key={index} className="pl-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 bg-gradient-to-br from-green-50/50 to-white rounded-[2.5rem] border border-green-100/50 overflow-hidden min-h-[400px] md:min-h-[500px]">
                 {/* Left Content: Text */}
                 <div className="flex flex-col justify-center p-12 md:p-20 space-y-6">
                   <motion.div
@@ -27,7 +28,7 @@ const Slider = ({ sliderList }) => {
                     transition={{ delay: 0.2 }}
                     className="flex items-center gap-2"
                   >
-                    <span className="h-px w-8 bg-primary/30" />
+                    <span className="h-0.5 w-8 bg-primary/60" />
                     <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                       Limited Promotion
                     </span>
@@ -86,6 +87,7 @@ const Slider = ({ sliderList }) => {
         <CarouselPrevious className="hidden md:flex -left-10" />
         <CarouselNext className="hidden md:flex -right-10" />
       </Carousel>
+    </div>
     </div>
   );
 };
