@@ -133,7 +133,7 @@ const CreateAccount = () => {
         className="hidden md:block relative h-full w-full bg-green-50 overflow-hidden"
       >
         <Image 
-          src="https://images.unsplash.com/photo-1543168256-418811576931?q=80&w=2070&auto=format&fit=crop" 
+          src="/create-account.jpeg" 
           layout="fill" 
           objectFit="cover" 
           alt="Fresh Veggies"
