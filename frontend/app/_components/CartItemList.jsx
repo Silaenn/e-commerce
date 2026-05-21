@@ -56,14 +56,14 @@ const CartItemList = ({ cartItemList, onDeleteItem }) => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex-1 flex flex-col items-center justify-center text-center space-y-6"
+            className="flex-1 flex flex-col items-center justify-center text-center space-y-2"
           >
-            <div className="bg-green-50 p-10 rounded-full relative">
-               <Image src="/logo.png" width={120} height={120} alt="empty" className="opacity-10 grayscale brightness-0" />
+            <div className="p-10 rounded-full relative">
+               <Image src="/logo.png" width={120} height={120} alt="empty" className="opacity-20 grayscale brightness-0" />
                <motion.div 
                  animate={{ scale: [1, 1.1, 1] }}
                  transition={{ repeat: Infinity, duration: 3 }}
-                 className="absolute inset-0 border-2 border-primary/10 rounded-full" 
+                 className="absolute inset-0" 
                />
             </div>
             <div className="space-y-1">
