@@ -6,6 +6,8 @@ import ProductList from "@/app/_components/ProductList";
 import { SearchContext } from "@/app/_context/SearchContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 function ProductCategory({ params }) {
   const [productList, setProductList] = useState([]);
@@ -45,17 +47,18 @@ function ProductCategory({ params }) {
     // Gunakan router untuk navigasi ke kategori baru
     router.push(`/products-category/${newCategory}`);
   };
+
   return (
     <div className="min-h-screen">
       {/* Category Header */}
       <div className="bg-green-50/30 py-16 px-6 md:px-12 lg:px-12 w-full border-b border-green-100/50">
-        <div className="max-w-[1800px] mx-auto">
+        <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-3"
+            className="space-y-3 text-center md:text-left"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center md:justify-start gap-2">
               <span className="h-0.5 w-8 bg-primary/60" />
               <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                 Category
@@ -65,6 +68,16 @@ function ProductCategory({ params }) {
               {decodeURIComponent(params.categoryName)}
             </h2>
           </motion.div>
+
+          <Link href={"/"}>
+            <motion.button 
+              whileHover={{ x: -5 }}
+              className="flex items-center gap-3 px-8 py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-sm uppercase tracking-widest"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              Back to Home
+            </motion.button>
+          </Link>
         </div>
       </div>
 
