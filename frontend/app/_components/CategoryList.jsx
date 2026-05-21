@@ -29,9 +29,10 @@ const CategoryList = ({ categoryList }) => {
   };
 
   return (
-    <div className="mt-24 px-6 md:px-12 lg:px-24">
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }}
+    <div className="mt-28 px-6 md:px-12 lg:px-12 w-full">
+      <div className="max-w-[1800px] mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
@@ -39,7 +40,7 @@ const CategoryList = ({ categoryList }) => {
       >
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <span className="h-px w-8 bg-primary/30" />
+            <span className="h-0.5 w-8 bg-primary/60" />
             <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
               Fresh Selection
             </span>
@@ -98,6 +99,7 @@ const CategoryList = ({ categoryList }) => {
           ))}
         </motion.div>
       )}
+    </div>
     </div>
   );
 };

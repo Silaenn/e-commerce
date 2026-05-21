@@ -28,8 +28,9 @@ const TrustFeatures = () => {
   ];
 
   return (
-    <div className="mt-24 px-6 md:px-12 lg:px-24">
-      <motion.div
+    <div className="mt-28 px-6 md:px-12 lg:px-12 w-full">
+      <div className="max-w-[1800px] mx-auto">
+        <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}  
@@ -82,6 +83,7 @@ const TrustFeatures = () => {
           </motion.div>
         ))}
       </motion.div>
+    </div>
     </div>
   );
 };

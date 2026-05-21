@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 
 const SpecialPromo = () => {
   return (
-    <div className="mt-32 px-6 md:px-12 lg:px-24 mb-20">
-      <motion.div 
-        initial={{ opacity: 0, y: 40 }}
+    <div className="mt-32 px-6 md:px-12 lg:px-12 mb-20 w-full">
+      <div className="max-w-[1800px] mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -21,7 +22,7 @@ const SpecialPromo = () => {
             transition={{ delay: 0.3 }}
             className="flex items-center justify-center md:justify-start gap-2"
           >
-            <span className="h-px w-8 bg-primary/30" />
+            <span className="h-0.5 w-8 bg-primary/60" />
             <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase">
               Exclusive Offer
             </span>
@@ -81,6 +82,7 @@ const SpecialPromo = () => {
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 blur-[100px] rounded-full" />
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 blur-[100px] rounded-full" />
       </motion.div>
+    </div>
     </div>
   );
 };

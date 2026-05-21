@@ -102,9 +102,10 @@ const Header = () => {
     <motion.div 
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="p-4 px-6 md:px-12 lg:px-24 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b flex justify-between items-center"
+      className="p-4 px-6 md:px-12 lg:px-12 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b w-full"
     >
-      <div className="flex items-center gap-10">
+      <div className="max-w-[1800px] mx-auto flex justify-between items-center">
+        <div className="flex items-center gap-10">
         <Link href={"/"}>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Image
@@ -251,6 +252,7 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         )}
+      </div>
       </div>
     </motion.div>
   );
