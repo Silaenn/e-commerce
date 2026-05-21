@@ -192,32 +192,38 @@ const Header = () => {
               </AnimatePresence>
             </motion.button>
           </SheetTrigger>
-          <SheetContent className="rounded-l-[2rem] bg-white shadow-2xl border-l">
-            <SheetHeader>
-              <SheetTitle className="bg-primary text-white font-bold text-lg p-3 rounded-xl mb-4">
+          <SheetContent className="rounded-l-[2rem] bg-white shadow-2xl border-l p-0 flex flex-col h-full">
+            <SheetHeader className="p-8 pt-14 pb-4 relative">
+              <SheetTitle className="bg-primary text-white font-extrabold text-xl p-5 rounded-2xl mb-4 shadow-lg shadow-green-900/10">
                 Your Shopping Cart
               </SheetTitle>
               <SheetDescription asChild>
-                <CartItemList
-                  cartItemList={cartItemList}
-                  onDeleteItem={onDeleteItem}
-                />
+                <div className="flex-1 overflow-hidden mt-4 h-full">
+                  <CartItemList
+                    cartItemList={cartItemList}
+                    onDeleteItem={onDeleteItem}
+                  />
+                </div>
               </SheetDescription>
             </SheetHeader>
-            <SheetClose asChild>
-              <div className="flex flex-col absolute w-[90%] bottom-6">
-                <h2 className="text-xl font-bold flex justify-between p-4 bg-gray-50 rounded-2xl mb-4">
-                  Subtotal <span>Rp{subtotal.toLocaleString("id-ID")}</span>
-                </h2>
-                <Button
-                  className="h-14 rounded-full text-lg font-bold shadow-xl shadow-green-900/10"
-                  disabled={subtotal === 0}
-                  onClick={() => router.push(jwt ? "/checkout" : "sign-in")}
-                >
-                  Go to Checkout
-                </Button>
+
+            <div className="mt-auto p-8 bg-gray-50/50 border-t">
+              <div className="flex flex-col gap-6">
+                <div className="flex justify-between items-center bg-white p-5 rounded-2xl shadow-sm border border-green-100/50">
+                  <span className="text-gray-500 font-bold uppercase tracking-widest text-xs">Subtotal</span>
+                  <span className="text-2xl font-black text-primary">Rp{subtotal.toLocaleString("id-ID")}</span>
+                </div>
+                <SheetClose asChild>
+                  <Button
+                    className="h-16 rounded-full text-lg font-black shadow-xl shadow-green-900/20 w-full"
+                    disabled={subtotal === 0}
+                    onClick={() => router.push(jwt ? "/checkout" : "sign-in")}
+                  >
+                    Go to Checkout
+                  </Button>
+                </SheetClose>
               </div>
-            </SheetClose>
+            </div>
           </SheetContent>
         </Sheet>
 
