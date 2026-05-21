@@ -69,10 +69,14 @@ const Header = () => {
   };
 
   const getCartItems = async () => {
-    if (user && jwt) {
-      const cartItemList = await GlobalApi.getCartItems(user.id, jwt);
-      setTotalCartItem(cartItemList?.length);
-      setCartItemList(cartItemList);
+    if (user && user.id && jwt) {
+      try {
+        const cartItemList = await GlobalApi.getCartItems(user.id, jwt);
+        setTotalCartItem(cartItemList?.length);
+        setCartItemList(cartItemList);
+      } catch (error) {
+        console.error("DEBUG: Failed to fetch cart items:", error.response?.data || error.message);
+      }
     }
   };
 
