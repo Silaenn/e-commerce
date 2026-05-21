@@ -62,26 +62,42 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
       {/* 3. Trust Features (Standard E-commerce) */}
       <div className="mt-24 px-6 md:px-12 lg:px-24">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.1
+              }
+            }
+          }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12 border-y border-gray-100"
         >
           {features.map((feature, index) => (
             <motion.div 
               key={index} 
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              variants={{
+                hidden: { opacity: 0, y: 15 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  transition: { 
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1] // OutQuint for a smooth entry
+                  } 
+                }
+              }}
               className="flex items-center gap-5 group"
             >
-              <div className="p-4 bg-gray-50 rounded-2xl group-hover:bg-primary/10 transition-colors">
+              <div className="p-4 bg-gray-50 rounded-2xl group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-500 ease-in-out">
                 {feature.icon}
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 leading-tight">{feature.title}</h3>
+                <h3 className="font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">{feature.title}</h3>
                 <p className="text-gray-500 text-sm">{feature.desc}</p>
               </div>
             </motion.div>
