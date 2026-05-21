@@ -60,9 +60,7 @@ const addToCart = (data, jwt) =>
 const getCartItems = (userId, jwt) =>
   axiosClient
     .get(
-      "/user-carts?filters[userId][$eq]=" +
-        userId +
-        "&populate[products][populate][images][populate][0]=url",
+      "/user-carts?populate=*",
       {
         headers: {
           Authorization: "Bearer " + jwt,
@@ -72,24 +70,26 @@ const getCartItems = (userId, jwt) =>
     .then((res) => {
       const data = res.data.data;
       const cartItemList = data.map((item) => {
-        const product = item.products[0];
+        // Safe check for products as it might be an array or null
+        const product = item.products && item.products.length > 0 ? item.products[0] : null;
 
         let imageUrl = "";
-        if (product.images && product.images[0]) {
+        if (product && product.images && product.images[0]) {
           imageUrl = product.images[0].url;
         }
 
         return {
-          name: product.name,
+          name: product ? product.name : "Unknown",
           quantity: item.quantity,
           amount: item.amount,
           image: imageUrl,
-          actualPrice: product.sellingPrice,
+          actualPrice: product ? product.sellingPrice : 0,
           id: item.id,
-          product: item.products[0].id,
+          product: product ? product.id : null,
         };
       });
 
+      // Filter here instead of API if API filter is failing
       return cartItemList;
     });
 
@@ -137,9 +137,9 @@ const createOrder = async (payload, jwt) => {
 const getMyOrder = (userId, jwt) =>
   axiosClient
     .get(
-      "orders?filters[userId][$eq]=" +
+      "/orders?filters[userId][$eq]=" +
         userId +
-        "&[populate][orderitemList][populate][product][populate][images]=url",
+        "&populate=*",
       {
         headers: {
           Authorization: "Bearer " + jwt,
