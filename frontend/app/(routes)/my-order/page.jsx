@@ -9,9 +9,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import moment from "moment";
+import { motion } from "framer-motion";
 import MyOrderItem from "./_components/MyOrderItem";
-import { CircleX, DoorClosed } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, History } from "lucide-react";
 import Link from "next/link";
 
 const MyOrder = () => {
@@ -20,73 +20,118 @@ const MyOrder = () => {
   const [orderList, setOrderList] = useState([]);
 
   useEffect(() => {
-    if (jwt === null) {
-      // jwt masih null, tunggu sampai jwt di-set oleh useAuth
-      console.log("Waiting for JWT to be set...");
-      return;
-    }
-    if (!jwt) {
-      console.log("JWT is empty, redirecting...");
-      router.replace("/");
-    }
-
+    if (jwt === null) return;
+    if (!jwt) router.replace("/");
     getMyOrder();
   }, [jwt, router]);
 
   const getMyOrder = async () => {
     const orderList_ = await GlobalApi.getMyOrder(user.id, jwt);
     setOrderList(orderList_);
-    console.log(orderList_);
   };
 
   return (
-    <div>
-      <h2 className="p-3 bg-primary text-xl font-bold text-center text-white">
-        My Order
-      </h2>
-      <div className="py-8 mx-7 lg:mx-56 md:mx-36">
-        <div className="flex items-center justify-around mb-4">
-          <h2 className="text-3xl font-bold text-primary">Order History</h2>
+    <div className="min-h-screen bg-white pb-20">
+      {/* Premium Header */}
+      <div className="bg-green-50/30 py-16 px-6 md:px-12 lg:px-12 w-full border-b border-green-100/50">
+        <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-3 text-center md:text-left"
+          >
+            <div className="flex items-center justify-center md:justify-start gap-2">
+              <span className="h-0.5 w-8 bg-primary/60" />
+              <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
+                Account
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-gray-900">
+              Order History
+            </h2>
+          </motion.div>
+
           <Link href={"/"}>
-            <Button
-              variant="outline"
-              className="flex items-center gap-1 border border-gray-300 rounded-lg p-5 "
+            <motion.button 
+              whileHover={{ x: -5 }}
+              className="flex items-center gap-3 px-8 py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-sm uppercase tracking-widest"
             >
-              <CircleX width={27} />
-              <p className="text-sm">Kembali</p>
-            </Button>
+              <ArrowLeft className="h-5 w-5" />
+              Back to Home
+            </motion.button>
           </Link>
         </div>
-        <div className="w-full justify-center flex flex-col items-center gap-4">
-          {orderList.map((order, index) => (
-            <Collapsible key={index}>
-              <CollapsibleTrigger>
-                <div className="border p-2 bg-slate-100 flex justify-evenly gap-28">
-                  <h2>
-                    <span className="font-bold mr-2">Order Date:</span>
-                    {moment(order?.createdAt).format("DD/MMM/yyy")}
-                  </h2>
-                  <h2>
-                    <span className="font-bold mr-2">Total Amount:</span>
-                    Rp{(order?.totalOrderAmount).toLocaleString("id-ID")}
-                  </h2>
-                  <h2>
-                    <span className="font-bold mr-2">Status:</span>
-                    {order.status}
-                  </h2>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                {order.orderItemList.map((orderItem, index) => (
-                  <MyOrderItem
-                    key={index}
-                    orderItem={orderItem}
-                    orderStatus={order.status}
-                  />
-                ))}
-              </CollapsibleContent>
-            </Collapsible>
-          ))}
+      </div>
+
+      <div className="max-w-[1800px] mx-auto px-6 md:px-12 lg:px-12 py-16">
+        <div className="grid grid-cols-1 gap-8">
+          {orderList.length > 0 ? orderList.map((order, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              key={index}
+            >
+              <Collapsible className="group">
+                <CollapsibleTrigger asChild>
+                  <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-10 bg-white border border-gray-100 rounded-[2.5rem] hover:border-primary/20 hover:shadow-2xl hover:shadow-green-900/5 transition-all duration-500 cursor-pointer group-data-[state=open]:border-primary/20 group-data-[state=open]:shadow-xl">
+                    <div className="flex items-center gap-8">
+                      <div className="h-16 w-16 rounded-[1.2rem] bg-green-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+                        <History className="h-7 w-7" />
+                      </div>
+                      <div className="text-left space-y-1">
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Order Placed</p>
+                        <h2 className="text-xl font-black text-gray-900">{moment(order?.createdAt).format("DD MMMM YYYY")}</h2>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-16">
+                      <div className="text-center md:text-left space-y-1">
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Total Amount</p>
+                        <h2 className="text-2xl font-black text-primary">Rp{(order?.totalOrderAmount).toLocaleString("id-ID")}</h2>
+                      </div>
+                      
+                      <div className="text-center md:text-left space-y-1">
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest text-center">Status</p>
+                        <div className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
+                          ${order.status === 'Success' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}
+                        `}>
+                          {order.status}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-6 bg-gray-50/50 rounded-[3rem] p-8 md:p-12 border border-green-50 shadow-inner"
+                  >
+                    <div className="space-y-8">
+                      {order.orderItemList.map((orderItem, idx) => (
+                        <MyOrderItem
+                          key={idx}
+                          orderItem={orderItem}
+                          orderStatus={order.status}
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+                </CollapsibleContent>
+              </Collapsible>
+            </motion.div>
+          )) : (
+            <div className="py-32 flex flex-col items-center justify-center text-center space-y-6">
+              <div className="bg-gray-50 p-12 rounded-[2.5rem]">
+                <History className="h-20 w-26 text-gray-200" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-3xl font-black text-gray-900 tracking-tighter">No orders found</h2>
+                <p className="text-gray-400 font-medium text-lg">You haven't made any purchases yet.</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
