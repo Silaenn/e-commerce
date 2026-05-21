@@ -23,8 +23,8 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 142 71% 95%;      /* Very Light Green for Hover */
+    --accent-foreground: 142 71% 29%; /* Dark Green for Hover Text */
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
