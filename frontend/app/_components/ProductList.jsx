@@ -71,7 +71,7 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
         >
           {productList.map(
-            (p, index) => index < 8 && (
+            (p, index) => (
               <ProductItem key={p.id || index} p={p} />
             )
           )}

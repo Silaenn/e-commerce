@@ -45,7 +45,7 @@ const Header = () => {
   const router = useRouter();
   const [subtotal, setSubTotal] = useState(0);
   const params = usePathname();
-  const disabled = params == "/";
+  // const disabled = params == "/"; // Hapus logika ini
 
   useEffect(() => {
     let total = 0;
@@ -92,9 +92,11 @@ const Header = () => {
     });
   };
 
-  const handleKeyPress = async (event) => {
+  const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      setSearch(event.target.value);
+      const query = event.target.value;
+      setSearch(query);
+      router.push(`/search?q=${query}`);
     }
   };
 
@@ -105,7 +107,7 @@ const Header = () => {
       className="p-4 px-6 md:px-12 lg:px-12 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b w-full"
     >
       <div className="max-w-[1800px] mx-auto flex justify-between items-center">
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-10 flex-1">
         <Link href={"/"}>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Image
@@ -122,30 +124,33 @@ const Header = () => {
           <DropdownMenuTrigger asChild>
             <motion.h2 
               whileHover={{ color: "#22c55e" }}
-              className="hidden md:flex gap-2 items-center text-sm font-bold cursor-pointer transition-colors uppercase tracking-widest"
+              className="hidden xl:flex gap-2 items-center text-sm font-black cursor-pointer transition-colors uppercase tracking-[0.2em]"
             >
+              <LayoutGrid className="h-5 w-5 text-primary" />
               Explore
             </motion.h2>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="rounded-2xl p-2 min-w-[200px] bg-white shadow-2xl border">
-            <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-gray-400 pb-2">Categories</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+          <DropdownMenuContent className="rounded-2xl p-2 min-w-[240px] bg-white shadow-2xl border border-green-100">
+            <DropdownMenuLabel className="font-black text-[10px] uppercase tracking-[0.3em] text-gray-400 p-4">Categories</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-green-50" />
             {category.map((c, index) => (
               <Link
                 key={index}
                 href={"/products-category/" + c.name}
               >
-                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
-                      c?.image?.url || ""
-                    }`}
-                    alt={c?.name || "icon"}
-                    width={25}
-                    height={25}
-                    unoptimized={true}
-                  />
-                  <h2 className="text-sm font-bold">{c?.name}</h2>
+                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3 font-bold text-gray-600">
+                  <div className="h-10 w-10 bg-green-50 rounded-lg flex items-center justify-center">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
+                        c?.image?.url || ""
+                      }`}
+                      alt={c?.name || "icon"}
+                      width={25}
+                      height={25}
+                      unoptimized={true}
+                    />
+                  </div>
+                  <h2 className="text-sm">{c?.name}</h2>
                 </DropdownMenuItem>
               </Link>
             ))}
@@ -153,19 +158,15 @@ const Header = () => {
         </DropdownMenu>
 
         <motion.div 
-          initial={{ width: "300px" }}
-          whileFocus={{ width: "400px" }}
-          className="hidden md:flex items-center gap-3 bg-gray-100 rounded-full px-5 py-2 border border-transparent focus-within:border-primary/20 focus-within:bg-white transition-all"
+          className="hidden md:flex items-center gap-3 bg-gray-50 rounded-2xl px-6 py-3 border border-gray-100 focus-within:border-primary/30 focus-within:bg-white focus-within:shadow-xl focus-within:shadow-green-900/5 transition-all w-full max-w-xl"
         >
-          <Search className="h-4 w-4 text-gray-400" />
+          <Search className="h-5 w-5 text-primary/40" />
           <input
             type="text"
-            placeholder="Search for items..."
-            className="bg-transparent outline-none text-sm w-full font-medium"
-            value={search}
+            placeholder="Search fresh groceries, organic veggies..."
+            className="bg-transparent outline-none text-sm w-full font-bold placeholder:text-gray-300 placeholder:font-medium"
             onChange={(e) => setSearch(e.target.value)}
             onKeyPress={handleKeyPress}
-            disabled={disabled}
           />
         </motion.div>
       </div>

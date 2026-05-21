@@ -39,23 +39,23 @@ const ProductItemDetail = ({ product }) => {
         data: {
           quantity: quantity,
           amount: quantity * productTotalPrice,
-          products: product.id,
-          users_permissions_users: user,
+          products: [product.id],
           userId: user.id,
         },
       };
 
-      console.log(data);
+      console.log("DEBUG: Add to Cart Payload:", data);
 
       GlobalApi.addToCart(data, jwt).then(
         (resp) => {
           console.log(resp);
-          toast("Added to cart");
+          toast.success("Added to cart successfully!");
           setUpdateCart(!updateCart);
           setLoading(false);
         },
         (e) => {
-          toast("Error while adding into cart");
+          console.error("DEBUG: Add to Cart Error:", e.response?.data || e.message);
+          toast.error(e?.response?.data?.error?.message || "Error while adding into cart");
           setLoading(false);
         }
       );
