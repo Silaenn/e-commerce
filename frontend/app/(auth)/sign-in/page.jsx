@@ -52,7 +52,7 @@ const SignIn = () => {
         className="hidden md:block relative h-full w-full bg-green-50 overflow-hidden"
       >
         <Image 
-          src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070&auto=format&fit=crop" 
+          src="/sign-in.jpeg" 
           layout="fill" 
           objectFit="cover" 
           alt="Clean Grocery"
