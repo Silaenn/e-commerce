@@ -39,8 +39,8 @@ const ProductItemDetail = ({ product }) => {
         data: {
           quantity: quantity,
           amount: quantity * productTotalPrice,
-          products: [product.id],
-          userId: user.id,
+          products: [product.id], // Kembali ke plural array sesuai skema backend
+          userId: user.id.toString(), // Pastikan String sesuai skema Strapi
         },
       };
 
