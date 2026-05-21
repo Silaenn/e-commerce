@@ -50,12 +50,12 @@ function ProductCategory({ params }) {
   return (
     <div>
       <h2 className="p-4 bg-primary text-white font-bold text-3xl text-center">
-        {params.categoryName}
+        {decodeURIComponent(params.categoryName)}
       </h2>
 
       <TopCategoryList
         categoryList={categoryList}
-        selectedCategory={params.categoryName}
+        selectedCategory={decodeURIComponent(params.categoryName)}
       />
 
       <div className="p-5 md:p-10">
