@@ -59,22 +59,22 @@ const Slider = ({ sliderList }) => {
                 </div>
 
                 {/* Right Content: Image (Completely Separate) */}
-                <div className="relative bg-gray-100 flex items-center justify-center p-12 overflow-hidden">
-                   <motion.div
-                     initial={{ opacity: 0, scale: 1.1, x: 20 }}
-                     animate={{ opacity: 1, scale: 1, x: 0 }}
-                     transition={{ duration: 0.8 }}
-                     className="w-full h-full relative"
-                   >
-                     <Image
+                <div className="relative bg-gray-100 overflow-hidden min-h-[300px] md:min-h-[500px]">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 1.1, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="absolute inset-0"  
+                  >
+                    <Image
                       src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
                         s?.image?.url || ""
                       }`}
                       fill
                       alt="slider product"
-                      className="object-cover drop-shadow-2xl hover:scale-105 transition-transform duration-700"
+                      className="object-cover hover:scale-105 transition-transform duration-700"
                     />
-                   </motion.div>
+                  </motion.div>
                 </div>
               </div>
             </CarouselItem>
