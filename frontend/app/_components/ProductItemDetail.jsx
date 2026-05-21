@@ -87,11 +87,16 @@ const ProductItemDetail = ({ product }) => {
           transition={{ delay: 0.2 }}
           className="space-y-4"
         >
-          <span className="text-xs uppercase tracking-[0.2em] font-bold text-gray-400">{product.categories?.[0]?.name || "Organic"}</span>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-gray-900 leading-tight">{product.name}</h2>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-xs uppercase tracking-[0.2em] font-bold text-primary/60">
+              {product.categories?.[0]?.name || "Organic Fresh"}
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tighter text-gray-900 leading-[0.9]">{product.name}</h2>
+          <div className="flex items-center gap-4 pt-2">
             {product.sellingPrice && (
-              <span className="text-3xl font-extrabold tracking-tighter text-primary">
+              <span className="text-4xl font-extrabold tracking-tighter text-primary">
                 Rp{product.sellingPrice.toLocaleString("id-ID")}
               </span>
             )}
@@ -107,29 +112,29 @@ const ProductItemDetail = ({ product }) => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-gray-500 leading-relaxed text-lg font-medium border-l-4 border-primary/10 pl-6 italic"
+          className="text-gray-500 leading-relaxed text-lg font-medium border-l-4 border-primary/20 pl-6 italic bg-green-50/30 py-4 rounded-r-2xl"
         >
           {product.description || "Fresh selection, carefully picked for your daily nutrition. Guaranteed quality from our farmers."}
         </motion.p>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center gap-8 bg-gray-50 w-fit p-2 px-6 rounded-full border border-gray-100"
+            className="flex items-center gap-8 bg-gray-50 w-fit p-3 px-8 rounded-full border border-green-100 shadow-sm"
           >
             <button
               disabled={quantity === 1}
               onClick={() => setQuantity((prev) => prev - 1)}
-              className="text-2xl font-bold hover:text-primary transition-colors disabled:opacity-30"
+              className="text-2xl font-bold text-gray-400 hover:text-primary transition-all disabled:opacity-20 active:scale-75"
             >
               -
             </button>
-            <h2 className="text-xl font-bold w-8 text-center">{quantity}</h2>
+            <h2 className="text-2xl font-black w-10 text-center text-gray-900">{quantity}</h2>
             <button 
               onClick={() => setQuantity((prev) => prev + 1)}
-              className="text-2xl font-bold hover:text-primary transition-colors"
+              className="text-2xl font-bold text-gray-400 hover:text-primary transition-all active:scale-75"
             >+</button>
           </motion.div>
 
@@ -137,22 +142,22 @@ const ProductItemDetail = ({ product }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="space-y-4"
+            className="space-y-6"
           >
-             <div className="flex justify-between items-center text-sm font-bold uppercase tracking-widest text-gray-400">
-                <span>Total Amount</span>
-                <span className="text-primary text-xl font-extrabold">Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}</span>
+             <div className="flex justify-between items-center text-sm font-bold uppercase tracking-[0.2em] text-gray-400 px-2">
+                <span>Subtotal</span>
+                <span className="text-primary text-3xl font-black tracking-tighter">Rp{(quantity * productTotalPrice).toLocaleString("id-ID")}</span>
              </div>
             <Button
-              className="w-full h-16 rounded-full text-lg font-bold flex gap-4 bg-primary text-white hover:bg-green-700 transition-all shadow-xl shadow-green-900/10"
+              className="w-full h-20 rounded-full text-xl font-bold flex gap-4 bg-primary text-white hover:bg-green-700 transition-all shadow-2xl shadow-green-900/20 active:scale-[0.98]"
               onClick={() => addToCart()}
               disabled={loading || isDisabled}
             >
-              <ShoppingBasket className="h-6 w-6" />
+              <ShoppingBasket className="h-7 w-7" />
               {loading && !paymentToken ? (
-                <LoaderCircle className="animate-spin h-6 w-6" />
+                <LoaderCircle className="animate-spin h-7 w-7" />
               ) : (
-                <span>{isDisabled ? "Pending Payment" : "Add To Cart"}</span>
+                <span>{isDisabled ? "Payment Pending" : "Add To Cart"}</span>
               )}
             </Button>
           </motion.div>

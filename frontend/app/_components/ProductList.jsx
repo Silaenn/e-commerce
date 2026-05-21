@@ -20,20 +20,26 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
 
   return (
     <div className="mt-24 px-6 md:px-12 lg:px-24">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-6">
         <motion.div 
           initial={{ opacity: 0, x: -15 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-1"
+          className="space-y-3 text-center md:text-left"
         >
-          <h2 className="text-gray-900 font-extrabold text-4xl tracking-tight">
+          <div className="flex items-center justify-center md:justify-start gap-2">
+            <span className="h-px w-8 bg-primary/30" />
+            <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
+              Top Picks
+            </span>
+          </div>
+          <h2 className="text-gray-900 font-extrabold text-4xl md:text-5xl tracking-tighter">
             Popular Products
           </h2>
           <p className="text-gray-500 font-medium italic">The most loved items this week.</p>
         </motion.div>
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           {button && (
             <>
               <Button 
