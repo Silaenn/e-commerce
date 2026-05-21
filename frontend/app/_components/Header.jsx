@@ -134,7 +134,7 @@ const Header = () => {
                 key={index}
                 href={"/products-category/" + c.name}
               >
-                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3 hover:bg-gray-50">
+                <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
                       c?.image?.url || ""
@@ -237,14 +237,15 @@ const Header = () => {
                 <CircleUserRound className="h-6 w-6 text-primary" />
               </motion.div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="rounded-2xl min-w-[150px] bg-white shadow-2xl border">
-              <DropdownMenuLabel className="font-bold">My Account</DropdownMenuLabel>
+            <DropdownMenuContent className="rounded-2xl min-w-[180px] bg-white shadow-2xl border p-2">
+              <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-gray-400 pb-2">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer rounded-xl p-3 font-bold">Profile</DropdownMenuItem>
               <Link href={"/my-order"}>
-                <DropdownMenuItem className="cursor-pointer">My order</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer rounded-xl p-3 font-bold">My order</DropdownMenuItem>
               </Link>
-              <DropdownMenuItem onClick={() => onSignOut()} className="text-red-500 cursor-pointer">
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => onSignOut()} className="text-red-500 cursor-pointer rounded-xl p-3 font-bold focus:bg-red-50 focus:text-red-600">
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
