@@ -30,22 +30,22 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
 
   const features = [
     {
-      icon: <Truck className="h-6 w-6 text-primary" />,
+      icon: <Truck />,
       title: "Free Shipping",
       desc: "For all orders over Rp 200k"
     },
     {
-      icon: <ShieldCheck className="h-6 w-6 text-primary" />,
+      icon: <ShieldCheck />,
       title: "Secure Payment",
       desc: "100% secure payment methods"
     },
     {
-      icon: <Headphones className="h-6 w-6 text-primary" />,
+      icon: <Headphones />,
       title: "24/7 Support",
       desc: "Get help anytime you need"
     },
     {
-      icon: <RotateCcw className="h-6 w-6 text-primary" />,
+      icon: <RotateCcw />,
       title: "Easy Returns",
       desc: "30 days money back guarantee"
     }
@@ -61,43 +61,54 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
       
       {/* 3. Trust Features (Standard E-commerce) */}
       <div className="mt-24 px-6 md:px-12 lg:px-24">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.3 }}  
           variants={{
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
               transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.1
-              }
-            }
+                staggerChildren: 0.15,
+                delayChildren: 0.05,
+              },
+            },
           }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12 border-y border-gray-100"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12 border-y border-gray-100 place-items-center"
         >
           {features.map((feature, index) => (
-            <motion.div 
-              key={index} 
+            <motion.div
+              key={index}
               variants={{
-                hidden: { opacity: 0, y: 15 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
-                  transition: { 
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
                     duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1] // OutQuint for a smooth entry
-                  } 
-                }
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
               }}
-              className="flex items-center gap-5 group"
+              className="flex items-center gap-5 group cursor-default"
             >
-              <div className="p-4 bg-gray-50 rounded-2xl group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-500 ease-in-out">
+              {/* Icon box — pakai [&>svg] supaya icon inherit current color */}
+              <div className="p-4 bg-gray-50 rounded-2xl shrink-0
+                text-primary                        
+                group-hover:bg-primary group-hover:text-white
+                group-hover:scale-110
+                transition-all duration-300 ease-out
+                [&>svg]:h-6 [&>svg]:w-6 [&>svg]:transition-colors"
+              >
                 {feature.icon}
               </div>
+
               <div>
-                <h3 className="font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">{feature.title}</h3>
+                <h3 className="font-bold text-gray-900 leading-tight
+                  group-hover:text-primary transition-colors duration-300">
+                  {feature.title}
+                </h3>
                 <p className="text-gray-500 text-sm">{feature.desc}</p>
               </div>
             </motion.div>
