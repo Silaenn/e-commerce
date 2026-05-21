@@ -12,7 +12,6 @@ import Link from "next/link";
 function ProductCategory({ params }) {
   const [productList, setProductList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-  const { search } = useContext(SearchContext);
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const button = true;
   const router = useRouter();
@@ -27,16 +26,11 @@ function ProductCategory({ params }) {
   }, [params.categoryName]);
 
   useEffect(() => {
-    if (search) {
-      // Jika ada pencarian, gunakan API pencarian
-      GlobalApi.searchProducts(search).then(setProductList);
-    } else {
-      // Jika tidak ada pencarian, tampilkan produk berdasarkan kategori
-      GlobalApi.getProductsByCategory(params.categoryName).then((res) => {
-        setProductList(res);
-      });
-    }
-  }, [search, params.categoryName]);
+    // Halaman kategori sekarang murni mengambil berdasarkan kategori
+    GlobalApi.getProductsByCategory(params.categoryName).then((res) => {
+      setProductList(res);
+    });
+  }, [params.categoryName]);
 
   const navigateCategory = (direction) => {
     let newIndex = currentCategoryIndex + direction;

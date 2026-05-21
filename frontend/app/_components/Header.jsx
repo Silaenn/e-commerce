@@ -36,7 +36,8 @@ import { SearchContext } from "../_context/SearchContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
-  const { search, setSearch, setSearchResults } = useContext(SearchContext);
+  const { setSearch } = useContext(SearchContext);
+  const [searchInput, setSearchInput] = useState("");
   const [category, setCategory] = useState([]);
   const { user, jwt } = useAuth();
   const [totalCartItem, setTotalCartItem] = useState(0);
@@ -94,9 +95,8 @@ const Header = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      const query = event.target.value;
-      setSearch(query);
-      router.push(`/search?q=${query}`);
+      setSearch(searchInput);
+      router.push(`/search?q=${searchInput}`);
     }
   };
 
@@ -165,7 +165,8 @@ const Header = () => {
             type="text"
             placeholder="Search fresh groceries, organic veggies..."
             className="bg-transparent outline-none text-sm w-full font-bold placeholder:text-gray-300 placeholder:font-medium"
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             onKeyPress={handleKeyPress}
           />
         </motion.div>
