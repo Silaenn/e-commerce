@@ -51,10 +51,11 @@ const CreateAccount = () => {
         className="flex flex-col items-center justify-center p-8 md:p-20 bg-white order-last md:order-first"
       >
         <div className="w-full max-w-sm space-y-10">
-          <motion.div
+         <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
+            className="flex md:block justify-center"
           >
             <Link href="/" className="inline-block">
               <Image src="/logo.png" width={140} height={140} alt="logo" />
@@ -65,7 +66,7 @@ const CreateAccount = () => {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="space-y-2"
+            className="space-y-2 text-center md:text-left"
           >
             <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Create Account</h1>
             <p className="text-gray-500 font-medium">Join us for a fresh shopping experience.</p>
