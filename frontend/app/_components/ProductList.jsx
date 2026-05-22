@@ -21,15 +21,15 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
   return (
     <div className="mt-28 px-6 md:px-12 lg:px-12 w-full">
       <div className="max-w-[1800px] mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row items-start justify-between mb-16 gap-6">
         <motion.div 
           initial={{ opacity: 0, x: -15 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-3 text-center md:text-left"
+          className="space-y-3 text-left"
         >
-          <div className="flex items-center justify-center md:justify-start gap-2">
+          <div className="flex items-center justify-start gap-2">
             <span className="h-0.5 w-8 bg-primary/60" />
             <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
               Top Picks
