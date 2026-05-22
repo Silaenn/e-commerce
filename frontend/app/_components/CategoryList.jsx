@@ -36,7 +36,7 @@ const CategoryList = ({ categoryList }) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4"
+        className="flex flex-col md:flex-row justify-between items-left mb-16 gap-4"
       >
         <div className="space-y-3">
           <div className="flex items-center gap-2">
