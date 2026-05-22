@@ -56,7 +56,7 @@ const ProductItem = ({ p }) => {
         {/* Quick Add Overlay */}
         <Dialog>
           <DialogTrigger asChild>
-            <button className="absolute inset-0 z-20 bg-primary/0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[2px] group-hover:bg-primary/5">
+            <button className="absolute inset-0 z-20 bg-primary/0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center group-hover:bg-primary/5">
                <motion.div 
                  initial={{ y: 20, opacity: 0 }}
                  whileHover={{ scale: 1.1 }}
