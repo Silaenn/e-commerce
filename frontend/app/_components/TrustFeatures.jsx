@@ -67,8 +67,9 @@ const TrustFeatures = () => {
               text-primary border border-green-100 shadow-sm
               group-hover:bg-primary group-hover:text-white
               group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-green-900/10
-              transition-all duration-500 ease-out
-              [&>svg]:h-7 [&>svg]:w-7 [&>svg]:transition-colors"
+              transition-[background-color,color,box-shadow,transform] duration-500 ease-out
+              will-change-transform
+              [&>svg]:h-7 [&>svg]:w-7"
             >
               {feature.icon}
             </div>
