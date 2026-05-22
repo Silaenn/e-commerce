@@ -48,7 +48,7 @@ const Slider = ({ sliderList }) => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
-                      className="text-4xl md:text-5xl 2xl:text-6xl font-extrabold text-gray-900 leading-[0.9] tracking-tighter"
+                      className="text-3xl md:text-4xl 2xl:text-5xl font-extrabold text-gray-900 leading-[0.9] tracking-tighter"
                     >
                       {s.name}
                     </motion.h2>
@@ -57,7 +57,7 @@ const Slider = ({ sliderList }) => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
-                      className="text-gray-500 text-lg md:text-xl font-medium max-w-sm leading-relaxed"
+                      className="text-gray-500 text-lg md:text-xl font-medium  leading-relaxed"
                     >
                       Premium quality groceries delivered fresh to your doorstep every single day.
                     </motion.p>
