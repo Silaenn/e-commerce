@@ -1,12 +1,18 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import GlobalApi from "../_utils/GlobalApi";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CartItemList = ({ cartItemList, onDeleteItem }) => {
+  const backendBaseUrl =
+    process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337";
+
+  const getCartImageSrc = (image) => {
+    if (!image) return "/logo.png";
+    return `${backendBaseUrl}${image}`;
+  };
+
   return (
     <div className="h-full min-h-[500px] flex flex-col">
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar flex flex-col">
@@ -23,7 +29,7 @@ const CartItemList = ({ cartItemList, onDeleteItem }) => {
               <div className="flex gap-4 items-center">
                 <div className="relative h-20 w-20 bg-white rounded-2xl flex items-center justify-center p-2 border border-green-50 shadow-sm">
                   <Image
-                    src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + cart.image}
+                    src={getCartImageSrc(cart.image)}
                     width={70}
                     height={70}
                     alt={cart.name}

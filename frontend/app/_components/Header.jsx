@@ -86,11 +86,28 @@ const Header = () => {
     router.push("/sign-in");
   };
 
-  const onDeleteItem = (id) => {
-    GlobalApi.deleteCartItems(id, jwt).then((res) => {
+  const onDeleteItem = async (id) => {
+    if (!jwt) {
+      toast("Please sign in to remove items.");
+      return;
+    }
+
+    try {
+      await GlobalApi.deleteCartItems(id, jwt);
+      setCartItemList((prev) => {
+        const updated = prev.filter((item) => item.id !== id);
+        setTotalCartItem(updated.length);
+        return updated;
+      });
+      setUpdateCart((prev) => !prev);
       toast("Item removed!");
-      getCartItems();
-    });
+    } catch (error) {
+      console.error(
+        "DEBUG: Failed to delete cart item:",
+        error.response?.data || error.message
+      );
+      toast("Failed to remove item. Please try again.");
+    }
   };
 
   const handleKeyPress = (event) => {

@@ -59,24 +59,26 @@ const addToCart = (data, jwt) =>
 
 const getCartItems = (userId, jwt) =>
   axiosClient
-    .get(
-      "/user-carts?populate=*",
-      {
-        headers: {
-          Authorization: "Bearer " + jwt,
-        },
-      }
-    )
+    .get("/user-carts?populate[products][populate]=images", {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+    })
     .then((res) => {
       const data = res.data.data;
       const cartItemList = data.map((item) => {
-        // Safe check for products as it might be an array or null
-        const product = item.products && item.products.length > 0 ? item.products[0] : null;
+        const productSource = Array.isArray(item.products)
+          ? item.products[0]
+          : item.products?.data?.[0];
+        const product = productSource?.attributes
+          ? { id: productSource.id, ...productSource.attributes }
+          : productSource || null;
 
-        let imageUrl = "";
-        if (product && product.images && product.images[0]) {
-          imageUrl = product.images[0].url;
-        }
+        const imageUrl =
+          product?.images?.[0]?.url ||
+          product?.images?.data?.[0]?.attributes?.url ||
+          product?.images?.data?.[0]?.url ||
+          "";
 
         return {
           name: product ? product.name : "Unknown",
@@ -89,7 +91,6 @@ const getCartItems = (userId, jwt) =>
         };
       });
 
-      // Filter here instead of API if API filter is failing
       return cartItemList;
     });
 
