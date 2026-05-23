@@ -85,15 +85,15 @@ const MyOrder = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-16">
-                      <div className="text-center md:text-left space-y-1">
+                    <div className="flex items-center gap-8 md:gap-16">
+                      <div className="text-center md:text-left space-y-1 w-40">
                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Total Amount</p>
                         <h2 className="text-2xl font-black text-primary">Rp{(order?.totalOrderAmount).toLocaleString("id-ID")}</h2>
                       </div>
                       
-                      <div className="text-center md:text-left space-y-1">
-                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest text-center">Status</p>
-                        <div className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
+                      <div className="text-center md:text-left space-y-1 w-32 flex flex-col items-center">
+                        <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Status</p>
+                        <div className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm inline-block
                           ${(order.status?.toLowerCase() === 'paid' || order.status?.toLowerCase() === 'success') 
                             ? 'bg-green-100 text-green-700' 
                             : order.status?.toLowerCase() === 'cancelled'
