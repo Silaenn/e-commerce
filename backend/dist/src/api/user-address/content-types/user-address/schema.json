@@ -1,0 +1,38 @@
+{
+    "kind": "collectionType",
+    "collectionName": "user_addresses",
+    "info": {
+        "singularName": "user-address",
+        "pluralName": "user-addresses",
+        "displayName": "User-Address"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "phone": {
+            "type": "string",
+            "required": true
+        },
+        "zip": {
+            "type": "string"
+        },
+        "address": {
+            "type": "text",
+            "required": true
+        },
+        "userId": {
+            "type": "string",
+            "required": true
+        },
+        "isDefault": {
+            "type": "boolean",
+            "default": false
+        }
+    }
+}

@@ -24,59 +24,73 @@ const Checkout = () => {
   const [phone, setPhone] = useState("");
   const [zip, setZip] = useState("");
   const [address, setAddress] = useState("");
+  const [saveAddress, setSaveAddress] = useState(false);
+  const [userAddresses, setUserAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState("");
+
   const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
 
   const [paymentPending, setPaymentPending] = useState(false);
   const [paymentToken, setPaymentToken] = useState(null);
 
   useEffect(() => {
-    // Load saved form data from localStorage
-    const savedUsername = localStorage.getItem("checkout_username");
-    const savedEmail = localStorage.getItem("checkout_email");
-    const savedPhone = localStorage.getItem("checkout_phone");
-    const savedZip = localStorage.getItem("checkout_zip");
-    const savedAddress = localStorage.getItem("checkout_address");
-    const checkoutCompleted = localStorage.getItem("checkoutCompleted");
-
-    if (!checkoutCompleted) {
-      if (savedUsername) setUsername(savedUsername);
-      if (savedEmail) setEmail(savedEmail);
-      if (savedPhone) setPhone(savedPhone);
-      if (savedZip) setZip(savedZip);
-      if (savedAddress) setAddress(savedAddress);
-    } else {
-      localStorage.removeItem("checkout_username");
-      localStorage.removeItem("checkout_email");
-      localStorage.removeItem("checkout_phone");
-      localStorage.removeItem("checkout_zip");
-      localStorage.removeItem("checkout_address");
-      localStorage.removeItem("checkoutCompleted");
+    if (user && jwt) {
+      setUsername(user.username || "");
+      setEmail(user.email || "");
+      fetchUserAddresses();
     }
-  }, []);
+
+    const storedPaymentPending = sessionStorage.getItem("paymentPending");
+    const storedPaymentToken = sessionStorage.getItem("paymentToken");
+
+    if (storedPaymentPending === "true" && storedPaymentToken) {
+      setPaymentPending(true);
+      setPaymentToken(storedPaymentToken);
+    }
+  }, [user, jwt]);
+
+  const fetchUserAddresses = async () => {
+    try {
+      const addresses = await GlobalApi.getUserAddresses(user.id, jwt);
+      setUserAddresses(addresses);
+      if (addresses.length > 0) {
+        const defaultAddr = addresses.find(a => a.isDefault) || addresses[0];
+        applyAddress(defaultAddr);
+      } else {
+        setSelectedAddressId("new");
+      }
+    } catch (error) {
+      console.error("Error fetching addresses:", error);
+    }
+  };
+
+  const applyAddress = (addr) => {
+    setSelectedAddressId(addr.documentId);
+    setPhone(addr.phone || "");
+    setZip(addr.zip || "");
+    setAddress(addr.address || "");
+  };
+
+  const handleAddressSelect = (id) => {
+    setSelectedAddressId(id);
+    if (id === "new") {
+      setPhone("");
+      setZip("");
+      setAddress("");
+    } else {
+      const selected = userAddresses.find(a => a.documentId === id);
+      if (selected) applyAddress(selected);
+    }
+  };
 
   const handleInputChange = (field) => (e) => {
     const { value } = e.target;
     switch (field) {
-      case "username":
-        setUsername(value);
-        localStorage.setItem("checkout_username", value);
-        break;
-      case "email":
-        setEmail(value);
-        localStorage.setItem("checkout_email", value);
-        break;
-      case "phone":
-        setPhone(value);
-        localStorage.setItem("checkout_phone", value);
-        break;
-      case "zip":
-        setZip(value);
-        localStorage.setItem("checkout_zip", value);
-        break;
-      case "address":
-        setAddress(value);
-        localStorage.setItem("checkout_address", value);
-        break;
+      case "username": setUsername(value); break;
+      case "email": setEmail(value); break;
+      case "phone": setPhone(value); break;
+      case "zip": setZip(value); break;
+      case "address": setAddress(value); break;
     }
   };
 
@@ -124,7 +138,24 @@ const Checkout = () => {
     return "Rp" + totalAmount.toLocaleString("id-ID");
   };
 
-  const onApprove = () => {
+  const onApprove = async () => {
+    if (saveAddress && selectedAddressId === "new") {
+      try {
+        await GlobalApi.addUserAddress({
+          data: {
+            name: username,
+            phone: phone,
+            zip: zip,
+            address: address,
+            userId: user.id.toString(),
+            isDefault: userAddresses.length === 0
+          }
+        }, jwt);
+      } catch (error) {
+        console.error("Error saving address:", error);
+      }
+    }
+
     const payload = {
       data: {
         paymentId: user.id.toString(),
@@ -135,7 +166,7 @@ const Checkout = () => {
         zip: zip,
         address: address,
         orderitemList: cartItemList,
-        userId: user.id,
+        userId: user.id.toString(),
       },
     };
 
@@ -143,25 +174,25 @@ const Checkout = () => {
       .then((res) => {
         const token = res.transaction.transaction.token;
         setPaymentToken(token);
-        localStorage.setItem("paymentToken", token);
-        const id = res.order.data.id;
-        localStorage.setItem("orderId", id);
+        sessionStorage.setItem("paymentToken", token);
+        const orderDocId = res.order.data.documentId;
+        sessionStorage.setItem("orderId", orderDocId);
 
         if (window.snap) {
           window.snap.pay(token, {
-            onSuccess: function (result) {
+            onSuccess: async function (result) {
               toast.success("Payment successful!");
               localStorage.setItem("checkoutCompleted", "true");
 
-              const id = res.order.data.id;
-              GlobalApi.updateOrder(id, "Success", jwt);
+              await GlobalApi.updateOrder(orderDocId, "paid", jwt);
 
-              cartItemList.forEach((item) => {
-                GlobalApi.deleteCartItems(item.id, jwt);
-              });
+              // Tunggu semua proses hapus item keranjang selesai sebelum pindah halaman
+              await Promise.all(
+                cartItemList.map((item) => GlobalApi.deleteCartItems(item.id, jwt))
+              );
 
-              localStorage.removeItem("paymentPending");
-              localStorage.removeItem("paymentToken");
+              sessionStorage.removeItem("paymentPending");
+              sessionStorage.removeItem("paymentToken");
               setUpdateCart(!updateCart);
               setPaymentPending(false);
               window.location.href = "/order-confirmation";
@@ -169,13 +200,13 @@ const Checkout = () => {
             onPending: function (result) {
               toast("Payment is pending. Please complete the payment.");
               setPaymentPending(true);
-              localStorage.setItem("paymentPending", "true");
+              sessionStorage.setItem("paymentPending", "true");
             },
             onError: function (result) {
               toast.error("Payment failed. Please try again.");
               setPaymentPending(false);
-              localStorage.removeItem("paymentPending");
-              localStorage.removeItem("paymentToken");
+              sessionStorage.removeItem("paymentPending");
+              sessionStorage.removeItem("paymentToken");
             },
             onClose: function () {
               toast("Payment cancelled.");
@@ -194,19 +225,19 @@ const Checkout = () => {
   const reopenPaymentPopup = () => {
     if (paymentPending && window.snap && paymentToken) {
       window.snap.pay(paymentToken, {
-        onSuccess: function (result) {
+        onSuccess: async function (result) {
           toast.success("Payment successful!");
           localStorage.setItem("checkoutCompleted", "true");
 
-          const orderId = localStorage.getItem("orderId");
-          GlobalApi.updateOrder(orderId, "Success", jwt);
+          const orderId = sessionStorage.getItem("orderId");
+          await GlobalApi.updateOrder(orderId, "paid", jwt);
 
-          cartItemList.forEach((item) => {
-            GlobalApi.deleteCartItems(item.id, jwt);
-          });
+          await Promise.all(
+            cartItemList.map((item) => GlobalApi.deleteCartItems(item.id, jwt))
+          );
 
-          localStorage.removeItem("paymentPending");
-          localStorage.removeItem("paymentToken");
+          sessionStorage.removeItem("paymentPending");
+          sessionStorage.removeItem("paymentToken");
           setUpdateCart(!updateCart);
           setPaymentPending(false);
           window.location.href = "/order-confirmation";
@@ -219,8 +250,8 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    const storedPaymentPending = localStorage.getItem("paymentPending");
-    const storedPaymentToken = localStorage.getItem("paymentToken");
+    const storedPaymentPending = sessionStorage.getItem("paymentPending");
+    const storedPaymentToken = sessionStorage.getItem("paymentToken");
 
     if (storedPaymentPending === "true" && storedPaymentToken) {
       setPaymentPending(true);
@@ -270,14 +301,33 @@ const Checkout = () => {
             className="lg:col-span-2 space-y-10"
           >
             <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 bg-primary/10 rounded-2xl flex items-center justify-center">
-                  <ReceiptText className="h-6 w-6 text-primary" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 bg-primary/10 rounded-2xl flex items-center justify-center">
+                    <ReceiptText className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-black tracking-tight text-gray-900">Billing Details</h2>
+                    <p className="text-gray-400 font-medium">Please enter your shipping information below.</p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-3xl font-black tracking-tight text-gray-900">Billing Details</h2>
-                  <p className="text-gray-400 font-medium">Please enter your shipping information below.</p>
-                </div>
+                {userAddresses.length > 0 && (
+                  <div className="w-64">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Select Saved Address</label>
+                    <select 
+                      className="w-full h-10 px-4 rounded-xl border-gray-100 bg-gray-50 text-xs font-bold focus:bg-white outline-none transition-all cursor-pointer"
+                      value={selectedAddressId}
+                      onChange={(e) => handleAddressSelect(e.target.value)}
+                    >
+                      {userAddresses.map((addr) => (
+                        <option key={addr.documentId} value={addr.documentId}>
+                          {addr.name} ({addr.address.substring(0, 15)}...)
+                        </option>
+                      ))}
+                      <option value="new">+ Add New Address</option>
+                    </select>
+                  </div>
+                )}
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -334,17 +384,36 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Full Address</label>
-                <div className="relative group">
-                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-300 group-focus-within:text-primary transition-colors" />
-                  <Input
-                    placeholder="Complete delivery address"
-                    className="h-14 pl-12 rounded-2xl border-gray-100 bg-gray-50/50 focus:bg-white transition-all font-bold"
-                    onChange={handleInputChange("address")}
-                    value={address}
-                  />
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Full Address</label>
+                  <div className="relative group">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-300 group-focus-within:text-primary transition-colors" />
+                    <Input
+                      placeholder="Complete delivery address"
+                      className="h-14 pl-12 rounded-2xl border-gray-100 bg-gray-50/50 focus:bg-white transition-all font-bold"
+                      onChange={handleInputChange("address")}
+                      value={address}
+                    />
+                  </div>
                 </div>
+
+                {selectedAddressId === "new" && (
+                  <label className="flex items-center gap-3 cursor-pointer group w-fit">
+                    <div className="relative">
+                      <input 
+                        type="checkbox" 
+                        className="peer hidden" 
+                        checked={saveAddress}
+                        onChange={(e) => setSaveAddress(e.target.checked)}
+                      />
+                      <div className="h-6 w-6 border-2 border-gray-200 rounded-lg peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center">
+                        <div className="h-2 w-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity" />
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold text-gray-500 group-hover:text-primary transition-colors">Save this address to my profile</span>
+                  </label>
+                )}
               </div>
 
               {paymentPending && (

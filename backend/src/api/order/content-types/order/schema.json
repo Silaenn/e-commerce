@@ -26,6 +26,15 @@
     "paymentId": {
       "type": "string"
     },
+    "phone": {
+      "type": "string"
+    },
+    "zip": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
     "Status": {
       "type": "enumeration",
       "enum": [
