@@ -101,6 +101,13 @@ const deleteCartItems = (id, jwt) =>
     },
   });
 
+const updateCartQuantity = (id, data, jwt) =>
+  axiosClient.put("/user-carts/" + id, data, {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
+
 const createOrder = async (payload, jwt) => {
   try {
     // Persiapkan data untuk Midtrans
@@ -201,6 +208,7 @@ export default {
   addToCart,
   getCartItems,
   deleteCartItems,
+  updateCartQuantity,
   createOrder,
   getMyOrder,
   searchProducts,
