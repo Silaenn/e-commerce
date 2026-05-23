@@ -167,6 +167,7 @@ const Checkout = () => {
         address: address,
         orderitemList: cartItemList,
         userId: user.id.toString(),
+        Status: "pending",
       },
     };
 
