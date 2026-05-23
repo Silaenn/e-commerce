@@ -114,7 +114,7 @@ const createOrder = async (payload, jwt) => {
     const midtransPayload = {
       transaction_details: {
         order_id: `ORDER-${Date.now()}`,
-        gross_amount: payload.data.totalOrderAmount,
+        gross_amount: Math.round(payload.data.totalOrderAmount),
       },
       customer_details: {
         first_name: payload.data.username,
@@ -122,13 +122,13 @@ const createOrder = async (payload, jwt) => {
       },
     };
 
-    // Panggil API route kita
+    // Panggil API route kita (Next.js API route)
     const midtransResponse = await axios.post(
       "/api/create-midtrans-transaction",
-      JSON.stringify(midtransPayload)
+      midtransPayload
     );
 
-    // Simpan order ke backend
+    // Simpan order ke backend Strapi
     const orderResponse = await axiosClient.post("/orders", payload, {
       headers: {
         Authorization: "Bearer " + jwt,
@@ -157,7 +157,7 @@ const getMyOrder = (userId, jwt) =>
     .then((resp) => {
       const response = resp.data.data;
       const orderList = response.map((item) => ({
-        id: item.id,
+        id: item.documentId, // Gunakan documentId untuk Strapi v5
         totalOrderAmount: item.totalOrderAmount,
         paymentId: item.paymentId,
         orderItemList: item.orderitemList,
@@ -197,6 +197,24 @@ const updateOrder = async (id, newStatus, jwt) => {
   }
 };
 
+const addUserAddress = (data, jwt) =>
+  axiosClient.post("/user-addresses", data, {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
+
+const getUserAddresses = (userId, jwt) =>
+  axiosClient
+    .get("/user-addresses?filters[userId][$eq]=" + userId, {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+    })
+    .then((resp) => {
+      return resp.data.data;
+    });
+
 export default {
   getCategory,
   getSliders,
@@ -213,4 +231,6 @@ export default {
   getMyOrder,
   searchProducts,
   updateOrder,
+  addUserAddress,
+  getUserAddresses,
 };

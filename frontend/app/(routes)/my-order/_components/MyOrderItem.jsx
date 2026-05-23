@@ -12,7 +12,7 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
             <Image
               src={
                 (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
-                orderItem.product.images[0].url
+                (orderItem.image || "/logo.png")
               }
               width={80}
               height={80}
@@ -21,9 +21,9 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
             />
           </div>
           <div className="space-y-1">
-            <h2 className="font-black text-gray-900 text-lg tracking-tight leading-tight uppercase">{orderItem.product.name}</h2>
+            <h2 className="font-black text-gray-900 text-lg tracking-tight leading-tight uppercase">{orderItem.name}</h2>
             <p className="text-xs font-black text-gray-400 uppercase tracking-widest">
-              Unit Price: <span className="text-primary ml-1">Rp{orderItem.product.price?.toLocaleString("id-ID")}</span>
+              Unit Price: <span className="text-primary ml-1">Rp{(orderItem.actualPrice || 0).toLocaleString("id-ID")}</span>
             </p>
           </div>
         </div>
@@ -44,7 +44,7 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
           </div>
 
           <div className="flex items-center justify-center h-12 w-12 rounded-2xl bg-gray-50 border border-gray-100">
-            {orderStatus === "Success" ? (
+            {orderStatus === "paid" || orderStatus === "Success" ? (
               <CircleCheckBig className="text-green-500 h-6 w-6" />
             ) : (
               <X className="text-red-400 h-6 w-6" />
