@@ -251,14 +251,36 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    const storedPaymentPending = sessionStorage.getItem("paymentPending");
-    const storedPaymentToken = sessionStorage.getItem("paymentToken");
+    const checkPendingOrder = async () => {
+      const storedPaymentPending = sessionStorage.getItem("paymentPending");
+      const storedPaymentToken = sessionStorage.getItem("paymentToken");
+      const storedOrderId = sessionStorage.getItem("orderId");
 
-    if (storedPaymentPending === "true" && storedPaymentToken) {
-      setPaymentPending(true);
-      setPaymentToken(storedPaymentToken);
+      if (storedPaymentPending === "true" && storedOrderId && jwt) {
+        try {
+          // Cek ke Strapi apakah order ini masih ada
+          await GlobalApi.getMyOrder(user.id, jwt); 
+          // getMyOrder mengembalikan list, kita bisa cek lebih spesifik jika mau, 
+          // tapi untuk sekarang jika token ada kita asumsikan valid kecuali API error
+          
+          setPaymentPending(true);
+          setPaymentToken(storedPaymentToken);
+        } catch (error) {
+          // Jika order tidak ditemukan atau error, bersihkan session
+          console.log("Pending order not found, clearing session...");
+          sessionStorage.removeItem("paymentPending");
+          sessionStorage.removeItem("paymentToken");
+          sessionStorage.removeItem("orderId");
+          setPaymentPending(false);
+          setPaymentToken(null);
+        }
+      }
+    };
+
+    if (user && jwt) {
+      checkPendingOrder();
     }
-  }, []);
+  }, [user, jwt]);
 
   return (
     <div className="min-h-screen bg-white">
