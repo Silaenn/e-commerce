@@ -59,7 +59,7 @@ const addToCart = (data, jwt) =>
 
 const getCartItems = (userId, jwt) =>
   axiosClient
-    .get("/user-carts?populate[products][populate]=images", {
+    .get("/user-carts?filters[userId][$eq]=" + userId + "&populate[products][populate]=images", {
       headers: {
         Authorization: "Bearer " + jwt,
       },
@@ -86,7 +86,7 @@ const getCartItems = (userId, jwt) =>
           amount: item.amount,
           image: imageUrl,
           actualPrice: product ? product.sellingPrice : 0,
-          id: item.id,
+          id: item.documentId,
           product: product ? product.id : null,
         };
       });
