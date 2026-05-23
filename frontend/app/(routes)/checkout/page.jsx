@@ -5,7 +5,7 @@ import useAuth from "@/app/_context/useAuth";
 import GlobalApi from "@/app/_utils/GlobalApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowBigRight, ArrowLeft, CreditCard, MapPin, Phone, Mail, User, ReceiptText } from "lucide-react";
+import { ArrowBigRight, ArrowLeft, CreditCard, MapPin, Phone, Mail, User, ReceiptText, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -32,6 +32,8 @@ const Checkout = () => {
 
   const [paymentPending, setPaymentPending] = useState(false);
   const [paymentToken, setPaymentToken] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (user && jwt) {
@@ -139,6 +141,9 @@ const Checkout = () => {
   };
 
   const onApprove = async () => {
+    if (loading) return;
+    setLoading(true);
+
     if (saveAddress && selectedAddressId === "new") {
       try {
         await GlobalApi.addUserAddress({
@@ -187,44 +192,60 @@ const Checkout = () => {
 
               await GlobalApi.updateOrder(orderDocId, "paid", jwt);
 
-              // Tunggu semua proses hapus item keranjang selesai sebelum pindah halaman
               await Promise.all(
                 cartItemList.map((item) => GlobalApi.deleteCartItems(item.id, jwt))
               );
 
               sessionStorage.removeItem("paymentPending");
               sessionStorage.removeItem("paymentToken");
+              sessionStorage.removeItem("orderId");
               setUpdateCart(!updateCart);
               setPaymentPending(false);
-              window.location.href = "/order-confirmation";
+              setLoading(false);
+              router.push("/order-confirmation");
             },
             onPending: function (result) {
               toast("Payment is pending. Please complete the payment.");
               setPaymentPending(true);
               sessionStorage.setItem("paymentPending", "true");
+              setLoading(false);
             },
             onError: function (result) {
               toast.error("Payment failed. Please try again.");
               setPaymentPending(false);
               sessionStorage.removeItem("paymentPending");
               sessionStorage.removeItem("paymentToken");
+              sessionStorage.removeItem("orderId");
+              setLoading(false);
             },
-            onClose: function () {
+            onClose: async function () {
               toast("Payment cancelled.");
+              // Set status di Strapi jadi cancelled agar tidak gantung
+              await GlobalApi.updateOrder(orderDocId, "cancelled", jwt);
+              
+              // Bersihkan session agar user bisa checkout ulang dengan data bersih
+              sessionStorage.removeItem("paymentPending");
+              sessionStorage.removeItem("paymentToken");
+              sessionStorage.removeItem("orderId");
+              setPaymentPending(false);
+              setLoading(false);
             },
           });
         } else {
           toast.error("Payment system is not ready. Please try again later.");
+          setLoading(false);
         }
       })
       .catch((error) => {
         console.error("Error creating order:", error);
         toast.error("Failed to place order. Please try again.");
+        setLoading(false);
       });
   };
 
   const reopenPaymentPopup = () => {
     if (paymentPending && window.snap && paymentToken) {
+      setLoading(true);
       window.snap.pay(paymentToken, {
         onSuccess: async function (result) {
           toast.success("Payment successful!");
@@ -239,13 +260,19 @@ const Checkout = () => {
 
           sessionStorage.removeItem("paymentPending");
           sessionStorage.removeItem("paymentToken");
+          sessionStorage.removeItem("orderId");
           setUpdateCart(!updateCart);
           setPaymentPending(false);
-          window.location.href = "/order-confirmation";
+          setLoading(false);
+          router.push("/order-confirmation");
         },
         onPending: function (result) {
           toast("Payment is still pending.");
+          setLoading(false);
         },
+        onClose: function () {
+          setLoading(false);
+        }
       });
     }
   };
@@ -495,20 +522,29 @@ const Checkout = () => {
                   {paymentPending ? (
                     <Button 
                       onClick={reopenPaymentPopup} 
+                      disabled={loading}
                       className="w-full h-16 rounded-full text-lg font-black bg-orange-500 hover:bg-orange-600 transition-all shadow-xl shadow-orange-900/20 gap-3"
                     >
-                      Complete Payment
-                      <ArrowBigRight className="h-6 w-6" />
+                      {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : (
+                        <>
+                          Complete Payment
+                          <ArrowBigRight className="h-6 w-6" />
+                        </>
+                      )}
                     </Button>
                   ) : (
                     <Button
                       onClick={onApprove}
-                      disabled={!(username && email && zip && address) || totalCartItem === 0}
+                      disabled={!(username && email && zip && address) || totalCartItem === 0 || loading}
                       className="w-full h-16 rounded-full text-lg font-black bg-primary text-white hover:bg-green-700 transition-all shadow-xl shadow-green-900/20 gap-3 active:scale-[0.98]"
                     >
-                      <CreditCard className="h-6 w-6" />
-                      Proceed to Payment
-                      <ArrowBigRight className="h-6 w-6" />
+                      {loading ? <Loader2 className="h-6 w-6 animate-spin" /> : (
+                        <>
+                          <CreditCard className="h-6 w-6" />
+                          Proceed to Payment
+                          <ArrowBigRight className="h-6 w-6" />
+                        </>
+                      )}
                     </Button>
                   )}
                   

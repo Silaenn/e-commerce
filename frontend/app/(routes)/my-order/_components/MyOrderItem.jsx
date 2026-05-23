@@ -44,10 +44,10 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
           </div>
 
           <div className="flex items-center justify-center h-12 w-12 rounded-2xl bg-gray-50 border border-gray-100">
-            {orderStatus === "paid" || orderStatus === "Success" ? (
+            {orderStatus?.toLowerCase() === "paid" || orderStatus?.toLowerCase() === "success" ? (
               <CircleCheckBig className="text-green-500 h-6 w-6" />
             ) : (
-              <X className="text-red-400 h-6 w-6" />
+              <X className={`${orderStatus?.toLowerCase() === 'cancelled' ? 'text-red-500' : 'text-amber-500'} h-6 w-6`} />
             )}
           </div>
         </div>
