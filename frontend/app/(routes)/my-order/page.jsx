@@ -96,7 +96,7 @@ const MyOrder = () => {
                         <div className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
                           ${(order.status?.toLowerCase() === 'paid' || order.status?.toLowerCase() === 'success') ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}
                         `}>
-                          {order.status}
+                          {order.status || 'pending'}
                         </div>
                       </div>
                     </div>
