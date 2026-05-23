@@ -25,7 +25,8 @@ const ProductItemDetail = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const addToCart = () => {
+
+  const addToCart = async () => {
     if (!jwt) {
       router.push("/sign-in");
       setLoading(false);
@@ -35,30 +36,50 @@ const ProductItemDetail = ({ product }) => {
       setIsDisabled(true);
     } else {
       setLoading(true);
-      const data = {
-        data: {
-          quantity: quantity,
-          amount: quantity * productTotalPrice,
-          products: [product.id], // Kembali ke plural array sesuai skema backend
-          userId: user.id.toString(), // Pastikan String sesuai skema Strapi
-        },
-      };
 
-      console.log("DEBUG: Add to Cart Payload:", data);
+      try {
+        // 1. Ambil data cart terbaru untuk mengecek apakah item sudah ada
+        const cartItems = await GlobalApi.getCartItems(user.id, jwt);
+        
+        // 2. Cari apakah produk ini sudah ada di cart
+        // Perlu dicek item.product (ID produk) atau item.name jika ID tidak tersedia
+        const existingItem = cartItems.find(
+          (item) => item.product === product.id
+        );
 
-      GlobalApi.addToCart(data, jwt).then(
-        (resp) => {
-          console.log(resp);
+        if (existingItem) {
+          // 3. Jika ADA, update quantity dan amount
+          const newQuantity = existingItem.quantity + quantity;
+          const updateData = {
+            data: {
+              quantity: newQuantity,
+              amount: newQuantity * productTotalPrice,
+            },
+          };
+
+          await GlobalApi.updateCartQuantity(existingItem.id, updateData, jwt);
+          toast.success("Cart updated successfully!");
+        } else {
+          // 4. Jika TIDAK ADA, buat baru
+          const data = {
+            data: {
+              quantity: quantity,
+              amount: quantity * productTotalPrice,
+              products: [product.id],
+              userId: user.id.toString(),
+            },
+          };
+          await GlobalApi.addToCart(data, jwt);
           toast.success("Added to cart successfully!");
-          setUpdateCart(!updateCart);
-          setLoading(false);
-        },
-        (e) => {
-          console.error("DEBUG: Add to Cart Error:", e.response?.data || e.message);
-          toast.error(e?.response?.data?.error?.message || "Error while adding into cart");
-          setLoading(false);
         }
-      );
+
+        setUpdateCart(!updateCart);
+      } catch (e) {
+        console.error("DEBUG: Add/Update Cart Error:", e.response?.data || e.message);
+        toast.error(e?.response?.data?.error?.message || "Error while adding into cart");
+      } finally {
+        setLoading(false);
+      }
     }
   };
   return (
