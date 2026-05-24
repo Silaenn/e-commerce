@@ -8,3 +8,4 @@ dist/
 .env.local
 .strapi/
 .DS_Store
+public/uploads/
