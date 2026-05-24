@@ -52,7 +52,7 @@ function ProductCategory({ params }) {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-2 sm:space-y-3 text-center sm:text-left"
           >
-            <div className="flex items-center justify-center md:justify-start gap-2">
+            <div className="flex items-center justify-center sm:justify-start gap-2">
               <span className="h-0.5 w-8 bg-primary/60" />
               <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                 Category

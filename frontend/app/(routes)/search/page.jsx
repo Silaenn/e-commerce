@@ -32,9 +32,9 @@ function SearchPage() {
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-3 text-center md:text-left"
+            className="space-y-2 sm:space-y-3 text-center sm:text-left"
           >
-            <div className="flex items-center justify-center md:justify-start gap-2">
+            <div className="flex items-center justify-center sm:justify-start gap-2">
               <span className="h-0.5 w-8 bg-primary/60" />
               <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                 Search Results
@@ -57,7 +57,7 @@ function SearchPage() {
         </div>
       </div>
 
-      <div className="max-w-[1800px] mx-auto min-h-[400px]">
+      <div className="max-w-[1800px] mx-auto min-h-[400px] px-5 sm:px-8 md:px-12">
         {loading ? (
           <div className="flex items-center justify-center py-32">
              <div className="h-12 w-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />

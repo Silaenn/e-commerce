@@ -34,13 +34,13 @@ const MyOrder = () => {
     <div className="min-h-screen bg-white pb-20">
       {/* Premium Header */}
       <div className="bg-green-50/30 py-10 sm:py-16 px-5 sm:px-8 md:px-12 w-full border-b border-green-100/50">
-         <div className="max-w-[1800px] mx-auto flex flex-col sm:flex-rowjustify-between items-center gap-4 sm:gap-8">
+         <div className="max-w-[1800px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-2 sm:space-y-3 text-center sm:text-left"
           >
-            <div className="flex items-center justify-center md:justify-start gap-2">
+            <div className="flex items-center justify-center sm:justify-start gap-2">
               <span className="h-0.5 w-8 bg-primary/60" />
               <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                 Account
