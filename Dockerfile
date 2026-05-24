@@ -3,7 +3,7 @@ FROM node:20-alpine AS build
 RUN apk add --no-cache build-base gcc autoconf automake libtool zlib-dev vips-dev git
 WORKDIR /opt/app
 
-# COPY langsung karena isi backend sudah di root HF
+# COPY langsung karena di HF folder backend sudah jadi root
 COPY package.json package-lock.json ./
 RUN npm install
 
