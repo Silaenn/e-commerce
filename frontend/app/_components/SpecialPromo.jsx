@@ -56,19 +56,10 @@ const SpecialPromo = () => {
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
-              whileHover={{ 
-                scale: 1.05, 
-                backgroundColor: "#15803d",
-                boxShadow: "0 20px 40px rgba(21, 128, 61, 0.2)"
-              }}
+              transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              transition={{ 
-                type: "spring",
-                stiffness: 400,
-                damping: 20,
-                delay: 0.6 
-              }}
-              className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-2xl shadow-green-900/20 transition-all w-fit"
+              className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-2xl shadow-green-900/20 w-fit hover:bg-green-700 hover:shadow-green-900/30 transition-colors duration-200"
             >
               Claim Offer Now
             </motion.button>
