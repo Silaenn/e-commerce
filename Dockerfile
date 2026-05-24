@@ -3,11 +3,12 @@ FROM node:20-alpine AS build
 RUN apk add --no-cache build-base gcc autoconf automake libtool zlib-dev vips-dev git
 WORKDIR /opt/app
 
-# COPY langsung karena di HF folder backend sudah jadi root
+# Copy files
 COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
+# Build project agar file .ts di config menjadi .js di dist/
 RUN npm run build
 
 # Stage 2: Runtime
@@ -15,10 +16,14 @@ FROM node:20-alpine
 RUN apk add --no-cache vips-dev
 WORKDIR /opt/app
 
-# Copy dari build stage
-COPY --from=build /opt/app ./
+# Copy hasil build dan files yang diperlukan
+COPY --from=build /opt/app/node_modules ./node_modules
+COPY --from=build /opt/app/dist ./dist
+COPY --from=build /opt/app/config ./config
+COPY --from=build /opt/app/public ./public
+COPY --from=build /opt/app/package.json ./package.json
 
-EXPOSE 7860
 ENV NODE_ENV=production
 ENV PORT=7860
-CMD ["npm", "start"]
+EXPOSE 7860
+CMD ["npm", "run", "start"]
