@@ -3,7 +3,6 @@ import GlobalApi from "@/app/_utils/GlobalApi";
 import React, { useContext, useEffect, useState } from "react";
 import TopCategoryList from "../_components/TopCategoryList";
 import ProductList from "@/app/_components/ProductList";
-import { SearchContext } from "@/app/_context/SearchContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
@@ -26,7 +25,6 @@ function ProductCategory({ params }) {
   }, [params.categoryName]);
 
   useEffect(() => {
-    // Halaman kategori sekarang murni mengambil berdasarkan kategori
     GlobalApi.getProductsByCategory(params.categoryName).then((res) => {
       setProductList(res);
     });
@@ -36,9 +34,7 @@ function ProductCategory({ params }) {
     let newIndex = currentCategoryIndex + direction;
     if (newIndex < 0) newIndex = categoryList.length - 1;
     if (newIndex >= categoryList.length) newIndex = 0;
-
     const newCategory = categoryList[newIndex].name;
-    // Gunakan router untuk navigasi ke kategori baru
     router.push(`/products-category/${newCategory}`);
   };
 
@@ -46,8 +42,8 @@ function ProductCategory({ params }) {
     <div className="min-h-screen">
       {/* Category Header */}
       <div className="bg-green-50/30 py-10 sm:py-16 px-5 sm:px-8 md:px-12 w-full border-b border-green-100/50">
-         <div className="max-w-[1800px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
-          <motion.div 
+        <div className="max-w-[1800px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-2 sm:space-y-3 text-center sm:text-left"
@@ -58,13 +54,13 @@ function ProductCategory({ params }) {
                 Category
               </span>
             </div>
-             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-gray-900">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-gray-900">
               {decodeURIComponent(params.categoryName)}
             </h2>
           </motion.div>
 
           <Link href={"/"}>
-            <motion.button 
+            <motion.button
               whileHover={{ x: -5 }}
               className="flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-xs sm:text-sm uppercase tracking-widest"
             >
@@ -79,13 +75,11 @@ function ProductCategory({ params }) {
         categoryList={categoryList}
         selectedCategory={decodeURIComponent(params.categoryName)}
       />
-
       <ProductList
         productList={productList}
         button={button}
         navigateCategory={navigateCategory}
       />
-      
       <div className="pb-20" />
     </div>
   );
