@@ -69,9 +69,7 @@ const CategoryList = ({ categoryList }) => {
                   className="group flex flex-col items-center gap-4 sm:gap-6"
                 >
                   <motion.div
-                    whileHover={{
-                      y: -8,
-                    }}
+                    whileHover={{ y: -8 }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     className="relative aspect-square w-full rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] bg-gray-50 border border-transparent flex items-center justify-center p-5 sm:p-8 md:p-10 transition-all duration-500 group-hover:bg-white group-hover:border-green-100 group-hover:shadow-2xl group-hover:shadow-green-900/5"
                   >

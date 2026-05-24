@@ -79,7 +79,7 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
           </motion.div>
         ) : (
           <div className="h-40 sm:h-64 flex items-center justify-center bg-gray-50 rounded-[2rem] sm:rounded-[2.5rem] border border-dashed border-gray-200 transition-colors hover:bg-gray-100/50">
-            <p className="text-gray-400 font-medium tracking-tight text-sm">
+            <p className="text-sm text-gray-400 font-medium tracking-tight">
               No products found matching your search.
             </p>
           </div>

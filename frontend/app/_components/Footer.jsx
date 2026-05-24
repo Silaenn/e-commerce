@@ -1,6 +1,6 @@
 import {
   Facebook, Instagram, Linkedin, Twitter,
-  ChevronRight, Mail, Phone, MapPin
+  ChevronRight, Mail, Phone, MapPin,
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";

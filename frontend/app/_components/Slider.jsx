@@ -19,7 +19,7 @@ const Slider = ({ sliderList }) => {
           <CarouselContent className="-ml-0">
             {sliderList.map((s, index) => (
               <CarouselItem key={index} className="pl-0">
-                <div className="grid grid-cols-1 2xl:grid-cols-[minmax(420px,1fr)_2fr] bg-gradient-to-br from-green-50/50 to-white rounded-[2.5rem] border border-green-100/50 overflow-hidden min-h-[280px] sm:min-h-[350px] 2xl:min-h-[500px]">
+                <div className="grid grid-cols-1 2xl:grid-cols-[minmax(420px,1fr)_2fr] bg-gradient-to-br from-green-50/50 to-white rounded-[2rem] sm:rounded-[2.5rem] border border-green-100/50 overflow-hidden min-h-[280px] sm:min-h-[350px] 2xl:min-h-[500px]">
                   {/* Left Content: Text */}
                   <div className="flex flex-col justify-center p-6 sm:p-10 md:p-20 space-y-4 sm:space-y-6 min-w-0">
                     <motion.div
