@@ -33,12 +33,12 @@ const MyOrder = () => {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Premium Header */}
-      <div className="bg-green-50/30 py-16 px-6 md:px-12 lg:px-12 w-full border-b border-green-100/50">
-        <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="bg-green-50/30 py-10 sm:py-16 px-5 sm:px-8 md:px-12 w-full border-b border-green-100/50">
+         <div className="max-w-[1800px] mx-auto flex flex-col sm:flex-rowjustify-between items-center gap-4 sm:gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-3 text-center md:text-left"
+            className="space-y-2 sm:space-y-3 text-center sm:text-left"
           >
             <div className="flex items-center justify-center md:justify-start gap-2">
               <span className="h-0.5 w-8 bg-primary/60" />
@@ -46,7 +46,7 @@ const MyOrder = () => {
                 Account
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-gray-900">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-gray-900">
               Order History
             </h2>
           </motion.div>
@@ -54,7 +54,7 @@ const MyOrder = () => {
           <Link href={"/"}>
             <motion.button 
               whileHover={{ x: -5 }}
-              className="flex items-center gap-3 px-8 py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-sm uppercase tracking-widest"
+              className="flex items-center gap-3 px-8 py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-xs sm:text-sm uppercase tracking-widest"
             >
               <ArrowLeft className="h-5 w-5" />
               Back to Home
@@ -63,7 +63,7 @@ const MyOrder = () => {
         </div>
       </div>
 
-      <div className="max-w-[1800px] mx-auto px-6 md:px-12 lg:px-12 py-16">
+      <div className="max-w-[1800px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-12 md:py-16">
         <div className="grid grid-cols-1 gap-8">
           {orderList.length > 0 ? orderList.map((order, index) => (
             <motion.div
@@ -74,21 +74,21 @@ const MyOrder = () => {
             >
               <Collapsible className="group">
                 <CollapsibleTrigger asChild>
-                  <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-10 bg-white border border-gray-100 rounded-[2.5rem] hover:border-primary/20 hover:shadow-2xl hover:shadow-green-900/5 transition-all duration-500 cursor-pointer group-data-[state=open]:border-primary/20 group-data-[state=open]:shadow-xl">
-                    <div className="flex items-center gap-8">
-                      <div className="h-16 w-16 rounded-[1.2rem] bg-green-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+                  <div className="w-full  flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 p-5 sm:p-8 md:p-10 bg-white border border-gray-100 rounded-[2rem] sm:rounded-[2.5rem] hover:border-primary/20 hover:shadow-2xl hover:shadow-green-900/5 transition-all duration-500 cursor-pointer group-data-[state=open]:border-primary/20 group-data-[state=open]:shadow-xl">
+                    <div className="flex items-center gap-5 sm:gap-8">
+                      <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-[1rem] sm:rounded-[1.2rem] bg-green-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
                         <History className="h-7 w-7" />
                       </div>
                       <div className="text-left space-y-1">
                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Order Placed</p>
-                        <h2 className="text-xl font-black text-gray-900">{moment(order?.createdAt).format("DD MMMM YYYY")}</h2>
+                        <h2 className="text-lg sm:text-xl font-black text-gray-900">{moment(order?.createdAt).format("DD MMMM YYYY")}</h2>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-8 md:gap-16">
+                    <div className="flex items-center gap-6 sm:gap-8 md:gap-16 w-full sm:w-auto">
                       <div className="text-center md:text-left space-y-1 w-40">
                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Total Amount</p>
-                        <h2 className="text-2xl font-black text-primary">Rp{(order?.totalOrderAmount).toLocaleString("id-ID")}</h2>
+                        <h2 className="text-xl sm:text-2xl font-black text-primary">Rp{(order?.totalOrderAmount).toLocaleString("id-ID")}</h2>
                       </div>
                       
                       <div className="text-center md:text-left space-y-1 w-32 flex flex-col items-center">
@@ -110,7 +110,7 @@ const MyOrder = () => {
                   <motion.div 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-6 bg-gray-50/50 rounded-[3rem] p-8 md:p-12 border border-green-50 shadow-inner"
+                    className="mt-4 sm:mt-6 bg-gray-50/50 rounded-[2rem] sm:rounded-[3rem] p-5 sm:p-8 md:p-12 border border-green-50 shadow-inner"
                   >
                     <div className="space-y-8">
                       {order.orderItemList.map((orderItem, idx) => (
@@ -126,13 +126,13 @@ const MyOrder = () => {
               </Collapsible>
             </motion.div>
           )) : (
-            <div className="py-32 flex flex-col items-center justify-center text-center space-y-6">
-              <div className="bg-gray-50 p-12 rounded-[2.5rem]">
-                <History className="h-20 w-26 text-gray-200" />
+            <div className="py-16 sm:py-32 flex flex-col items-center justify-center text-center space-y-4 sm:space-y-6">
+              <div className="bg-gray-50 p-8 sm:p-12 rounded-[2rem] sm:rounded-[2.5rem]">
+                <History className="h-14 w-14 sm:h-20 sm:w-20 text-gray-200" />
               </div>
               <div className="space-y-2">
-                <h2 className="text-3xl font-black text-gray-900 tracking-tighter">No orders found</h2>
-                <p className="text-gray-400 font-medium text-lg">You haven't made any purchases yet.</p>
+                <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tighter">No orders found</h2>
+                <p className="text-gray-400 font-medium text-base sm:text-lg">You haven't made any purchases yet.</p>
               </div>
             </div>
           )}
