@@ -12,7 +12,7 @@ const TrustFeatures = () => {
   ];
 
   return (
-    <div className="mt-28 px-6 md:px-12 lg:px-12 w-full">
+    <div className="mt-16 sm:mt-28 px-5 sm:px-8 md:px-12 w-full">
       <div className="max-w-[1800px] mx-auto">
         <motion.div
           initial="hidden"
@@ -25,10 +25,10 @@ const TrustFeatures = () => {
               transition: { staggerChildren: 0.15, delayChildren: 0.05 },
             },
           }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-16 border-y border-green-100/50 bg-green-50/10 rounded-[2.5rem]"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-10 sm:py-16 border-y border-green-100/50 bg-green-50/10 rounded-[2rem] sm:rounded-[2.5rem]"
         >
           {features.map((feature, index) => (
-            <div key={index} className="flex justify-center w-full px-6 sm:px-4">
+            <div key={index} className="flex justify-center w-full px-4 sm:px-6">
               <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 20 },
@@ -38,21 +38,13 @@ const TrustFeatures = () => {
                     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
                   },
                 }}
-                className="flex items-center gap-6 group cursor-default w-full max-w-sm"
+                className="flex items-center gap-4 sm:gap-6 group cursor-default w-full max-w-sm"
               >
-                <div
-                  className="p-5 bg-white rounded-2xl shrink-0
-                    text-primary border border-green-100 shadow-sm
-                    group-hover:bg-primary group-hover:text-white
-                    group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-green-900/10
-                    transition-[background-color,color,box-shadow,transform] duration-500 ease-out
-                    will-change-transform
-                    [&>svg]:h-7 [&>svg]:w-7"
-                >
+                <div className="p-4 sm:p-5 bg-white rounded-2xl shrink-0 text-primary border border-green-100 shadow-sm group-hover:bg-primary group-hover:text-white group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-green-900/10 transition-[background-color,color,box-shadow,transform] duration-500 ease-out will-change-transform [&>svg]:h-5 [&>svg]:w-5 sm:[&>svg]:h-7 sm:[&>svg]:w-7">
                   {feature.icon}
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-bold text-gray-900 text-lg leading-tight group-hover:text-primary transition-colors duration-300">
+                  <h3 className="font-bold text-gray-900 text-base sm:text-lg leading-tight group-hover:text-primary transition-colors duration-300">
                     {feature.title}
                   </h3>
                   <p className="text-gray-500 text-sm font-medium leading-relaxed">

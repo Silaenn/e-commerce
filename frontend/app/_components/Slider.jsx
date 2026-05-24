@@ -13,25 +13,15 @@ import { motion } from "framer-motion";
 
 const Slider = ({ sliderList }) => {
   return (
-    <div className="mt-10 px-6 md:px-12 lg:px-12 w-full">
+    <div className="mt-8 sm:mt-10 px-5 sm:px-8 md:px-12 w-full">
       <div className="max-w-[1800px] mx-auto">
         <Carousel className="w-full">
           <CarouselContent className="-ml-0">
             {sliderList.map((s, index) => (
               <CarouselItem key={index} className="pl-0">
-                <div
-                  className="
-                    grid
-                    grid-cols-1
-                    2xl:grid-cols-[minmax(420px,1fr)_2fr]
-                    bg-gradient-to-br from-green-50/50 to-white
-                    rounded-[2.5rem] border border-green-100/50
-                    overflow-hidden
-                    min-h-[400px] 2xl:min-h-[500px]
-                  "
-                >
+                <div className="grid grid-cols-1 2xl:grid-cols-[minmax(420px,1fr)_2fr] bg-gradient-to-br from-green-50/50 to-white rounded-[2.5rem] border border-green-100/50 overflow-hidden min-h-[280px] sm:min-h-[350px] 2xl:min-h-[500px]">
                   {/* Left Content: Text */}
-                  <div className="flex flex-col justify-center p-12 md:p-20 space-y-6 min-w-0">
+                  <div className="flex flex-col justify-center p-6 sm:p-10 md:p-20 space-y-4 sm:space-y-6 min-w-0">
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -48,7 +38,7 @@ const Slider = ({ sliderList }) => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
-                      className="text-3xl md:text-4xl 2xl:text-5xl font-extrabold text-gray-900 leading-[0.9] tracking-tighter"
+                      className="text-2xl sm:text-3xl md:text-4xl 2xl:text-5xl font-extrabold text-gray-900 leading-tight sm:leading-[0.9] tracking-tighter"
                     >
                       {s.name}
                     </motion.h2>
@@ -57,7 +47,7 @@ const Slider = ({ sliderList }) => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4 }}
-                      className="text-gray-500 text-lg md:text-xl font-medium  leading-relaxed"
+                      className="text-gray-500 text-sm sm:text-lg md:text-xl font-medium leading-relaxed"
                     >
                       Premium quality groceries delivered fresh to your doorstep every single day.
                     </motion.p>
@@ -68,7 +58,7 @@ const Slider = ({ sliderList }) => {
                       transition={{ delay: 0.5 }}
                     >
                       <Link href={s.link || "#"}>
-                        <button className="bg-primary text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-green-900/10 hover:bg-green-700 transition-all active:scale-95">
+                        <button className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl shadow-green-900/10 hover:bg-green-700 transition-all active:scale-95">
                           Shop Collection
                         </button>
                       </Link>
@@ -76,7 +66,7 @@ const Slider = ({ sliderList }) => {
                   </div>
 
                   {/* Right/Bottom Content: Image */}
-                  <div className="relative bg-green-100/10 overflow-hidden min-h-[150px] sm:min-h-[300px] xl:min-h-[500px]">
+                  <div className="relative bg-green-100/10 overflow-hidden min-h-[150px] sm:min-h-[250px] md:min-h-[350px] xl:min-h-[500px]">
                     <motion.div
                       initial={{ opacity: 0, scale: 1.1 }}
                       animate={{ opacity: 1, scale: 1 }}
