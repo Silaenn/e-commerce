@@ -123,10 +123,10 @@ const Header = () => {
     <motion.div 
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="p-4 px-6 md:px-12 lg:px-12 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b w-full"
+      className="py-4 px-5 sm:px-8 md:px-12 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b w-full"
     >
       <div className="max-w-[1800px] mx-auto flex justify-between items-center">
-        <div className="flex items-center gap-10 flex-1">
+        <div className="flex items-center gap-4 sm:gap-8 flex-1">
         <Link href={"/"}>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Image
@@ -191,7 +191,7 @@ const Header = () => {
         </motion.div>
       </div>
       
-      <div className="flex gap-4 sm:gap-6 items-center">
+      <div className="flex gap-4 sm:gap-8 items-center">
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -304,7 +304,7 @@ const Header = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >
-            <div className="pt-4 pb-2">
+            <div className="pt-4 pb-1">
               <div className="flex items-center gap-3 bg-gray-50 rounded-2xl px-6 py-3 border border-gray-100 focus-within:border-primary/30 focus-within:bg-white focus-within:shadow-xl focus-within:shadow-green-900/5 transition-all">
                 <Search className="h-5 w-5 text-primary/40" />
                 <input
