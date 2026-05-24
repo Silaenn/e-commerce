@@ -1,0 +1,10 @@
+# Strapi ignore files
+node_modules/
+.tmp/
+.cache/
+build/
+dist/
+.env
+.env.local
+.strapi/
+.DS_Store
