@@ -44,81 +44,100 @@ const CreateAccount = () => {
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 overflow-hidden">
       {/* Form Side */}
-      <motion.div 
-        initial={{ x: -100, opacity: 0 }}
+      <motion.div
+        initial={{ x: -30, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex flex-col items-center justify-center p-8 md:p-20 bg-white order-last md:order-first"
+        className="flex flex-col items-center justify-center p-6 sm:p-10 md:p-20 bg-white order-last md:order-first"
       >
-        <div className="w-full max-w-sm space-y-10">
-         <motion.div
+        <div className="w-full max-w-sm space-y-6 sm:space-y-10">
+          <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="flex md:block justify-center"
+            className="flex sm:block justify-center"
           >
             <Link href="/" className="inline-block">
-              <Image src="/logo.png" width={140} height={140} alt="logo" />
+              <Image
+                src="/logo.png"
+                width={140}
+                height={140}
+                alt="logo"
+                className="w-28 sm:w-36 h-auto"
+              />
             </Link>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="space-y-2 text-center md:text-left"
+            className="space-y-2 text-center sm:text-left"
           >
-            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Create Account</h1>
-            <p className="text-gray-500 font-medium">Join us for a fresh shopping experience.</p>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+              Create Account
+            </h1>
+            <p className="text-sm sm:text-base text-gray-500 font-medium">
+              Join us for a fresh shopping experience.
+            </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6"
           >
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Username</label>
+              <label className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">
+                Username
+              </label>
               <Input
                 placeholder="Full Name"
-                className="h-12 border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
+                className="h-12 rounded-2xl border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Email</label>
+              <label className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">
+                Email
+              </label>
               <Input
                 placeholder="name@example.com"
-                className="h-12 border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
+                className="h-12 rounded-2xl border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-bold text-gray-700 uppercase tracking-wider">Password</label>
+              <label className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">
+                Password
+              </label>
               <Input
                 type="password"
                 placeholder="••••••••"
-                className="h-12 border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
+                className="h-12 rounded-2xl border-gray-200 focus:border-primary focus:ring-primary transition-all font-medium"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            
+
             <Button
-              className="w-full h-14 rounded-xl text-lg font-bold bg-primary text-white hover:bg-green-700 transition-all shadow-lg shadow-green-900/10 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none"
+              className="w-full h-12 sm:h-14 rounded-xl text-base sm:text-lg font-bold bg-primary text-white hover:bg-green-700 transition-all shadow-lg shadow-green-900/10 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none"
               onClick={() => onCreateAccount()}
-              disabled={!(username || email || password) || loader}
+              disabled={!(username && email && password) || loader}
             >
               {loader ? (
-                <LoaderIcon className="animate-spin h-6 w-6" />
+                <LoaderIcon className="animate-spin h-5 w-5 sm:h-6 sm:w-6" />
               ) : (
                 "Create Account"
               )}
             </Button>
 
-            <p className="text-center text-gray-500 font-medium">
-              Already have an account? {""}
-              <Link href="/sign-in" className="text-primary font-bold hover:underline">
+            <p className="text-sm text-center text-gray-500 font-medium">
+              Already have an account?{" "}
+              <Link
+                href="/sign-in"
+                className="text-primary font-bold hover:underline"
+              >
                 Sign In
               </Link>
             </p>
@@ -127,18 +146,17 @@ const CreateAccount = () => {
       </motion.div>
 
       {/* Visual Side */}
-      <motion.div 
-        initial={{ x: 100, opacity: 0 }}
+      <motion.div
+        initial={{ x: 30, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="hidden md:block relative h-full w-full bg-green-50 overflow-hidden"
       >
-        <Image 
-          src="/create-account.jpeg" 
-          layout="fill" 
-          objectFit="cover" 
+        <Image
+          src="/create-account.jpeg"
+          fill
           alt="Fresh Veggies"
-          className="opacity-90 grayscale-[10%]"
+          className="object-cover opacity-90 grayscale-[10%]"
         />
         <div className="absolute inset-0 bg-green-900/5" />
       </motion.div>
