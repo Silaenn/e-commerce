@@ -189,17 +189,17 @@ const Header = () => {
         </motion.div>
       </div>
       
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-4 sm:gap-6 items-center">
         <Sheet>
           <SheetTrigger asChild>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="flex gap-2 items-center text-lg relative group"
             >
-              <ShoppingBasket className="h-7 w-7 text-gray-900 group-hover:text-primary transition-colors" />
+              <ShoppingBasket className="h-6 w-6 sm:h-7 sm:w-7 text-gray-900 group-hover:text-primary transition-colors" />
               <AnimatePresence mode="popLayout">
-                <motion.span 
+                <motion.span
                   key={totalCartItem}
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -211,13 +211,14 @@ const Header = () => {
               </AnimatePresence>
             </motion.button>
           </SheetTrigger>
-          <SheetContent className="rounded-l-[2rem] bg-white shadow-2xl border-l p-0 flex flex-col h-full">
-            <SheetHeader className="p-8 pt-14 pb-4 relative">
-              <SheetTitle className="bg-primary text-white font-extrabold text-xl p-5 rounded-2xl mb-4 shadow-lg shadow-green-900/10">
+
+          <SheetContent className="rounded-l-[1.5rem] sm:rounded-l-[2rem] bg-white shadow-2xl border-l p-0 flex flex-col h-full overflow-hidden w-full sm:w-[380px] max-w-full">
+            <SheetHeader className="px-4 sm:px-8 pt-10 sm:pt-14 pb-3 sm:pb-4 relative flex flex-col flex-1 min-h-0">
+              <SheetTitle className="bg-primary text-white font-extrabold text-base sm:text-xl p-4 sm:p-5 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 shadow-lg shadow-green-900/10">
                 Your Shopping Cart
               </SheetTitle>
               <SheetDescription asChild>
-                <div className="flex-1 overflow-hidden mt-4 h-full">
+                <div className="flex-1 min-h-0 overflow-y-auto mt-3 sm:mt-4 pr-1">
                   <CartItemList
                     cartItemList={cartItemList}
                     onDeleteItem={onDeleteItem}
@@ -226,15 +227,19 @@ const Header = () => {
               </SheetDescription>
             </SheetHeader>
 
-            <div className="mt-auto p-8 bg-gray-50/50 border-t">
-              <div className="flex flex-col gap-6">
-                <div className="flex justify-between items-center bg-white p-5 rounded-2xl shadow-sm border border-green-100/50">
-                  <span className="text-gray-500 font-bold uppercase tracking-widest text-xs">Subtotal</span>
-                  <span className="text-2xl font-black text-primary">Rp{subtotal.toLocaleString("id-ID")}</span>
+            <div className="mt-auto px-4 sm:px-8 py-4 sm:py-6 bg-gray-50/50 border-t shrink-0">
+              <div className="flex flex-col gap-3 sm:gap-6">
+                <div className="flex justify-between items-center bg-white px-4 py-3 sm:p-5 rounded-xl sm:rounded-2xl shadow-sm border border-green-100/50">
+                  <span className="text-gray-500 font-bold uppercase tracking-widest text-[10px] sm:text-xs">
+                    Subtotal
+                  </span>
+                  <span className="text-xl sm:text-2xl font-black text-primary">
+                    Rp{subtotal.toLocaleString("id-ID")}
+                  </span>
                 </div>
                 <SheetClose asChild>
                   <Button
-                    className="h-16 rounded-full text-lg font-black shadow-xl shadow-green-900/20 w-full"
+                    className="h-12 sm:h-16 rounded-full text-base sm:text-lg font-black shadow-xl shadow-green-900/20 w-full"
                     disabled={subtotal === 0}
                     onClick={() => router.push(jwt ? "/checkout" : "sign-in")}
                   >
