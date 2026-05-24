@@ -54,9 +54,9 @@ const MyOrder = () => {
           <Link href={"/"}>
             <motion.button 
               whileHover={{ x: -5 }}
-              className="flex items-center gap-3 px-8 py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-xs sm:text-sm uppercase tracking-widest"
+              className="flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-white border border-green-100 rounded-full text-primary font-black shadow-sm hover:shadow-xl hover:shadow-green-900/5 transition-all text-xs sm:text-sm uppercase tracking-widest"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
               Back to Home
             </motion.button>
           </Link>
@@ -77,7 +77,7 @@ const MyOrder = () => {
                   <div className="w-full  flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 p-5 sm:p-8 md:p-10 bg-white border border-gray-100 rounded-[2rem] sm:rounded-[2.5rem] hover:border-primary/20 hover:shadow-2xl hover:shadow-green-900/5 transition-all duration-500 cursor-pointer group-data-[state=open]:border-primary/20 group-data-[state=open]:shadow-xl">
                     <div className="flex items-center gap-5 sm:gap-8">
                       <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-[1rem] sm:rounded-[1.2rem] bg-green-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500">
-                        <History className="h-7 w-7" />
+                        <History className="h-5 w-5 sm:h-7 sm:w-7" />
                       </div>
                       <div className="text-left space-y-1">
                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Order Placed</p>
@@ -85,7 +85,7 @@ const MyOrder = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-6 sm:gap-8 md:gap-16 w-full sm:w-auto">
+                    <div className="flex items-center gap-4 sm:gap-6 md:gap-16 w-full sm:w-auto">
                       <div className="text-center md:text-left space-y-1 w-40">
                         <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Total Amount</p>
                         <h2 className="text-xl sm:text-2xl font-black text-primary">Rp{(order?.totalOrderAmount).toLocaleString("id-ID")}</h2>

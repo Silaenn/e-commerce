@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const TopCategoryList = ({ categoryList, selectedCategory }) => {
   return (
-    <div className="mt-12 px-6 md:px-12 lg:px-12 w-full">
+    <div className="mt-12 px-5 sm:px-8 md:px-12 w-full">
       <div className="max-w-[1800px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
