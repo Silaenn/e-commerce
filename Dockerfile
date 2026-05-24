@@ -3,13 +3,11 @@ FROM node:20-alpine AS build
 RUN apk add --no-cache build-base gcc autoconf automake libtool zlib-dev vips-dev git
 WORKDIR /opt/app
 
-# Copy dari folder backend (karena Dockerfile di root)
-COPY backend/package.json backend/package-lock.json ./
+# COPY langsung karena isi backend sudah di root HF
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy sisa file dari folder backend
-COPY backend/ .
-
+COPY . .
 RUN npm run build
 
 # Stage 2: Runtime
