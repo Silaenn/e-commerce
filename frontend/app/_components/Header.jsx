@@ -264,7 +264,7 @@ const Header = () => {
         {!jwt ? (
           <Link href={"/sign-in"}>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="rounded-full px-8 font-bold">Login</Button>
+              <Button className="rounded-full px-8 font-black uppercase tracking-widest text-xs">Login</Button>
             </motion.div>
           </Link>
         ) : (
@@ -279,7 +279,7 @@ const Header = () => {
               </motion.div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="rounded-2xl min-w-[180px] bg-white shadow-2xl border p-2">
-              <DropdownMenuLabel className="font-bold text-xs uppercase tracking-widest text-gray-400 pb-2">My Account</DropdownMenuLabel>
+              <DropdownMenuLabel className="font-black text-[10px] uppercase tracking-[0.2em] text-gray-400 pb-2 p-3">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer rounded-xl p-3 font-bold">Profile</DropdownMenuItem>
               <Link href={"/my-order"}>

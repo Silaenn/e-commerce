@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const OrderConfirmation = () => {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center p-5 sm:p-6 bg-white relative overflow-hidden">
+    <div className="min-h-[80vh] flex items-center justify-center py-10 sm:py-24 px-5 sm:px-8 md:px-12 bg-white relative overflow-hidden">
       {/* Decorative Background Elements */}
       <motion.div
         animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
@@ -24,7 +24,7 @@ const OrderConfirmation = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="max-w-2xl w-full flex flex-col items-center text-center space-y-6 sm:space-y-8 px-6 py-10 sm:px-12 sm:py-16 md:px-20 md:py-20 rounded-[2rem] sm:rounded-[3rem] bg-white border border-green-50 shadow-2xl shadow-green-900/5 relative"
+        className="max-w-2xl w-full flex flex-col items-center text-center space-y-6 sm:space-y-8 px-6 py-10 sm:px-12 sm:py-16 md:px-20 md:py-20 rounded-[2rem] sm:rounded-[3.5rem] bg-white border border-green-50 shadow-2xl shadow-green-900/5 relative"
       >
         {/* Success Icon */}
         <div className="relative">
@@ -44,6 +44,17 @@ const OrderConfirmation = () => {
         </div>
 
         <div className="space-y-3 sm:space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="flex items-center justify-center gap-2"
+          >
+            <span className="h-0.5 w-8 bg-primary/60" />
+            <span className="text-primary font-black tracking-[0.2em] text-xs uppercase">
+              Success
+            </span>
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -68,10 +79,10 @@ const OrderConfirmation = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full pt-4 sm:pt-6"
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full pt-4 sm:pt-6"
         >
           <Link href="/my-order" className="flex-1">
-            <Button className="w-full h-12 sm:h-16 rounded-full font-black text-base sm:text-lg bg-primary hover:bg-green-700 transition-all shadow-xl shadow-green-900/20 group">
+            <Button className="w-full h-12 sm:h-16 rounded-full font-black text-base sm:text-lg bg-primary hover:bg-green-700 transition-all shadow-xl shadow-green-900/20 group uppercase tracking-widest">
               Track Order
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -79,10 +90,10 @@ const OrderConfirmation = () => {
           <Link href="/" className="flex-1">
             <Button
               variant="outline"
-              className="w-full h-12 sm:h-16 rounded-full font-black text-base sm:text-lg border-green-100 text-gray-600 hover:bg-green-50 hover:text-primary transition-all gap-2"
+              className="w-full h-12 sm:h-16 rounded-full font-black text-base sm:text-lg border-green-100 text-gray-600 hover:bg-green-50 hover:text-primary transition-all gap-2 uppercase tracking-widest"
             >
               <ShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
-              Continue Shopping
+              Continue
             </Button>
           </Link>
         </motion.div>
