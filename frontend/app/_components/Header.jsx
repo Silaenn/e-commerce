@@ -46,6 +46,7 @@ const Header = () => {
   const router = useRouter();
   const [subtotal, setSubTotal] = useState(0);
   const params = usePathname();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   // const disabled = params == "/"; // Hapus logika ini
 
   useEffect(() => {
@@ -114,6 +115,7 @@ const Header = () => {
     if (event.key === "Enter") {
       setSearch(searchInput);
       router.push(`/search?q=${searchInput}`);
+      setIsSearchOpen(false);
     }
   };
 
@@ -190,6 +192,14 @@ const Header = () => {
       </div>
       
       <div className="flex gap-4 sm:gap-6 items-center">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="md:hidden flex items-center justify-center text-gray-900 hover:text-primary transition-colors"
+          onClick={() => setIsSearchOpen(!isSearchOpen)}
+        >
+          <Search className="h-6 w-6" />
+        </motion.button>
         <Sheet>
           <SheetTrigger asChild>
             <motion.button
@@ -284,6 +294,33 @@ const Header = () => {
         )}
       </div>
       </div>
+
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden"
+          >
+            <div className="pt-4 pb-2">
+              <div className="flex items-center gap-3 bg-gray-50 rounded-2xl px-6 py-3 border border-gray-100 focus-within:border-primary/30 focus-within:bg-white focus-within:shadow-xl focus-within:shadow-green-900/5 transition-all">
+                <Search className="h-5 w-5 text-primary/40" />
+                <input
+                  type="text"
+                  placeholder="Search fresh groceries..."
+                  className="bg-transparent outline-none text-sm w-full font-bold placeholder:text-gray-300 placeholder:font-medium"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  autoFocus
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
