@@ -1,13 +1,13 @@
 "use client";
 import GlobalApi from "@/app/_utils/GlobalApi";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ProductList from "@/app/_components/ProductList";
 import { motion } from "framer-motion";
 import { ArrowLeft, Search } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const [productList, setProductList] = useState([]);
@@ -83,6 +83,20 @@ function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center py-16 sm:py-32">
+          <div className="h-12 w-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   );
 }
 
