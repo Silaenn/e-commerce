@@ -51,30 +51,13 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
   };
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="bg-background min-h-screen"
-    >
-      <motion.div variants={sectionVariants}>
-        <Slider sliderList={sliderList} />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <CategoryList categoryList={categoryList} />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <TrustFeatures />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <ProductList productList={productList.slice(0, 8)} search={search} />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <SpecialPromo />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <Footer />
-      </motion.div>
-    </motion.div>
+     <div className="bg-background min-h-screen">
+      <Slider sliderList={sliderList} />
+      <CategoryList categoryList={categoryList} />
+      <TrustFeatures />
+      <ProductList productList={productList.slice(0, 8)} search={search} />
+      <SpecialPromo />
+      <Footer />
+    </div>
   );
 }
