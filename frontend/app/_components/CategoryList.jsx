@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
+import { resolveMediaUrl } from "../_utils/backend";
 
 const CategoryList = ({ categoryList }) => {
   const containerVariants = {
@@ -86,10 +87,7 @@ const CategoryList = ({ categoryList }) => {
                     className="relative aspect-square w-full rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] bg-gray-50 border border-transparent flex items-center justify-center p-5 sm:p-8 md:p-10 transition-all duration-500 group-hover:bg-white group-hover:border-green-100 group-hover:shadow-2xl group-hover:shadow-green-900/5 overflow-hidden"
                   >
                     <Image
-                      src={`${
-                        process.env.NEXT_PUBLIC_BACKEND_BASE_URL ||
-                        "http://localhost:1337"
-                      }${c?.image?.url || ""}`}
+                      src={resolveMediaUrl(c?.image?.url) || "/logo.png"}
                       width={150}
                       height={150}
                       alt={c.name}

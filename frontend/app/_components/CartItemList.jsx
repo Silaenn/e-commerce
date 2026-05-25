@@ -3,14 +3,12 @@ import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveMediaUrl } from "../_utils/backend";
 
 const CartItemList = ({ cartItemList, onDeleteItem }) => {
-  const backendBaseUrl =
-    process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337";
-
   const getCartImageSrc = (image) => {
     if (!image) return "/logo.png";
-    return `${backendBaseUrl}${image}`;
+    return resolveMediaUrl(image) || "/logo.png";
   };
 
   return (

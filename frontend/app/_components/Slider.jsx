@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { resolveMediaUrl } from "../_utils/backend";
 
 const Slider = ({ sliderList }) => {
   return (
@@ -106,10 +107,7 @@ const Slider = ({ sliderList }) => {
                         className="absolute inset-0"
                       >
                         <Image
-                          src={`${
-                            process.env.NEXT_PUBLIC_BACKEND_BASE_URL ||
-                            "http://localhost:1337"
-                          }${s?.image?.url || ""}`}
+                          src={resolveMediaUrl(s?.image?.url) || "/logo.png"}
                           fill
                           alt="slider product"
                           className="object-cover transition-transform duration-1000"

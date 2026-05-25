@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
+import { resolveMediaUrl } from "../../../_utils/backend";
 
 const TopCategoryList = ({ categoryList, selectedCategory }) => {
   return (
@@ -33,9 +34,7 @@ const TopCategoryList = ({ categoryList, selectedCategory }) => {
               >
                 <div className={`p-4 rounded-2xl transition-all duration-300 ${selectedCategory === c.name ? "bg-green-50" : "bg-gray-50 group-hover:bg-white"}`}>
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
-                      c?.image?.url || ""
-                    }`}
+                    src={resolveMediaUrl(c?.image?.url) || "/logo.png"}
                     width={40}
                     height={40}
                     alt={c.name}

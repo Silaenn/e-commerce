@@ -10,6 +10,7 @@ import {
 import ProductItemDetail from "./ProductItemDetail";
 import { ShoppingBasket } from "lucide-react";
 import { motion } from "framer-motion";
+import { resolveMediaUrl } from "../_utils/backend";
 
 const ProductItem = ({ p }) => {
   return (
@@ -31,10 +32,7 @@ const ProductItem = ({ p }) => {
           className="w-full h-full relative z-10"
         >
           <Image
-            src={
-              (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
-              p.images[0].url
-            }
+            src={resolveMediaUrl(p?.images?.[0]?.url) || "/logo.png"}
             width={400}
             height={400}
             alt={p.name}

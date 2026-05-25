@@ -34,6 +34,7 @@ import { toast } from "sonner";
 import useAuth from "../_context/useAuth";
 import { SearchContext } from "../_context/SearchContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveMediaUrl } from "../_utils/backend";
 
 const Header = () => {
   const { setSearch } = useContext(SearchContext);
@@ -160,9 +161,7 @@ const Header = () => {
                 <DropdownMenuItem className="flex gap-4 items-center cursor-pointer rounded-xl p-3 font-bold text-gray-600">
                   <div className="h-10 w-10 bg-green-50 rounded-lg flex items-center justify-center">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337"}${
-                        c?.image?.url || ""
-                      }`}
+                      src={resolveMediaUrl(c?.image?.url) || "/logo.png"}
                       alt={c?.name || "icon"}
                       width={25}
                       height={25}

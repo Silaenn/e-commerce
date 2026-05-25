@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import GlobalApi from "../_utils/GlobalApi";
+import { resolveMediaUrl } from "../_utils/backend";
 import { toast } from "sonner";
 import { UpdateCartContext } from "../_context/UpdateCartContext";
 import { motion } from "framer-motion";
@@ -91,10 +92,7 @@ const ProductItemDetail = ({ product }) => {
         className="bg-gray-50 p-6 sm:p-10 md:p-12 flex items-center justify-center min-h-[300px] md:min-h-auto"
       >
         <Image
-          src={
-            (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
-            product.images[0].url
-          }
+          src={resolveMediaUrl(product?.images?.[0]?.url) || "/logo.png"}
           alt="image"
           width={600}
           height={600}

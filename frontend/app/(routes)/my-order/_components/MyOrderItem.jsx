@@ -2,6 +2,7 @@ import { CircleCheckBig, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { resolveMediaUrl } from "../../../_utils/backend";
 
 const MyOrderItem = ({ orderItem, orderStatus }) => {
   return (
@@ -11,8 +12,9 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
           <div className="relative h-24 w-24 bg-white rounded-3xl flex items-center justify-center p-4 border border-green-50 shadow-sm group-hover/item:shadow-lg transition-all duration-500">
             <Image
               src={
-                (process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:1337") +
-                (orderItem.image || "/logo.png")
+                orderItem.image
+                  ? resolveMediaUrl(orderItem.image)
+                  : "/logo.png"
               }
               width={80}
               height={80}

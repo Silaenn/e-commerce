@@ -1,7 +1,8 @@
 import axios from "axios";
+import { getApiBaseUrl } from "./backend";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:1337/api",
+  baseURL: getApiBaseUrl(),
 });
 
 const getCategory = () => axiosClient.get("/categories?populate=*");
