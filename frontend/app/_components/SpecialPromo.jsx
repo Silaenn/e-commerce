@@ -11,7 +11,7 @@ const SpecialPromo = () => {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative overflow-hidden rounded-[2rem] sm:rounded-[3rem] bg-gradient-to-br from-green-50 via-white to-green-50/30 border border-green-100/50 shadow-2xl shadow-green-900/5 grid grid-cols-1 2xl:grid-cols-[minmax(420px,1fr)_2fr] min-h-[280px] sm:min-h-[350px] 2xl:min-h-[500px] group"
         >
           {/* Left/Top: Text */}
@@ -59,7 +59,7 @@ const SpecialPromo = () => {
               transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-2xl shadow-green-900/20 w-fit hover:bg-green-700 hover:shadow-green-900/30 transition-colors duration-200"
+              className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-2xl shadow-green-900/20 w-fit hover:bg-green-700 transition-all"
             >
               Claim Offer Now
             </motion.button>
@@ -84,29 +84,29 @@ const SpecialPromo = () => {
           </div>
 
           {/* Decorative blobs */}
-          <motion.div 
-            animate={{ 
+          <motion.div
+            animate={{
               y: [0, -20, 0],
               scale: [1, 1.1, 1],
             }}
-            transition={{ 
-              duration: 8, 
+            transition={{
+              duration: 8,
               repeat: Infinity,
-              ease: "easeInOut" 
+              ease: "easeInOut",
             }}
-            className="absolute -top-24 -right-24 w-48 h-48 sm:w-96 sm:h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none" 
+            className="absolute -top-24 -right-24 w-48 h-48 sm:w-96 sm:h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none"
           />
-          <motion.div 
-            animate={{ 
+          <motion.div
+            animate={{
               y: [0, 20, 0],
               scale: [1, 1.2, 1],
             }}
-            transition={{ 
-              duration: 10, 
+            transition={{
+              duration: 10,
               repeat: Infinity,
-              ease: "easeInOut" 
+              ease: "easeInOut",
             }}
-            className="absolute -bottom-24 -left-24 w-48 h-48 sm:w-96 sm:h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none" 
+            className="absolute -bottom-24 -left-24 w-48 h-48 sm:w-96 sm:h-96 bg-primary/10 blur-[100px] rounded-full pointer-events-none"
           />
         </motion.div>
       </div>

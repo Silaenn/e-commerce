@@ -22,9 +22,9 @@ const TrustFeatures = () => {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: { 
+              transition: {
                 staggerChildren: 0.1,
-                delayChildren: 0.2
+                delayChildren: 0.2,
               },
             },
           }}
@@ -39,23 +39,20 @@ const TrustFeatures = () => {
                     opacity: 1,
                     scale: 1,
                     y: 0,
-                    transition: { 
+                    transition: {
                       type: "spring",
                       stiffness: 150,
-                      damping: 15
+                      damping: 15,
                     },
                   },
                 }}
                 className="flex items-center gap-4 sm:gap-6 group cursor-default w-full max-w-sm"
               >
-                <motion.div 
-                  whileHover={{ 
-                    rotate: 15,
-                    scale: 1.1
-                  }}
+                <motion.div
+                  whileHover={{ rotate: 15, scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  className="p-4 sm:p-5 bg-white rounded-2xl shrink-0 text-primary border border-green-100 shadow-sm group-hover:bg-primary group-hover:text-white group-hover:shadow-xl group-hover:shadow-green-900/10 transition-[background-color,color,box-shadow,transform] duration-500 ease-out will-change-transform [&>svg]:h-5 [&>svg]:w-5 sm:[&>svg]:h-7 sm:[&>svg]:w-7"
+                  className="p-4 sm:p-5 bg-white rounded-2xl shrink-0 text-primary border border-green-100 shadow-sm group-hover:bg-primary group-hover:text-white group-hover:shadow-xl group-hover:shadow-green-900/10 transition-[background-color,color,box-shadow] duration-500 ease-out will-change-transform [&>svg]:h-5 [&>svg]:w-5 sm:[&>svg]:h-7 sm:[&>svg]:w-7"
                 >
                   {feature.icon}
                 </motion.div>

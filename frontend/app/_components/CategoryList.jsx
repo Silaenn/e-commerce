@@ -42,11 +42,11 @@ const CategoryList = ({ categoryList }) => {
         >
           <div className="space-y-2 sm:space-y-3">
             <div className="flex items-center gap-2">
-              <motion.span 
+              <motion.span
                 initial={{ width: 0 }}
                 whileInView={{ width: 32 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="h-0.5 bg-primary/60" 
+                className="h-0.5 bg-primary/60"
               />
               <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                 Fresh Selection
@@ -70,19 +70,16 @@ const CategoryList = ({ categoryList }) => {
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-8 md:gap-10"
           >
             {categoryList.map((c, index) => (
-              <motion.div 
-                key={c.id || index} 
-                variants={itemVariants}
-              >
+              <motion.div key={c.id || index} variants={itemVariants}>
                 <Link
                   href={"/products-category/" + c.name}
                   className="group flex flex-col items-center gap-4 sm:gap-6"
                 >
                   <motion.div
-                    whileHover={{ 
+                    whileHover={{
                       y: -12,
                       rotate: 2,
-                      scale: 1.02
+                      scale: 1.02,
                     }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -106,7 +103,7 @@ const CategoryList = ({ categoryList }) => {
                     <h2 className="text-gray-900 font-bold text-sm sm:text-base md:text-xl tracking-tight transition-all duration-300 group-hover:text-primary group-hover:scale-110">
                       {c.name}
                     </h2>
-                    <motion.div 
+                    <motion.div
                       className="h-1 bg-primary mx-auto rounded-full"
                       initial={{ width: 0 }}
                       whileHover={{ width: 32 }}

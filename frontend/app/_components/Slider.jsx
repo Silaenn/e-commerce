@@ -25,10 +25,11 @@ const Slider = ({ sliderList }) => {
                     <div className="flex flex-col justify-center p-6 sm:p-10 md:p-20 space-y-4 sm:space-y-6 min-w-0">
                       <motion.div
                         initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          duration: 0.8, 
-                          ease: [0.16, 1, 0.3, 1] // OutExpo
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.8,
+                          ease: [0.16, 1, 0.3, 1],
                         }}
                         className="flex items-center gap-2"
                       >
@@ -40,11 +41,12 @@ const Slider = ({ sliderList }) => {
 
                       <motion.h2
                         initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.8, 
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.8,
                           delay: 0.1,
-                          ease: [0.16, 1, 0.3, 1]
+                          ease: [0.16, 1, 0.3, 1],
                         }}
                         className="text-2xl sm:text-3xl md:text-4xl 2xl:text-5xl font-extrabold text-gray-900 leading-tight sm:leading-[0.9] tracking-tighter"
                       >
@@ -53,30 +55,33 @@ const Slider = ({ sliderList }) => {
 
                       <motion.p
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.8, 
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.8,
                           delay: 0.2,
-                          ease: [0.16, 1, 0.3, 1]
+                          ease: [0.16, 1, 0.3, 1],
                         }}
                         className="text-gray-500 text-sm sm:text-lg md:text-xl font-medium leading-relaxed"
                       >
-                        Premium quality groceries delivered fresh to your doorstep every single day.
+                        Premium quality groceries delivered fresh to your
+                        doorstep every single day.
                       </motion.p>
 
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
+                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.5,
                           delay: 0.3,
                           type: "spring",
                           stiffness: 200,
-                          damping: 20
+                          damping: 20,
                         }}
                       >
                         <Link href={s.link || "#"}>
-                          <button className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl shadow-green-900/10 hover:bg-green-700 transition-all active:scale-95 group/btn">
+                          <button className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-xl shadow-green-900/10 hover:bg-green-700 transition-all active:scale-95">
                             <span className="flex items-center gap-2">
                               Shop Collection
                               <motion.span
@@ -95,7 +100,8 @@ const Slider = ({ sliderList }) => {
                     <div className="relative bg-green-100/10 overflow-hidden min-h-[150px] sm:min-h-[250px] md:min-h-[350px] xl:min-h-[500px]">
                       <motion.div
                         initial={{ opacity: 0, scale: 1.2, rotate: 5 }}
-                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                        viewport={{ once: true }}
                         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute inset-0"
                       >
@@ -109,7 +115,6 @@ const Slider = ({ sliderList }) => {
                           className="object-cover transition-transform duration-1000"
                         />
                       </motion.div>
-                      {/* Subtle Overlay Glow */}
                       <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent pointer-events-none" />
                     </div>
                   </div>
@@ -120,12 +125,11 @@ const Slider = ({ sliderList }) => {
             <CarouselNext className="hidden md:flex -right-10" />
           </Carousel>
         ) : (
-          <div className="w-full bg-gray-50 animate-pulse rounded-[2.5rem] min-h-[280px] sm:min-h-[350px] 2xl:min-h-[500px] border border-green-100/50" />
+          <div className="w-full bg-gray-50 animate-pulse rounded-[2rem] sm:rounded-[2.5rem] min-h-[280px] sm:min-h-[350px] 2xl:min-h-[500px] border border-green-100/50" />
         )}
       </div>
     </div>
   );
 };
-
 
 export default Slider;

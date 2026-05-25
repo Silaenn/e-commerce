@@ -9,30 +9,30 @@ import { motion } from "framer-motion";
 const Footer = () => {
   const columnVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
   };
 
   return (
     <footer className="bg-white text-gray-900 mt-20 sm:mt-32 border-t border-green-100/50 w-full relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
-      <motion.div 
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={{
           visible: {
             transition: {
-              staggerChildren: 0.1
-            }
-          }
+              staggerChildren: 0.1,
+            },
+          },
         }}
         className="max-w-[1800px] mx-auto px-5 sm:px-8 md:px-12 py-12 sm:py-20 relative z-10"
       >
@@ -76,7 +76,9 @@ const Footer = () => {
                   className="group flex items-center gap-2 hover:text-primary cursor-pointer transition-all duration-300"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-primary scale-0 group-hover:scale-100 transition-transform duration-300" />
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">{link}</span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">
+                    {link}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -94,7 +96,7 @@ const Footer = () => {
                 { Icon: Mail, text: "support@grocery.com" },
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 sm:gap-4 group cursor-pointer">
-                  <motion.div 
+                  <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     className="h-10 w-10 rounded-xl bg-green-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300 shrink-0"
                   >
@@ -110,7 +112,7 @@ const Footer = () => {
 
           {/* Newsletter */}
           <motion.div variants={columnVariants} className="space-y-4 sm:space-y-6">
-            <h2 className="font-bold text-xs uppercase tracking-[0.2em] text-primary mb-4 sm:mb-8">
+            <h2 className="font-bold text-xs uppercase tracking-[0.2em] text-primary">
               Newsletter
             </h2>
             <p className="text-gray-500 text-sm font-medium leading-relaxed">
@@ -129,7 +131,7 @@ const Footer = () => {
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           variants={columnVariants}
           className="border-t border-gray-100 mt-10 sm:mt-20 pt-6 sm:pt-10 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-6"
         >
@@ -149,13 +151,13 @@ const Footer = () => {
         </motion.div>
       </motion.div>
 
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 right-0 w-40 h-40 sm:w-64 sm:h-64 bg-primary/5 blur-[100px] rounded-full -mr-20 -mb-20 sm:-mr-32 sm:-mb-32" 
+        className="absolute bottom-0 right-0 w-40 h-40 sm:w-64 sm:h-64 bg-primary/5 blur-[100px] rounded-full -mr-20 -mb-20 sm:-mr-32 sm:-mb-32"
       />
     </footer>
   );

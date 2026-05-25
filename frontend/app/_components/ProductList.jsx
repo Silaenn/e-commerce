@@ -29,11 +29,11 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
             className="space-y-2 sm:space-y-3 text-left"
           >
             <div className="flex items-center justify-start gap-2">
-              <motion.span 
+              <motion.span
                 initial={{ width: 0 }}
                 whileInView={{ width: 32 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="h-0.5 bg-primary/60" 
+                className="h-0.5 bg-primary/60"
               />
               <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase">
                 Top Picks
@@ -47,32 +47,30 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
             </p>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="flex gap-4 self-end sm:self-auto"
-          >
-            {button && (
-              <>
-                <Button
-                  variant="outline"
-                  onClick={() => navigateCategory(-1)}
-                  className="rounded-full h-12 w-12 p-0 border-gray-200 hover:border-primary/30 hover:bg-green-50 transition-all duration-300 active:scale-90 shadow-sm hover:shadow-md"
-                >
-                  <MoveLeft className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => navigateCategory(+1)}
-                  className="rounded-full h-12 w-12 p-0 border-gray-200 hover:border-primary/30 hover:bg-green-50 transition-all duration-300 active:scale-90 shadow-sm hover:shadow-md"
-                >
-                  <MoveRight className="h-5 w-5" />
-                </Button>
-              </>
-            )}
-          </motion.div>
+          {button && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="flex gap-4 self-end sm:self-auto"
+            >
+              <Button
+                variant="outline"
+                onClick={() => navigateCategory(-1)}
+                className="rounded-full h-12 w-12 p-0 border-gray-200 hover:border-primary/30 hover:bg-green-50 transition-all duration-300 active:scale-90 shadow-sm hover:shadow-md"
+              >
+                <MoveLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigateCategory(+1)}
+                className="rounded-full h-12 w-12 p-0 border-gray-200 hover:border-primary/30 hover:bg-green-50 transition-all duration-300 active:scale-90 shadow-sm hover:shadow-md"
+              >
+                <MoveRight className="h-5 w-5" />
+              </Button>
+            </motion.div>
+          )}
         </div>
 
         {productList && productList.length > 0 ? (
@@ -88,12 +86,16 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
                 key={p.id || index}
                 variants={{
                   hidden: { opacity: 0, y: 30, scale: 0.95 },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0, 
+                  visible: {
+                    opacity: 1,
+                    y: 0,
                     scale: 1,
-                    transition: { type: "spring", stiffness: 100, damping: 15 }
-                  }
+                    transition: {
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15,
+                    },
+                  },
                 }}
               >
                 <ProductItem p={p} />
