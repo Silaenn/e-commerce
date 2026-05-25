@@ -52,17 +52,21 @@ const SpecialPromo = () => {
               delivered.
             </motion.p>
 
+           <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
             <motion.button
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
               className="bg-primary text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-2xl shadow-green-900/20 w-fit hover:bg-green-700 transition-all"
             >
               Claim Offer Now
             </motion.button>
+          </motion.div>
           </div>
 
           {/* Right/Bottom: Image */}
