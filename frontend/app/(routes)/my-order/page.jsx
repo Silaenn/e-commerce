@@ -77,9 +77,9 @@ const MyOrder = () => {
       <div className="max-w-[1800px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-12 md:py-16">
         <div className="grid grid-cols-1 gap-6 sm:gap-8">
           {loading ? (
-             <div className="space-y-6">
-               {[1, 2, 3].map(i => (
-                 <div key={i} className="h-28 w-full bg-gray-200 animate-pulse rounded-[2rem] sm:rounded-[2.5rem]" />
+             <div className="space-y-8">
+               {[1, 2, 3, 4].map(i => (
+                 <div key={i} className="h-32 w-full bg-gray-200 animate-pulse rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm" />
                ))}
              </div>
           ) : orderList.length > 0 ? orderList.map((order, index) => (

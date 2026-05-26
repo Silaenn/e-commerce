@@ -12,9 +12,9 @@ export default function Loading() {
       </div>
 
       <div className="max-w-[1800px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-12 md:py-16">
-        <div className="space-y-6">
+        <div className="space-y-8">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="h-32 w-full bg-gray-200 animate-pulse rounded-[2rem] sm:rounded-[2.5rem]" />
+            <div key={i} className="h-32 w-full bg-gray-200 animate-pulse rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm" />
           ))}
         </div>
       </div>
