@@ -79,7 +79,7 @@ const MyOrder = () => {
           {loading ? (
              <div className="space-y-6">
                {[1, 2, 3].map(i => (
-                 <div key={i} className="h-28 w-full bg-gray-50 animate-pulse rounded-[2rem] sm:rounded-[2.5rem]" />
+                 <div key={i} className="h-28 w-full bg-gray-200 animate-pulse rounded-[2rem] sm:rounded-[2.5rem]" />
                ))}
              </div>
           ) : orderList.length > 0 ? orderList.map((order, index) => (

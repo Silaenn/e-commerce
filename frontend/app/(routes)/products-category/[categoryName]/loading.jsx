@@ -23,6 +23,13 @@ export default function Loading() {
       {/* Product List Skeleton */}
       <div className="mt-16 sm:mt-28 px-5 sm:px-8 md:px-12 w-full">
         <div className="max-w-[1800px] mx-auto">
+          {/* Title Skeletons */}
+          <div className="mb-12 space-y-3">
+             <div className="h-4 w-24 bg-gray-300 animate-pulse rounded-full" />
+             <div className="h-10 w-64 sm:w-80 bg-gray-300 animate-pulse rounded-xl" />
+             <div className="h-4 w-48 bg-gray-200 animate-pulse rounded-full" />
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div key={i} className="h-[400px] w-full bg-gray-200 animate-pulse rounded-[2.5rem]" />

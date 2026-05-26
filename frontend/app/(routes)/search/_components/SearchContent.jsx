@@ -59,7 +59,7 @@ function SearchContent({ initialProductList, query }) {
         </div>
       </div>
 
-      <div className="max-w-[1800px] mx-auto min-h-[400px] px-5 sm:px-8 md:px-12">
+      <div className="w-full">
         <div className="pb-20">
           <ProductList productList={productList} loading={loading} />
           {!loading && productList.length === 0 && (
