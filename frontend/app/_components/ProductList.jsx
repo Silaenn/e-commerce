@@ -76,7 +76,7 @@ const ProductList = ({ productList, search, button, navigateCategory, loading })
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="h-[350px] w-full bg-gray-50 animate-pulse rounded-[2.5rem]" />
+              <div key={i} className="h-[350px] w-full bg-gray-200 animate-pulse rounded-[2.5rem]" />
             ))}
           </div>
         ) : productList && productList.length > 0 ? (

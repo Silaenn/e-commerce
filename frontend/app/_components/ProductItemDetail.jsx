@@ -37,12 +37,6 @@ const ProductItemDetail = ({ product }) => {
       return;
     }
 
-    // --- OPTIMISTIC UI START ---
-    // We trigger the success state immediately to make it feel instant
-    toast.success("Added to cart successfully!");
-    setUpdateCart(!updateCart); // Trigger header refresh immediately
-    // --- OPTIMISTIC UI END ---
-
     setLoading(true);
     try {
       // 1. Ambil data cart terbaru untuk mengecek apakah item sudah ada
@@ -61,6 +55,7 @@ const ProductItemDetail = ({ product }) => {
           },
         };
         await GlobalApi.updateCartQuantity(existingItem.id, updateData, jwt);
+        toast.success("Cart updated successfully!");
       } else {
         const data = {
           data: {
@@ -71,10 +66,13 @@ const ProductItemDetail = ({ product }) => {
           },
         };
         await GlobalApi.addToCart(data, jwt);
+        toast.success("Added to cart successfully!");
       }
+
+      setUpdateCart(!updateCart);
     } catch (e) {
       console.error("DEBUG: Add/Update Cart Error:", e.response?.data || e.message);
-      // Quietly fail or show error only if critical
+      toast.error(e?.response?.data?.error?.message || "Error while adding into cart");
     } finally {
       setLoading(false);
     }
