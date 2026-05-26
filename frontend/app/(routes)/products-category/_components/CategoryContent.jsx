@@ -18,9 +18,10 @@ function CategoryContent({ initialProductList, initialCategoryList, initialCateg
   // If initial data is empty (e.g. navigation), fetch on client
   useEffect(() => {
     // Check if we need to fetch (if initialProductList is from a previous category)
-    const isInitialDataValid = initialProductList && initialProductList.length > 0;
+    // We assume the initial data matches the URL. If it doesn't, we fetch.
+    const isDataMatching = initialProductList && initialProductList.length > 0;
     
-    if (!isInitialDataValid) {
+    if (!isDataMatching) {
       setLoading(true);
       GlobalApi.getProductsByCategory(categoryName).then(res => {
         setProductList(res);
@@ -30,13 +31,17 @@ function CategoryContent({ initialProductList, initialCategoryList, initialCateg
       setProductList(initialProductList);
       setLoading(false);
     }
-  }, [categoryName, initialProductList]);
+  }, [categoryName]); // Only trigger on categoryName change
 
   const navigateCategory = (direction) => {
     let newIndex = currentCategoryIndex + direction;
     if (newIndex < 0) newIndex = categoryList.length - 1;
     if (newIndex >= categoryList.length) newIndex = 0;
     const newCategory = categoryList[newIndex].name;
+    
+    // Clear list immediately for instant feedback
+    setProductList([]);
+    setLoading(true);
     router.push(`/products-category/${newCategory}`);
   };
 

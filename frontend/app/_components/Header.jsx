@@ -48,7 +48,14 @@ const Header = () => {
   const [subtotal, setSubTotal] = useState(0);
   const params = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  // const disabled = params == "/"; // Hapus logika ini
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // loading bar logic
+  useEffect(() => {
+    setIsNavigating(true);
+    const t = setTimeout(() => setIsNavigating(false), 600);
+    return () => clearTimeout(t);
+  }, [params]);
 
   useEffect(() => {
     let total = 0;
@@ -129,6 +136,16 @@ const Header = () => {
       animate={{ y: 0, opacity: 1 }}
       className="py-4 px-5 sm:px-8 md:px-12 sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b w-full"
     >
+      <AnimatePresence>
+        {isNavigating && (
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: "100%" }}
+            exit={{ opacity: 0 }}
+            className="absolute top-0 left-0 h-1 bg-primary z-[60]"
+          />
+        )}
+      </AnimatePresence>
       <div className="max-w-[1800px] mx-auto flex justify-between items-center">
         <div className="flex items-center gap-4 sm:gap-8 flex-1">
         <Link href={"/"}>

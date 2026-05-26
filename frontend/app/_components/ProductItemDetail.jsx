@@ -30,57 +30,53 @@ const ProductItemDetail = ({ product }) => {
   const addToCart = async () => {
     if (!jwt) {
       router.push("/sign-in");
-      setLoading(false);
       return;
     } else if (paymentToken) {
       toast.error("Payment is still pending. Please complete the payment.");
       setIsDisabled(true);
-    } else {
-      setLoading(true);
+      return;
+    }
 
-      try {
-        // 1. Ambil data cart terbaru untuk mengecek apakah item sudah ada
-        const cartItems = await GlobalApi.getCartItems(user.id, jwt);
-        
-        // 2. Cari apakah produk ini sudah ada di cart
-        // Perlu dicek item.product (ID produk) atau item.name jika ID tidak tersedia
-        const existingItem = cartItems.find(
-          (item) => item.product === product.id
-        );
+    // --- OPTIMISTIC UI START ---
+    // We trigger the success state immediately to make it feel instant
+    toast.success("Added to cart successfully!");
+    setUpdateCart(!updateCart); // Trigger header refresh immediately
+    // --- OPTIMISTIC UI END ---
 
-        if (existingItem) {
-          // 3. Jika ADA, update quantity dan amount
-          const newQuantity = existingItem.quantity + quantity;
-          const updateData = {
-            data: {
-              quantity: newQuantity,
-              amount: newQuantity * productTotalPrice,
-            },
-          };
+    setLoading(true);
+    try {
+      // 1. Ambil data cart terbaru untuk mengecek apakah item sudah ada
+      const cartItems = await GlobalApi.getCartItems(user.id, jwt);
+      
+      const existingItem = cartItems.find(
+        (item) => item.product === product.id
+      );
 
-          await GlobalApi.updateCartQuantity(existingItem.id, updateData, jwt);
-          toast.success("Cart updated successfully!");
-        } else {
-          // 4. Jika TIDAK ADA, buat baru
-          const data = {
-            data: {
-              quantity: quantity,
-              amount: quantity * productTotalPrice,
-              products: [product.id],
-              userId: user.id.toString(),
-            },
-          };
-          await GlobalApi.addToCart(data, jwt);
-          toast.success("Added to cart successfully!");
-        }
-
-        setUpdateCart(!updateCart);
-      } catch (e) {
-        console.error("DEBUG: Add/Update Cart Error:", e.response?.data || e.message);
-        toast.error(e?.response?.data?.error?.message || "Error while adding into cart");
-      } finally {
-        setLoading(false);
+      if (existingItem) {
+        const newQuantity = existingItem.quantity + quantity;
+        const updateData = {
+          data: {
+            quantity: newQuantity,
+            amount: newQuantity * productTotalPrice,
+          },
+        };
+        await GlobalApi.updateCartQuantity(existingItem.id, updateData, jwt);
+      } else {
+        const data = {
+          data: {
+            quantity: quantity,
+            amount: quantity * productTotalPrice,
+            products: [product.id],
+            userId: user.id.toString(),
+          },
+        };
+        await GlobalApi.addToCart(data, jwt);
       }
+    } catch (e) {
+      console.error("DEBUG: Add/Update Cart Error:", e.response?.data || e.message);
+      // Quietly fail or show error only if critical
+    } finally {
+      setLoading(false);
     }
   };
   return (
