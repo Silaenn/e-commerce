@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { UpdateCartContext } from "../_context/UpdateCartContext";
 import { motion } from "framer-motion";
 
-const ProductItemDetail = ({ product }) => {
+const ProductItemDetail = ({ product, closeDialog }) => {
   const jwt = sessionStorage.getItem("jwt");
   const paymentToken = localStorage.getItem("paymentToken");
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -70,6 +70,7 @@ const ProductItemDetail = ({ product }) => {
       }
 
       setUpdateCart(!updateCart);
+      if (closeDialog) closeDialog();
     } catch (e) {
       console.error("DEBUG: Add/Update Cart Error:", e.response?.data || e.message);
       toast.error(e?.response?.data?.error?.message || "Error while adding into cart");

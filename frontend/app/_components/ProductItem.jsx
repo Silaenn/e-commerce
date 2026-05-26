@@ -13,6 +13,8 @@ import { motion } from "framer-motion";
 import { resolveMediaUrl } from "../_utils/backend";
 
 const ProductItem = ({ p }) => {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <motion.div 
       whileHover={{ 
@@ -51,7 +53,7 @@ const ProductItem = ({ p }) => {
         />
         
         {/* Quick Add Overlay */}
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <button className="absolute inset-0 z-20 bg-primary/0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center group-hover:bg-primary/10 scale-95 group-hover:scale-100">
                <motion.div 
@@ -69,7 +71,7 @@ const ProductItem = ({ p }) => {
             </button>
           </DialogTrigger>
           <DialogContent className="max-w-4xl p-0 overflow-hidden rounded-[2.5rem] border-none shadow-2xl bg-white">
-            <ProductItemDetail product={p} />
+            <ProductItemDetail product={p} closeDialog={() => setOpen(false)} />
           </DialogContent>
         </Dialog>
       </div>
