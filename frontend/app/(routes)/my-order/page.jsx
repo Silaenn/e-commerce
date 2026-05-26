@@ -18,16 +18,27 @@ const MyOrder = () => {
   const { jwt, user } = useAuth();
   const router = useRouter();
   const [orderList, setOrderList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (jwt === null) return;
-    if (!jwt) router.replace("/");
+    if (!jwt) {
+      router.replace("/");
+      return;
+    }
     getMyOrder();
   }, [jwt, router]);
 
   const getMyOrder = async () => {
-    const orderList_ = await GlobalApi.getMyOrder(user.id, jwt);
-    setOrderList(orderList_);
+    setLoading(true);
+    try {
+      const orderList_ = await GlobalApi.getMyOrder(user.id, jwt);
+      setOrderList(orderList_);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,7 +76,13 @@ const MyOrder = () => {
 
       <div className="max-w-[1800px] mx-auto px-5 sm:px-8 md:px-12 py-8 sm:py-12 md:py-16">
         <div className="grid grid-cols-1 gap-6 sm:gap-8">
-          {orderList.length > 0 ? orderList.map((order, index) => (
+          {loading ? (
+             <div className="space-y-6">
+               {[1, 2, 3].map(i => (
+                 <div key={i} className="h-28 w-full bg-gray-50 animate-pulse rounded-[2rem] sm:rounded-[2.5rem]" />
+               ))}
+             </div>
+          ) : orderList.length > 0 ? orderList.map((order, index) => (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

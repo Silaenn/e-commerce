@@ -39,7 +39,7 @@ const Checkout = () => {
     if (user && jwt) {
       setUsername(user.username || "");
       setEmail(user.email || "");
-      fetchUserAddresses();
+      fetchInitialData();
     }
 
     const storedPaymentPending = sessionStorage.getItem("paymentPending");
@@ -51,9 +51,13 @@ const Checkout = () => {
     }
   }, [user, jwt]);
 
-  const fetchUserAddresses = async () => {
+  const fetchInitialData = async () => {
     try {
-      const addresses = await GlobalApi.getUserAddresses(user.id, jwt);
+      const [addresses, items] = await Promise.all([
+        GlobalApi.getUserAddresses(user.id, jwt),
+        GlobalApi.getCartItems(user.id, jwt)
+      ]);
+
       setUserAddresses(addresses);
       if (addresses.length > 0) {
         const defaultAddr = addresses.find(a => a.isDefault) || addresses[0];
@@ -61,8 +65,11 @@ const Checkout = () => {
       } else {
         setSelectedAddressId("new");
       }
+
+      setTotalCartItem(items?.length);
+      setCartItemList(items);
     } catch (error) {
-      console.error("Error fetching addresses:", error);
+      console.error("Error fetching initial checkout data:", error);
     }
   };
 
@@ -115,8 +122,10 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    getCartItems();
-  }, [user, jwt, updateCart]);
+    if (updateCart) {
+      getCartItems();
+    }
+  }, [updateCart]);
 
   const getCartItems = async () => {
     if (user && jwt) {

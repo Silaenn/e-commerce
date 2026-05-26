@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MoveLeft, MoveRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-const ProductList = ({ productList, search, button, navigateCategory }) => {
+const ProductList = ({ productList, search, button, navigateCategory, loading }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -73,7 +73,13 @@ const ProductList = ({ productList, search, button, navigateCategory }) => {
           )}
         </div>
 
-        {productList && productList.length > 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className="h-[350px] w-full bg-gray-50 animate-pulse rounded-[2.5rem]" />
+            ))}
+          </div>
+        ) : productList && productList.length > 0 ? (
           <motion.div
             variants={containerVariants}
             initial="hidden"

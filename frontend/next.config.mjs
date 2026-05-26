@@ -24,7 +24,6 @@ try {
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    unoptimized: true,
     remotePatterns: [
       backendPattern,
       {
