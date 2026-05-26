@@ -59,15 +59,18 @@ const Header = () => {
   }, [cartItemList]);
 
   useEffect(() => {
-    getCategoryList();
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
     if (user && jwt) {
       getCartItems();
     }
   }, [user, jwt, updateCart]);
 
-  const getCategoryList = () => {
-    GlobalApi.getCategory().then((resp) => {
-      setCategory(resp.data.data);
+  const fetchCategories = () => {
+    GlobalApi.getCategoryList().then((resp) => {
+      setCategory(resp);
     });
   };
 
@@ -136,6 +139,7 @@ const Header = () => {
               width={130}
               height={80}
               className="cursor-pointer"
+              priority
             />
           </motion.div>
         </Link>

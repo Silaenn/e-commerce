@@ -55,6 +55,7 @@ const SignIn = () => {
           fill
           alt="Clean Grocery"
           className="object-cover opacity-90 grayscale-[20%]"
+          priority
         />
         <div className="absolute inset-0 bg-green-900/10" />
       </motion.div>
@@ -80,6 +81,7 @@ const SignIn = () => {
                 height={140}
                 alt="logo"
                 className="w-28 sm:w-36 h-auto"
+                priority
               />
             </Link>
           </motion.div>

@@ -25,6 +25,23 @@ export default function HomeContent({ sliderList, categoryList, productList }) {
     }
   }, [user, jwt, router]);
 
+  useEffect(() => {
+    // Set up Midtrans script
+    const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const clientKey = process.env.NEXT_PUBLIC_CLIENT;
+    const script = document.createElement("script");
+
+    script.src = snapScript;
+    script.setAttribute("data-client-key", clientKey);
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const { search } = useContext(SearchContext);
 
   const containerVariants = {

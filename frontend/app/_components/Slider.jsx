@@ -111,6 +111,7 @@ const Slider = ({ sliderList }) => {
                           fill
                           alt="slider product"
                           className="object-cover transition-transform duration-1000"
+                          priority={index === 0}
                         />
                       </motion.div>
                       <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent pointer-events-none" />

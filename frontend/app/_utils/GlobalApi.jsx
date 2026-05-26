@@ -5,26 +5,24 @@ const axiosClient = axios.create({
   baseURL: getApiBaseUrl(),
 });
 
-const getCategory = () => axiosClient.get("/categories?populate=*");
-
-const getSliders = () =>
-  axiosClient.get("/sliders?populate=*").then((resp) => {
+const getCategoryList = () =>
+  axiosClient.get("/categories?populate[image][fields][0]=url&fields[0]=name").then((resp) => {
     return resp.data.data;
   });
 
-const getCategoryList = () =>
-  axiosClient.get("/categories?populate=*").then((resp) => {
+const getSliders = () =>
+  axiosClient.get("/sliders?populate[image][fields][0]=url&fields[0]=name&fields[1]=link").then((resp) => {
     return resp.data.data;
   });
 
 const getAllProducts = () =>
-  axiosClient.get("/products?populate=*").then((resp) => {
+  axiosClient.get("/products?populate[images][fields][0]=url&populate[categories][fields][0]=name&fields[0]=name&fields[1]=sellingPrice&fields[2]=price&fields[3]=description").then((resp) => {
     return resp.data.data;
   });
 
 const getProductsByCategory = (category) =>
   axiosClient
-    .get("/products?filters[categories][name][$in]=" + category + "&populate=*")
+    .get("/products?filters[categories][name][$in]=" + category + "&populate[images][fields][0]=url&fields[0]=name&fields[1]=sellingPrice&fields[2]=price&fields[3]=description")
     .then((resp) => {
       return resp.data.data;
     });
@@ -32,7 +30,7 @@ const getProductsByCategory = (category) =>
 const searchProducts = (searchTerm) =>
   axiosClient
     .get(
-      `/products?filters[$or][0][slug][$containsi]=${searchTerm}&filters[$or][1][categories][name][$containsi]=${searchTerm}&populate=*`
+      `/products?filters[$or][0][slug][$containsi]=${searchTerm}&filters[$or][1][categories][name][$containsi]=${searchTerm}&populate[images][fields][0]=url&fields[0]=name&fields[1]=sellingPrice&fields[2]=price&fields[3]=description`
     )
     .then((resp) => {
       return resp.data.data;
@@ -60,7 +58,7 @@ const addToCart = (data, jwt) =>
 
 const getCartItems = (userId, jwt) =>
   axiosClient
-    .get("/user-carts?filters[userId][$eq]=" + userId + "&populate[products][populate]=images", {
+    .get("/user-carts?filters[userId][$eq]=" + userId + "&populate[products][populate][images][fields][0]=url&populate[products][fields][0]=name&populate[products][fields][1]=sellingPrice", {
       headers: {
         Authorization: "Bearer " + jwt,
       },
@@ -143,12 +141,16 @@ const createOrder = async (payload, jwt) => {
   }
 };
 
+const getLatestProducts = () =>
+  axiosClient.get("/products?pagination[pageSize]=8&sort[0]=id:desc&populate[images][fields][0]=url&populate[categories][fields][0]=name&fields[0]=name&fields[1]=sellingPrice&fields[2]=price&fields[3]=description").then((resp) => {
+    return resp.data.data;
+  });
+
 const getMyOrder = (userId, jwt) =>
   axiosClient
     .get(
       "/orders?filters[userId][$eq]=" +
-        userId +
-        "&populate=*",
+        userId,
       {
         headers: {
           Authorization: "Bearer " + jwt,
@@ -158,7 +160,7 @@ const getMyOrder = (userId, jwt) =>
     .then((resp) => {
       const response = resp.data.data;
       const orderList = response.map((item) => ({
-        id: item.documentId, // Gunakan documentId untuk Strapi v5
+        id: item.documentId,
         totalOrderAmount: item.totalOrderAmount,
         paymentId: item.paymentId,
         orderItemList: item.orderitemList,
@@ -217,11 +219,11 @@ const getUserAddresses = (userId, jwt) =>
     });
 
 export default {
-  getCategory,
   getSliders,
   getCategoryList,
   getAllProducts,
   getProductsByCategory,
+  getLatestProducts,
   registerUser,
   signInUser,
   addToCart,

@@ -16,18 +16,25 @@ function ProductCategory({ params }) {
   const router = useRouter();
 
   useEffect(() => {
-    GlobalApi.getCategoryList().then((res) => {
-      setCategoryList(res);
-      const decodedName = decodeURIComponent(params.categoryName);
-      const index = res.findIndex((cat) => cat.name === decodedName);
-      setCurrentCategoryIndex(index !== -1 ? index : 0);
-    });
-  }, [params.categoryName]);
+    const fetchData = async () => {
+      try {
+        const [categories, products] = await Promise.all([
+          GlobalApi.getCategoryList(),
+          GlobalApi.getProductsByCategory(params.categoryName)
+        ]);
 
-  useEffect(() => {
-    GlobalApi.getProductsByCategory(params.categoryName).then((res) => {
-      setProductList(res);
-    });
+        setCategoryList(categories);
+        setProductList(products);
+
+        const decodedName = decodeURIComponent(params.categoryName);
+        const index = categories.findIndex((cat) => cat.name === decodedName);
+        setCurrentCategoryIndex(index !== -1 ? index : 0);
+      } catch (error) {
+        console.error("DEBUG: Failed to fetch category data:", error);
+      }
+    };
+
+    fetchData();
   }, [params.categoryName]);
 
   const navigateCategory = (direction) => {

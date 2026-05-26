@@ -64,6 +64,7 @@ const CreateAccount = () => {
                 height={140}
                 alt="logo"
                 className="w-28 sm:w-36 h-auto"
+                priority
               />
             </Link>
           </motion.div>
@@ -157,6 +158,7 @@ const CreateAccount = () => {
           fill
           alt="Fresh Veggies"
           className="object-cover opacity-90 grayscale-[10%]"
+          priority
         />
         <div className="absolute inset-0 bg-green-900/5" />
       </motion.div>

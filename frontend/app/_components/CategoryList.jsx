@@ -62,7 +62,7 @@ const CategoryList = ({ categoryList }) => {
           </div>
         </motion.div>
 
-        {categoryList && categoryList.length > 0 && (
+        {categoryList && categoryList.length > 0 ? (
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -112,6 +112,15 @@ const CategoryList = ({ categoryList }) => {
               </motion.div>
             ))}
           </motion.div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-8 md:gap-10">
+            {[1, 2, 3, 4, 5].map((item, index) => (
+              <div key={index} className="flex flex-col items-center gap-4">
+                <div className="h-[150px] w-full sm:h-[180px] md:h-[220px] bg-gray-100 animate-pulse rounded-[2rem] sm:rounded-[2.5rem]" />
+                <div className="h-4 w-24 bg-gray-100 animate-pulse rounded-full" />
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
