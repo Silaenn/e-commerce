@@ -7,6 +7,8 @@
 
 Aplikasi e-commerce full-stack dengan **frontend Next.js** dan **backend Strapi**. Mencakup katalog produk, pencarian, keranjang belanja, checkout dengan pembayaran Midtrans, dan riwayat pesanan.
 
+<img width="1920" height="964" alt="grocery-storee-vercel-app-" src="https://github.com/user-attachments/assets/122916b3-4dff-4143-a079-09057ef31c39" />
+
 ---
 
 ## ✨ Features
