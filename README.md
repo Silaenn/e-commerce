@@ -18,7 +18,7 @@ Aplikasi e-commerce full-stack dengan **frontend Next.js** dan **backend Strapi*
 - 🛒 Keranjang belanja
 - 💳 Checkout & integrasi Midtrans
 - 📋 Riwayat & detail pesanan
-- 🖼️ Upload media via Cloudinary
+- 🖼️ Upload media (local provider Strapi)
 - 🛠️ Strapi Admin Panel
 - 🎞️ Animasi UI dengan Framer Motion
 
@@ -65,7 +65,6 @@ Pastikan sudah terinstall:
 - Node.js ≥ 20
 - npm ≥ 6
 - Git
-- Akun [Cloudinary](https://cloudinary.com)
 - Akun [Midtrans](https://midtrans.com) atau [PayPal Developer](https://developer.paypal.com)
 
 ---
@@ -121,6 +120,8 @@ Lihat `backend/.env.example` untuk daftar lengkap. Variabel utama:
 | `TRANSFER_TOKEN_SALT` | Salt transfer token   |
 | `JWT_SECRET`          | Secret user JWT       |
 | `ENCRYPTION_KEY`      | Key enkripsi Strapi   |
+
+Catatan: Upload media menggunakan local provider Strapi (tanpa Cloudinary).
 
 ### Frontend — `frontend/.env.local`
 
