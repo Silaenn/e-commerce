@@ -34,9 +34,9 @@ const CartItemList = ({ cartItemList, onDeleteItem }) => {
                     className="object-contain transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 text-left">
                   <h2 className="font-black text-gray-900 leading-tight text-sm uppercase tracking-tight">{cart.name}</h2>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-start gap-2">
                     <span className="text-[10px] font-black bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase">Qty: {cart.quantity}</span>
                   </div>
                   <h2 className="text-lg font-black text-primary">
