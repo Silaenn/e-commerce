@@ -5,7 +5,7 @@ export default function Loading() {
     <div className="min-h-screen bg-white">
       {/* Header Skeleton */}
       <div className="bg-green-50/30 py-10 sm:py-16 px-5 sm:px-8 md:px-12 w-full border-b border-green-100/50">
-        <div className="max-w-[1800px] mx-auto space-y-4">
+        <div className="max-w-[1800px] mx-auto flex flex-col items-center sm:items-start space-y-4 text-center sm:text-left">
           <div className="h-4 w-32 bg-gray-300 animate-pulse rounded-full" />
           <div className="h-12 w-64 sm:w-96 bg-gray-300 animate-pulse rounded-2xl" />
         </div>
