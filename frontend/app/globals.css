@@ -40,7 +40,6 @@
   }
   html, body {
     @apply bg-background text-foreground antialiased;
-    overscroll-behavior: none;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
