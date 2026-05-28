@@ -30,7 +30,7 @@ const MyOrderItem = ({ orderItem, orderStatus }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-12 md:gap-24">
+        <div className="flex items-center gap-4 sm:gap-12 md:gap-24">
           <div className="text-center space-y-1">
             <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Quantity</p>
             <h2 className="text-xl font-black text-gray-900">
